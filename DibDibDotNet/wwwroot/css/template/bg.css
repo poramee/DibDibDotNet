@@ -1,0 +1,18 @@
+@import "Global.css";
+body.BGG{
+    background: var(--Grey6);/*เปลี่ยนสี BG ตาม UI ของแต่ละหน้า */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+footer.container-wave {
+    position: fixed;
+    left: 0;
+    bottom: -5px;
+    width: 100%;
+    overflow: hidden;
+    z-index: 0;/* wave อยู่ชั้นที่ 0 ถ้าจะเอามาทับ ต้องใส่อันนั้นเป็น ชั้นที่ 1 2 3..*/
+    /*opacity: 0.5; ทำ wave จางตรงนี้เลยจ้า */
+}
+
+/*------------------CSS for This Document----------------*/

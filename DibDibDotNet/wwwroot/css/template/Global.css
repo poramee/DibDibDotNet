@@ -1,0 +1,117 @@
+* {
+    margin: 0 ;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root{
+    --Accent: #0880AE;
+    --Warning: #F2AC57;
+    --Success:#14A38B;
+    --Error:#FF7171;
+    --Primary:#2c2738;
+    --Secondary:#6a647a;
+    --Muted:#7C9CBF;
+    --Bright:#FFFF;
+    --BG:#EBF4F8;
+    --Grey6:#F2F2F2;
+}
+
+/*----- colors-----*/
+.rc-Primary{
+    color: var(--Primary);
+}
+.rc-Accent{
+    color: var(--Accent);
+}
+.rc-Error{
+    color: var(--Error);
+}
+.rc-Success{
+    color: var(--Success);
+}
+.rc-Warning{
+    color: var(--Warning);
+}
+.rc-Secondary{
+    color: var(--Secondary);
+}
+.rc-Bright{
+    color: var(--Bright);
+}
+.rc-Muted{
+    color: var(--Muted);
+}
+.rc-BG{
+    color: var(--BG);
+}
+.rc-Grey6{
+    color: var(--Grey6);
+}
+
+/*----- Text -------*/
+.HeadingX1{
+    font-size: 72px;
+    font-weight: 100px;
+}
+.HeadingX2{
+    font-size: 64px;
+    font-weight: 100px;
+}
+.HeadingX3{
+    font-size: 56px;
+    font-weight: 100px;
+}
+.HeadingX4{
+    font-size: 34px;
+    font-weight: 100px;
+}
+.HeadingX5{
+    font-size: 28px;
+    font-weight: 100px;
+}
+.HeadingX6{
+    font-size: 20px;
+    font-weight: 100px;
+}
+.ParagraphX1 {
+    font-size: 16px;
+    font-weight: 60px;
+}
+.ParagraphX2 {
+    font-size: 14px;
+    font-weight: 60px;
+}
+
+.Label {
+    font-size: 12px;
+    font-weight: 60px;
+}
+
+/* ------ Eng -------*/
+.ENG {
+    font-family: 'Montserrat';
+}
+
+/* ------ Thai -------*/
+.TH {
+    font-family: 'Prompt', sans-serif;
+}
+
+/* Rules for icon sizes: */
+.md-18 { font-size: 18px; }
+.md-20 { font-size: 20px; }
+.md-24 { font-size: 24px; } /* Default */
+.md-36 { font-size: 36px; }
+.md-48 { font-size: 48px; }
+.md-64 { font-size: 64px; }
+.md-80 { font-size: 80px; }
+.md-100 {font-size: 100px;}
+
+/*drop shardown */
+.DS-SS {
+    filter: drop-shadow(0px 4px 3px rgba(0, 0, 0, 0.1));
+}
+.DS-item {
+    filter: drop-shadow(3px 4px 20px rgba(0, 0, 0, 0.1));
+}
+

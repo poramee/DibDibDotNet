@@ -385,3 +385,4 @@
 /Users/poramee/Documents/SW Studio Web/DibDibDotNet/DibDibDotNet/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.CSharp.resources.dll
 /Users/poramee/Documents/SW Studio Web/DibDibDotNet/DibDibDotNet/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll
 /Users/poramee/Documents/SW Studio Web/DibDibDotNet/DibDibDotNet/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/poramee/Documents/SW Studio Web/DibDibDotNet/DibDibDotNet/obj/Debug/netcoreapp3.1/Razor/Views/UserSelectRoom/UserSelectRoom.cshtml.g.cs

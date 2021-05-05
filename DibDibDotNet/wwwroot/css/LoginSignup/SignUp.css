@@ -1,4 +1,4 @@
-@import url("template/Global.css");
+@import url("../template/Global.css");
 
 body.BGG{
     background: var(--Grey6);/*เปลี่ยนสี BG ตาม UI ของแต่ละหน้า */

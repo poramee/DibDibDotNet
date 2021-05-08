@@ -782,3 +782,4 @@ D:\GitHub\DibDibDotNet\DibDibDotNet\obj\Debug\netcoreapp3.1\DibDibDotNet.dll
 D:\GitHub\DibDibDotNet\DibDibDotNet\obj\Debug\netcoreapp3.1\DibDibDotNet.pdb
 D:\GitHub\DibDibDotNet\DibDibDotNet\obj\Debug\netcoreapp3.1\DibDibDotNet.genruntimeconfig.cache
 D:\GitHub\DibDibDotNet\DibDibDotNet\obj\Debug\netcoreapp3.1\Razor\Views\HomeAdmin\HomeAdmin.cshtml.g.cs
+D:\GitHub\DibDibDotNet\DibDibDotNet\obj\Debug\netcoreapp3.1\Razor\Views\HomeUser\HomeUser.cshtml.g.cs

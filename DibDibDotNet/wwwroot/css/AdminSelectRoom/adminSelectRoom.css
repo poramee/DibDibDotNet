@@ -1,0 +1,303 @@
+@import url("../template/Global.css");
+
+body.BGG{
+    background: var(--Grey6);/*เปลี่ยนสี BG ตาม UI ของแต่ละหน้า */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+footer.container-wave {
+    position: fixed;
+    left: 0;
+    bottom: -5px;
+    width: 100%;
+    overflow: hidden;
+    z-index: 0; /* wave อยู่ชั้นที่ 0 ถ้าจะเอามาทับ ต้องใส่อันนั้นเป็น ชั้นที่ 1 2 3..*/
+    opacity: 0.3; /*ทำ wave จางตรงนี้เลยจ้า */
+}
+/*------------------CSS for This Document----------------*/
+
+
+/*---- container gride-----*/
+/*  nav 1 */
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+}
+/* Track */
+  ::-webkit-scrollbar-track {
+    background-color: #eeeeee;
+    border-radius: 10px;
+}
+   
+/* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(216, 216, 216); 
+    border-radius: 10px;
+}
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #bbbbbb; 
+}
+.topnav {
+    overflow: hidden;
+    
+}
+.topnav a  {
+  float: left;
+  text-align: center;
+  padding: 14px 30px;
+  text-decoration: none;
+}
+.topnav a:hover{
+    color: var(--Accent);
+}
+/* nav 2 */
+.room-name{
+    overflow: hidden;
+    /*background: rgb(212, 56, 56);*/
+    margin-left: 30px;
+    margin-right: 30px;
+}
+.room-name a,.room-name p {
+    float: left;
+    /*padding: 14px 10px;*/
+    padding-right: 10px;
+    padding-bottom: 30px;
+}
+.icon-back{
+    position: relative;
+    bottom: -4px;
+}
+.btn-add{
+    background-color: var(--Success);
+    box-shadow: 0px 2px 4px rgba(44, 39, 56, 0.08), 0px 4px 8px rgba(44, 39, 56, 0.08);
+    border-radius: 6px;
+    width: 100px; 
+    height: 34px;
+    border-style: none;
+    margin-right: 30px;
+    cursor: pointer;
+}
+.btn-del{
+    background-color: var(--Warning);
+    box-shadow: 0px 2px 4px rgba(44, 39, 56, 0.08), 0px 4px 8px rgba(44, 39, 56, 0.08);
+    border-radius: 6px;
+    width: 100px; 
+    height: 34px;
+    border-style: none;
+    cursor: pointer;
+}
+.btn-add-del{
+    margin-top: 10px;
+    
+}
+.btn-add:hover{
+    background :#0f8672;
+}
+.btn-del:hover{
+    background :#d6974a;
+}
+.li-hi{
+    margin-top: 4px;
+}
+.right {
+  float: right;
+}
+.left {
+    float: left;
+}
+.in-line{
+    display: inline;
+}
+
+/*------ content --------*/
+.parent-BG{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    height: 700px;
+}
+
+
+/*----- col 1 Logo -----*/
+.contain-col-1-preview { 
+    grid-area: 1 / 1 / 6 / 2; 
+    /*background: rgb(182, 40, 40);*/
+    z-index: 1;
+}
+.card-preview{
+    height: 650px;
+    width: 400px;
+    background: var(--Bright);
+    margin-left: 35px;
+    border-radius: 8px;
+    padding-left: 30px;
+}
+.img-card{
+    width: 100%;
+    border-radius: 8px;
+    padding: 30px;
+}
+.btn-manage{
+    background-color: var(--Accent);
+    box-shadow: 0px 2px 4px rgba(44, 39, 56, 0.08), 0px 4px 8px rgba(44, 39, 56, 0.08);
+    border-radius: 6px;
+    width: 340px; 
+    height: 40px;
+    border-style: none;
+    margin-top: 30px;
+    cursor: pointer;
+}
+.btn-manage:hover {
+    background-color: #086a91;
+}
+
+
+/*----- col 2  form -----*/
+.contain-col-2-history { 
+    grid-area: 1 / 2 / 6 / 5;
+    /*background: rgb(47, 30, 194);*/
+    z-index: 1;
+    height: 700px;
+    margin-left: 10px;
+    margin-right: 30px;
+    
+}
+.scroll{
+    width:100%;
+    height:700px; 
+    overflow: auto;
+   
+}
+.w3-table{
+    background:var(--Bright);
+}
+.hd-table {
+    background:  #E0E0E0;
+}
+.container-table{
+    background: #000;
+}
+
+/* pop up Content 'add' */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 2; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    overflow: auto; 
+    background: #333333;
+    background-color: rgba(0,0,0,0.5); 
+ 
+  }
+.modal-content {
+    background-color:var(--Bright); 
+    border-radius: 8px;
+    margin: auto;
+    padding: 30px;
+    width: 550px;
+    height: 280px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+   /*  Close Button */
+   .close-add, .close-del {
+    float: right;
+    height: 24px;
+    width: 24px;
+    margin-top: -16px;
+    margin-right: -16px;
+  }
+  
+  .close-add:hover,
+  .close-add:focus,.close-del:hover,.close-del:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.btn-pop-add{
+    background-color: var(--Success);
+    box-shadow: 0px 2px 4px rgba(44, 39, 56, 0.08), 0px 4px 8px rgba(44, 39, 56, 0.08);
+    border-radius: 6px;
+    width: 100px; 
+    height: 34px;
+    border-style: none;
+    cursor: pointer;
+    margin-top: 30px; 
+}
+
+.btn-pop-remove{
+    background-color:var(--Error);
+    border-radius: 6px;
+    width: 100px; 
+    height: 34px;
+    border-style: none;
+    cursor: pointer;
+    margin-top: 30px; 
+    box-shadow: 0px 2px 4px rgba(44, 39, 56, 0.08), 0px 4px 8px rgba(44, 39, 56, 0.08);
+}
+.btn-pop-add:hover{
+    background :#0f8672;
+}
+.btn-pop-remove:hover{
+    background: rgb(197, 58, 58);
+}
+.calendar{
+    width: 200px;
+    color: var(--Primary);
+    padding: 3px;
+    border: 1px solid #DBE2EA;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 8px rgba(44, 39, 56, 0.04);
+    border-radius: 6px;
+}
+.btn-plus, .btn-remove {
+    cursor: pointer;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.0001);
+    box-shadow: inset -1px 0px 0px #DBE2EA;
+    border: 1px solid #DBE2EA; 
+}
+.btn-plus{
+    border-radius: 0px 6px 6px 0px;
+}
+.btn-remove{
+    border-radius: 6px 0px 0px 6px;
+}
+.btn-plus:hover,.btn-remove:hover{
+    background: rgb(214, 214, 214);
+}
+.input-num{
+    background: rgba(0, 0, 0, 0.0001);
+    box-shadow: inset -1px 0px 0px #DBE2EA;
+    border: 1px solid #DBE2EA; 
+    width: 78px;
+    height: 26px;
+    text-align: center; 
+}
+
+
+.add-remove-text{
+    padding :35px;
+    margin-left: 20px;
+    margin-right: 50px;
+}
+.add-remove{
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 130px;
+    height: 30px;
+}
+/*@media screen and (min-width: 1200px) { }*/

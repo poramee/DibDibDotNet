@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
     <header>
         <title>User</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -54,13 +54,14 @@
                         <tbody>
                             <tr>
                                 <td><br><br><p class="HeadingX6 TH rc-Primary in-line">1</p></td>
-                                <td class="book "><br><p class="HeadingX6 TH rc-Success in-line ">จอง 1 เครื่อง<br><p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <p class="Paragraph1 TH rc-Error in-line">4</p> เครื่อง</p></p><p class="Label TH rc-Error ">* ไม่สามารถเปลี่ยนแปลงได้ แต่สามารถยกเลิกการจองได้ที่ "รถเข็น"</p></td>
+                                <td class="book "><br>
+                                    <p class="HeadingX6 TH rc-Success in-line ">จอง 1 เครื่อง</p><br><p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span class="Paragraph1 TH rc-Error in-line">4</span> เครื่อง</p><p class="Label TH rc-Error ">* ไม่สามารถเปลี่ยนแปลงได้ แต่สามารถยกเลิกการจองได้ที่ "รถเข็น"</p></td>
                                 <td  class="full"><br><p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br><i class="material-icons md-48 rc-Grey6 ">access_time</i></td>
-                                <td onclick="openBook()" class="remain"><br><br><p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <p class=" HeadingX6 TH rc-Error in-line">12</p> เครื่อง</p></td>
-                                <td onclick="openBook()" class="remain"><br><br><p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <p class=" HeadingX6 TH rc-Error in-line">8</p> เครื่อง</p></td>
+                                <td onclick="openBook()" class="remain"><br><br><p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span class=" HeadingX6 TH rc-Error in-line">12</span> เครื่อง</p></td>
+                                <td onclick="openBook()" class="remain"><br><br><p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span class=" HeadingX6 TH rc-Error in-line">8</span> เครื่อง</p></td>
                                 <td class="full"><br><p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br><i class="material-icons md-48 rc-Grey6 ">access_time</i></td>
-                                <td onclick="openBook()" class="remain"><br><br><p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <p class=" HeadingX6 TH rc-Error in-line">5</p> เครื่อง</p></td>
-                                <td onclick="openBook()"class="remain"><br><br><p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <p class=" HeadingX6 TH rc-Error in-line">10</p> เครื่อง</p></td>
+                                <td onclick="openBook()" class="remain"><br><br><p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span class=" HeadingX6 TH rc-Error in-line">5</span> เครื่อง</p></td>
+                                <td onclick="openBook()" class="remain"><br><br><p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span class=" HeadingX6 TH rc-Error in-line">10</span> เครื่อง</p></td>
                             </tr>
                         </tbody>   
                     </table>
@@ -75,27 +76,28 @@
                     <br>
                     <p class="ParagraphX1 ENG rc-Primary in-line"><b>1/02/2021</b></p><p class="ParagraphX1 ENG rc-Primary in-line">&nbsp;&nbsp;&nbsp;<b>11:00 - 12:00 </b></p><p class="ParagraphX1 TH rc-Primary in-line">&nbsp;น.</p>
                     <div class="add-remove-text">
-                    <p class="HeadingX6 TH re-Primary left "> จองจำนวน</p>
-                    <p class="HeadingX6 TH re-Primary right "> เครื่อง</p>
+                        <p class="HeadingX6 TH re-Primary left "> จองจำนวน</p>
+                        <p class="HeadingX6 TH re-Primary right "> เครื่อง</p>
                     </div>
-                    <div class="add-remove">
-                        <div class="left">
-                            <i onclick="document.form1.input1.value--" class="btn-remove material-icons md-24 rc-Primary  ">remove</i>
-                        </div>
-                        <form name=form1 >
-                        <input class="input-num" name=input1 value="1" size=10 
-                               onfocus="buffer=this.value" 
-                               onchange="if (isNaN(this.value)) 
+                    <form name="form1" >
+                        <div class="add-remove">
+                            <div class="left">
+                                <i onclick="document.form1.input1.value--" class="btn-remove material-icons md-24 rc-Primary  ">remove</i>
+                            </div>
+                        
+                            <input class="input-num" name="input1" value="1" size=10 
+                                   onfocus="buffer=this.value" 
+                                   onchange="if (isNaN(this.value)) 
                             { this.value=buffer}"
-                        >
-                        </form>
-                        <div class="right">
-                            <i onclick="document.form1.input1.value++" class="btn-plus material-icons md-24 rc-Primary ">add</i>
+                            >
+                            <div class="right">
+                                <i onclick="document.form1.input1.value++" class="btn-plus material-icons md-24 rc-Primary ">add</i>
+                            </div>
                         </div>
-                    </div>
-                    <br>
-                    <p class="warn-text Label TH rc-Error left "> *สามารถตรวจสอบรายการจองหรือยกเลิกรายการจองได้จากรถเข็น<br> กรุณาตรวจสอบจำนวน เวลา และวันที่ อีกครั้งก่อนการยืนยัน</p>
-                    <input  class="btn-pop-book rc-BG ENG ParagraphX1 right " type="submit" value="Ok">
+                        <br>
+                        <p class="warn-text Label TH rc-Error left "> *สามารถตรวจสอบรายการจองหรือยกเลิกรายการจองได้จากรถเข็น<br> กรุณาตรวจสอบจำนวน เวลา และวันที่ อีกครั้งก่อนการยืนยัน</p>
+                        <input  class="btn-pop-book rc-BG ENG ParagraphX1 right " type="submit" value="Ok">
+                    </form>
                 </div>
             </div>
         </div> <!-- col 2-->

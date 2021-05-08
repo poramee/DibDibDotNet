@@ -7,6 +7,9 @@
 
     <ItemGroup>
         <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+        <None Include="wwwroot\css\AdminSelectRoom\adminSelectRoom.css" />
+        <None Include="wwwroot\css\AdminSelectRoom\manageBooking.css" />
+        <None Include="wwwroot\css\AdminSelectRoom\memberRoom.css" />
         <None Include="wwwroot\css\UserSelectRoom\userSelectRoom.css" />
     </ItemGroup>
 

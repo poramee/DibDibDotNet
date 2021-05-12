@@ -17,10 +17,16 @@ namespace DibDibDotNet.Controllers
         {
             _logger = logger;
         }
-
-        public IActionResult AdminSelectRoom()
+        public IActionResult AdminSelectRoom(string roomId)
         {
-            return View();
+            Room roomModel = new Room();
+            roomModel.RoomNumber = roomId;
+            if (roomId == "ECC-501")
+            {
+                roomModel.EquipmentName = "Xilinx Spartan-6 FPGA";
+                roomModel.PicLocation = "/Assets/ImageRoom501.png";
+            }
+            return View(roomModel);
         }
         public IActionResult ManageBooking()
         {

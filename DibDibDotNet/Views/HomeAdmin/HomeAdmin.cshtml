@@ -15,7 +15,7 @@
                 <div class="right">
                     <a href="#"><i class="material-icons md-20 rc-Muted ">refresh</i></a>
                     <a class="ParagraphX2 ENG rc-Muted" href="#">Admin</a>
-                    <a id="checkLogout" onclick="logout()"class="ParagraphX2 ENG rc-Muted" href="../LoginSignup/Login.html">Logout</a>
+                    <a id="checkLogout" onclick="logout()" class="ParagraphX2 ENG rc-Muted" href="@Url.Action("Login", "LoginSignup")">Logout</a>
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
 
         <div class="parent-card">
             <div class="div3grid-area">
-                <a href="#">
+                <a href="@Url.Action("AdminSelectRoom","AdminSelectRoom", new {roomId = "ECC-501"})">
                     <div class="card-preview DS-SS">
                         <img class="img-card" src="/Assets/ImageRoom501.png" alt="Room501" >
                         <p class="HeadingX6 ENG rc-Primary"><b>ECC-501</b></p>
@@ -185,8 +185,6 @@
                             </tr>
                                 <td><p class="Label TH rc-Secondary in-line">Blacklist:</p></td>
                                 <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;4</p></td>
-                                
-                            
                         </table>
                     </div>
                 </a>

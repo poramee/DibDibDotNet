@@ -18,9 +18,10 @@ namespace DibDibDotNet.Controllers
             _logger = logger;
         }
 
-        public IActionResult UserSelectRoom()
+        public IActionResult UserSelectRoom(string roomId)
         {
-            return View();
+            Room roomModel = new Room(roomId);
+            return View(roomModel);
         }
     }
 }

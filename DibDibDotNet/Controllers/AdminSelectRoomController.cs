@@ -19,13 +19,7 @@ namespace DibDibDotNet.Controllers
         }
         public IActionResult AdminSelectRoom(string roomId)
         {
-            Room roomModel = new Room();
-            roomModel.RoomNumber = roomId;
-            if (roomId == "ECC-501")
-            {
-                roomModel.EquipmentName = "Xilinx Spartan-6 FPGA";
-                roomModel.PicLocation = "/Assets/ImageRoom501.png";
-            }
+            Room roomModel = new Room(roomId);
             return View(roomModel);
         }
         public IActionResult ManageBooking()

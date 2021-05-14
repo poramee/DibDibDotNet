@@ -1,3 +1,7 @@
+@using Microsoft.AspNetCore.Html
+@model HomeAdmin;
+
+
 <!DOCTYPE html>
 <html>
     <header>
@@ -49,21 +53,21 @@
             <div class="div3grid-area">
                 <a href="@Url.Action("AdminSelectRoom","AdminSelectRoom", new {roomId = "ECC-501"})">
                     <div class="card-preview DS-SS">
-                        <img class="img-card" src="/Assets/ImageRoom501.png" alt="Room501" >
-                        <p class="HeadingX6 ENG rc-Primary"><b>ECC-501</b></p>
-                        <p class="ParagraphX1 ENG rc-Primary">Xilinx Spartan-6 FPGA</p>
+                        <img class="img-card" src="@Model.RoomList["ECC-501"].PicLocation" alt="@Model.RoomList["ECC-501"].EquipmentName" >
+                        <p class="HeadingX6 ENG rc-Primary"><b>@Model.RoomList["ECC-501"].RoomNumber</b></p>
+                        <p class="ParagraphX1 ENG rc-Primary">@Model.RoomList["ECC-501"].EquipmentName</p>
                         <table border="0" >
                             <tr>
                                 <td><p class="Label TH rc-Secondary in-line">จอง</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;4</p></td>
+                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-501"].ReserveAmt</p></td>
                                 <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             </tr>
                                 <td><p class="Label TH rc-Secondary in-line">คงเหลือ</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;70</p></td>
+                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-501"].RemainingAmt</p></td>
                                 <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             <tr>
                                 <td><p class="Label TH rc-Secondary in-line">ทั้งหมด</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;74</p></td>
+                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-501"].TotalAmt</p></td>
                                 <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             </tr>
                         </table>

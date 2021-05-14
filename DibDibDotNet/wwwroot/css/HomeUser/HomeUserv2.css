@@ -367,7 +367,6 @@ a{
     padding-left: 20px;
     padding-top: 5px;
 }
-
 .logout:hover {
     cursor: pointer;
     background: #EBF4F8;
@@ -519,10 +518,15 @@ a{
     width: 110px; 
     height: 30px;
     cursor: pointer;
+    margin-left: 30px;
 }
 .btn-pop-bl:hover{
     background-color:  #4a494d;
     color: var(--Bright);
 }
 
+
+.verticalLine {
+    border-left: 2px solid #dfdddd;
+  }
 /*@media screen and (min-width: 1200px) { }*/

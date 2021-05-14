@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/template/Global.css"> <!-- change -> /template/Global.css  -->
-    <link rel="stylesheet" href="/css/AdminSelectRoom/adminSelectRoom.css"> <!-- Edit name for import Css of this document -->
+    <link rel="stylesheet" href="/css/AdminSelectRoom/adminSelectRoomv2.css"> <!-- Edit name for import Css of this document -->
 </header>
 <body class="BGG">
 <div class="topnav">
@@ -19,7 +19,7 @@
             <i class="material-icons md-20 rc-Muted ">refresh</i>
         </a>
         <a class="ParagraphX2 ENG rc-Muted" href="#">Admin</a>
-        <a id="checkLogout" onclick="logout()" class="ParagraphX2 ENG rc-Muted" href="../LoginSignup/Login.html">Logout</a>
+        <a id="checkLogout" onclick="logout()" class="ParagraphX2 ENG rc-Muted" href="@Url.Action("Login", "LoginSignup")">Logout</a>
     </div>
 </div>
 <div class="room-name">
@@ -205,10 +205,11 @@
                        onfocus="buffer=this.value"
                        onchange="if (isNaN(this.value)) 
                                 { this.value=buffer}">
+                    <div class="right">
+                        <i onclick="document.form1.input1.value++" class="btn-plus material-icons md-24 rc-Primary ">add</i>
+                    </div>
                 </form>
-                <div class="right">
-                    <i onclick="document.form1.input1.value++" class="btn-plus material-icons md-24 rc-Primary ">add</i>
-                </div>
+                
             </div>
             <input class="btn-pop-add rc-BG TH ParagraphX1 right " type="submit" value="เพิ่ม">
         </div>
@@ -241,10 +242,11 @@
                        onfocus="buffer=this.value"
                        onchange="if (isNaN(this.value)) 
                                 { this.value=buffer}">
+                    <div class="right">
+                        <i onclick="document.form2.input2.value++" class="btn-plus material-icons md-24 rc-Primary ">add</i>
+                    </div>
                 </form>
-                <div class="right">
-                    <i onclick="document.form2.input2.value++" class="btn-plus material-icons md-24 rc-Primary ">add</i>
-                </div>
+                
             </div>
             <input class="btn-pop-remove rc-BG TH ParagraphX1 right " type="submit" value="ลบ">
         </div>
@@ -308,10 +310,4 @@ var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(
 var dateTime = date+' '+time;
   /*document.getElementById("datetime").value = dateTime;*/
 
-function logout(){
-    var logout = confirm("Confirm to Log out")
-    if (!logout){
-        document.getElementById("checkLogout").href="./adminSelecteRoom.html"; 
-    }
-}
 </script>

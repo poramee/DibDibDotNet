@@ -17,10 +17,10 @@ namespace DibDibDotNet.Controllers
         {
             _logger = logger;
         }
-
-        public IActionResult AdminSelectRoom()
+        public IActionResult AdminSelectRoom(string roomId)
         {
-            return View();
+            Room roomModel = new Room(roomId);
+            return View(roomModel);
         }
         public IActionResult ManageBooking()
         {

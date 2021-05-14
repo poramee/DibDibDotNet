@@ -1,3 +1,5 @@
+@model DibDibDotNet.Models.Room;
+
 <!DOCTYPE html>
 <html>
 <header>
@@ -22,13 +24,13 @@
 </div>
 <div class="room-name">
     <div class="left">
-        <a href="#">
+        <a href="@Url.Action("HomeAdmin", "HomeAdmin")">
             <i class="icon-back material-icons md-24 rc-Primary ">arrow_back</i>
         </a>
         <p class="HeadingX6 ENG rc-Primary in-line " href="#">
-            <b>ECC-602</b>
+            <b>@Model.RoomNumber</b>
         </p>
-        <p class="ParagraphX1 ENG rc-Primary in-line li-hi">STM32-nucleo f767zi</p>
+        <p class="ParagraphX1 ENG rc-Primary in-line li-hi">@Model.EquipmentName</p>
     </div>
     <div class=" btn-add-del right">
         <input onclick="openPopAdd()" class="btn-add rc-BG TH ParagraphX1" type="submit" value="เพิ่มรายการ">
@@ -39,13 +41,13 @@
 <!-- left-->
 <div class="contain-col-1-preview">
     <div class="card-preview DS-SS ">
-        <img class="img-card" src="/Assets/ImageRoom602.png" alt="Room602">
+        <img class="img-card" src=@Model.PicLocation alt=@Model.EquipmentName>
 
 
         <p class="HeadingX6 ENG rc-Primary">
-            <b>ECC-602</b>
+            <b>@Model.RoomNumber</b>
         </p>
-        <p class="ParagraphX1 ENG rc-Primary">STM32-nucleo f767zi</p><br>
+        <p class="ParagraphX1 ENG rc-Primary">@Model.EquipmentName</p><br>
         <table border="0">
             <tr>
                 <td>

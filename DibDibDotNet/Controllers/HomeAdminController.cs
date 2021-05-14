@@ -20,7 +20,8 @@ namespace DibDibDotNet.Controllers
 
         public IActionResult HomeAdmin()
         {
-            return View();
+            HomeAdmin home = new HomeAdmin();
+            return View(home);
         }
     }
 }

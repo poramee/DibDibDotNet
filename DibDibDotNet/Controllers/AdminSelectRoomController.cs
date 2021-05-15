@@ -19,8 +19,7 @@ namespace DibDibDotNet.Controllers
         }
         public IActionResult AdminSelectRoom(string roomId)
         {
-            Room roomModel = new Room(roomId);
-            return View(roomModel);
+            return View();
         }
         public IActionResult ManageBooking()
         {

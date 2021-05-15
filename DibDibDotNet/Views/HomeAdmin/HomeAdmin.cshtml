@@ -1,6 +1,21 @@
 @using Microsoft.AspNetCore.Html
 @using System.Data.SqlTypes
-@model HomeAdmin;
+@model List<DibDibDotNet.Models.Equipment>;
+
+@{
+    var ecc501 = Model.Find(x => x.Room.Equals("ECC-501"));
+    var ecc502 = Model.Find(x => x.Room.Equals("ECC-502"));
+    var ecc504 = Model.Find(x => x.Room.Equals("ECC-504"));
+    var ecc601 = Model.Find(x => x.Room.Equals("ECC-601"));
+    var ecc602 = Model.Find(x => x.Room.Equals("ECC-602"));
+
+    var ecc501Pic = "/Assets/ImageRoom501.png";
+    var ecc502Pic = "/Assets/ImageRoom502.png";
+    var ecc504Pic = "/Assets/ImageRoom504.png";
+    var ecc601Pic = "/Assets/ImageRoom601.png";
+    var ecc602Pic = "/Assets/ImageRoom501.png";
+    
+}
 
 <!DOCTYPE html>
 <html>
@@ -61,26 +76,35 @@
     <div class="contain-cards">
         <div class="parent-card">
             <div class="div1-grid">
-               <a href="@Url.Action("AdminSelectRoom", "AdminSelectRoom", new {roomId = "ECC-501"})">
+                <a href="@Url.Action("AdminSelectRoom", "AdminSelectRoom", new {roomId = "ECC-501"})">
                     <div class="card-preview DS-SS">
-                        <img class="img-card" src="@Model.RoomList["ECC-501"].PicLocation" alt="@Model.RoomList["ECC-501"].EquipmentName">
+                        <img class="img-card" src="@ecc501Pic" alt="@ecc501?.Name">
                         <p class="HeadingX6 ENG rc-Primary">
-                            <b>@Model.RoomList["ECC-501"].RoomNumber</b>
+                            <b>ECC-501</b>
                         </p>
-                        <p class="ParagraphX1 ENG rc-Primary">@Model.RoomList["ECC-501"].EquipmentName</p>
+                        <p class="ParagraphX1 ENG rc-Primary">@ecc501?.Name</p>
                         <table border="0">
                             <tr>
-                                <td><p class="Label TH rc-Secondary in-line">จอง</p> </td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-501"].ReserveAmt</p></td>
-                                <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">จอง</p> </td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; -- </p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             </tr>
-                                <td><p class="Label TH rc-Secondary in-line">คงเหลือ</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-501"].RemainingAmt</p></td>
-                                <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line">คงเหลือ</p></td>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; -- </p></td>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             <tr>
-                                <td><p class="Label TH rc-Secondary in-line">ทั้งหมด</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-501"].TotalAmt</p></td>
-                                <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">ทั้งหมด</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@ecc501?.Total</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             </tr>
                         </table>
                     </div>
@@ -90,25 +114,34 @@
             <div class="div2-grid">
                 <a href="@Url.Action("AdminSelectRoom", "AdminSelectRoom", new {roomId = "ECC-502"})">
                     <div class="card-preview DS-SS">
-                        <img class="img-card" src="@Model.RoomList["ECC-502"].PicLocation" alt="@Model.RoomList["ECC-502"].EquipmentName">
+                        <img class="img-card" src="@ecc502Pic" alt="@ecc502?.Name">
                         <p class="HeadingX6 ENG rc-Primary">
-                            <b>@Model.RoomList["ECC-502"].RoomNumber</b>
+                            <b>ECC-502</b>
                         </p>
-                        <p class="ParagraphX1 ENG rc-Primary">@Model.RoomList["ECC-502"].EquipmentName</p>
+                        <p class="ParagraphX1 ENG rc-Primary">@ecc502?.Name</p>
                         <table border="0">
                             <tr>
-                                <td><p class="Label TH rc-Secondary in-line">จอง</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-502"].ReserveAmt</p></td>
-                                <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">จอง</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; -- </p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             </tr>
-                                <td><p class="Label TH rc-Secondary in-line">คงเหลือ</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-502"].RemainingAmt</p>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line">คงเหลือ</p></td>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; -- </p>
                             </td>
-                                <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             <tr>
-                                <td><p class="Label TH rc-Secondary in-line">ทั้งหมด</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-502"].TotalAmt</p></td>
-                                <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">ทั้งหมด</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@ecc502?.Total</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             </tr>
                         </table>
                     </div>
@@ -117,24 +150,33 @@
             <div class="div3-grid">
                 <a href="@Url.Action("AdminSelectRoom", "AdminSelectRoom", new {roomId = "ECC-504"})">
                     <div class="card-preview DS-SS">
-                        <img class="img-card" src="@Model.RoomList["ECC-504"].PicLocation" alt="@Model.RoomList["ECC-504"].EquipmentName">
+                        <img class="img-card" src="@ecc504Pic" alt="@ecc504?.Name">
                         <p class="HeadingX6 ENG rc-Primary">
-                            <b>@Model.RoomList["ECC-504"].RoomNumber</b>
+                            <b>ECC-504</b>
                         </p>
-                        <p class="ParagraphX1 ENG rc-Primary">@Model.RoomList["ECC-504"].EquipmentName</p>
+                        <p class="ParagraphX1 ENG rc-Primary">@ecc504?.Name</p>
                         <table border="0">
                             <tr>
-                                <td><p class="Label TH rc-Secondary in-line">จอง</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-504"].ReserveAmt</p></td>
-                                <td> <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">จอง</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; --</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             </tr>
-                                <td><p class="Label TH rc-Secondary in-line">คงเหลือ</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-504"].RemainingAmt</p></td>
-                                <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line">คงเหลือ</p></td>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; --</p></td>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             <tr>
-                                <td><p class="Label TH rc-Secondary in-line">ทั้งหมด</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-504"].TotalAmt</p></td>
-                                <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">ทั้งหมด</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@ecc504?.Total</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             </tr>
                         </table>
                     </div>
@@ -143,24 +185,33 @@
             <div class="div4-grid">
                 <a href="@Url.Action("AdminSelectRoom", "AdminSelectRoom", new {roomId = "ECC-601"})">
                     <div class="card-preview DS-SS">
-                        <img class="img-card" src="@Model.RoomList["ECC-601"].PicLocation" alt="@Model.RoomList["ECC-601"].EquipmentName">
+                        <img class="img-card" src="@ecc601Pic" alt="@ecc601?.Name">
                         <p class="HeadingX6 ENG rc-Primary">
-                            <b>@Model.RoomList["ECC-601"].RoomNumber</b>
+                            <b>ECC-601</b>
                         </p>
-                        <p class="ParagraphX1 ENG rc-Primary">@Model.RoomList["ECC-601"].EquipmentName</p>
+                        <p class="ParagraphX1 ENG rc-Primary">@ecc601?.Name</p>
                         <table border="0">
                             <tr>
-                                <td><p class="Label TH rc-Secondary in-line">จอง</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-601"].ReserveAmt</p></td>
-                                <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">จอง</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; --</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             </tr>
-                                <td><p class="Label TH rc-Secondary in-line">คงเหลือ</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-601"].RemainingAmt</p></td>
-                                <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line">คงเหลือ</p></td>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; --</p></td>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             <tr>
-                                <td><p class="Label TH rc-Secondary in-line">ทั้งหมด</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-601"].TotalAmt</p></td>
-                                <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">ทั้งหมด</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; @ecc601?.Total</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             </tr>
                         </table>
                     </div>
@@ -169,47 +220,60 @@
             <div class="div5-grid">
                 <a href="@Url.Action("AdminSelectRoom", "AdminSelectRoom", new {roomId = "ECC-602"})">
                     <div class="card-preview DS-SS">
-                        <img class="img-card" src="@Model.RoomList["ECC-602"].PicLocation" alt="@Model.RoomList["ECC-602"].EquipmentName">
+                        <img class="img-card" src="@ecc602Pic" alt="@ecc602?.Name">
                         <p class="HeadingX6 ENG rc-Primary">
-                            <b>@Model.RoomList["ECC-602"].RoomNumber</b>
+                            <b>ECC-602</b>
                         </p>
-                        <p class="ParagraphX1 ENG rc-Primary">@Model.RoomList["ECC-602"].EquipmentName</p>
+                        <p class="ParagraphX1 ENG rc-Primary">@ecc602?.Name</p>
                         <table border="0">
                             <tr>
-                                <td><p class="Label TH rc-Secondary in-line">จอง</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-602"].ReserveAmt</p></td>
-                                <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">จอง</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; --</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             </tr>
-                                <td><p class="Label TH rc-Secondary in-line">คงเหลือ</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-602"].RemainingAmt</p></td>
-                                <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line">คงเหลือ</p></td>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; --</p></td>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             <tr>
-                                <td><p class="Label TH rc-Secondary in-line">ทั้งหมด</p></td>
-                                <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.RoomList["ECC-602"].TotalAmt</p></td>
-                                <td><p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">ทั้งหมด</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; @ecc602?.Total</p></td>
+                                <td>
+                                    <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p></td>
                             </tr>
                         </table>
                     </div>
                 </a>
-            </div>
-            <div class="div6-grid">
-                <a href="#">
-                        <div class="card-preview DS-SS">
-                            <img class="img-card" src="/Assets/ImageRoomMember.png" alt="Member">
-                            <p class="HeadingX6 ENG rc-Primary">
-                                <b>Member</b>
-                            </p>
-                              <table border="0">
-                                <tr>
-                                    <td><p class="Label TH rc-Secondary in-line">Register:</p></td>
-                                    <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;23</p></td>
-                                </tr>
-                                    <td><p class="Label TH rc-Secondary in-line">Blacklist:</p></td>
-                                    <td><p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;4</p></td>
-                                </table>
-                        </div>
-                    </a>
-            </div> 
+        </div>
+        <div class="div6-grid">
+            <a href="#">
+                <div class="card-preview DS-SS">
+                    <img class="img-card" src="/Assets/ImageRoomMember.png" alt="Member">
+                    <p class="HeadingX6 ENG rc-Primary">
+                        <b>Member</b>
+                    </p>
+                    <table border="0">
+                        <tr>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line">Register:</p></td>
+                            <td>
+                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;23</p></td>
+                        </tr>
+                        <td>
+                            <p class="Label TH rc-Secondary in-line">Blacklist:</p></td>
+                        <td>
+                            <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;4</p></td>
+                    </table>
+                </div>
+            </a>
+        </div>
         </div><!-- parent card-->
     </div><!--contain-cards-->
  

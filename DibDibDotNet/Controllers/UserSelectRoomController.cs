@@ -20,8 +20,7 @@ namespace DibDibDotNet.Controllers
 
         public IActionResult UserSelectRoom(string roomId)
         {
-            Room roomModel = new Room(roomId);
-            return View(roomModel);
+            return View();
         }
     }
 }

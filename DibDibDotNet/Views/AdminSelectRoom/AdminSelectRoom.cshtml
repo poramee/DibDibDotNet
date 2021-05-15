@@ -1,4 +1,4 @@
-@model DibDibDotNet.Models.Room;
+@* @model DibDibDotNet.Models.Room; *@
 
 <!DOCTYPE html>
 <html>
@@ -41,7 +41,7 @@
 <!-- left-->
 <div class="contain-col-1-preview">
     <div class="card-preview DS-SS ">
-        <img class="img-card" src=@Model.PicLocation alt=@Model.EquipmentName>
+        <img class="img-card" src="@Model.PicLocation" alt="@Model.EquipmentName">
 
 
         <p class="HeadingX6 ENG rc-Primary">
@@ -184,9 +184,9 @@
                 <i class="material-icons rc-Secondary">close</i>
             </span>
             <p class="HeadingX6 ENG rc-Primary in-line">
-                <b>ECC-602</b>
+                <b>@Model.RoomNumber</b>
             </p>
-            <p class="ParagraphX1 ENG rc-Primary in-line">STM32-nucleo f767zi</p><br>
+            <p class="ParagraphX1 ENG rc-Primary in-line">@Model.EquipmentName</p><br>
             <br>
 
             <form action="/action_page.php">
@@ -221,9 +221,9 @@
                 <i class="material-icons rc-Secondary">close</i>
             </span>
             <p class="HeadingX6 ENG rc-Primary in-line">
-                <b>ECC-602</b>
+                <b>@Model.RoomNumber</b>
             </p>
-            <p class="ParagraphX1 ENG rc-Primary in-line">STM32-nucleo f767zi</p><br>
+            <p class="ParagraphX1 ENG rc-Primary in-line">@Model.EquipmentName</p><br>
             <br>
 
             <form action="/action_page.php">

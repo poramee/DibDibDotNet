@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DibDibDotNet.Models;
 using DibDibDotNet.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace DibDibDotNet.Controllers
 {
@@ -23,31 +24,39 @@ namespace DibDibDotNet.Controllers
 
     public IActionResult Login()
     {
+      if (HttpContext.Session.GetString("idUser") != null)
+      {
+        var currentUser = _context.User.Where(e => e.Id.Equals(int.Parse(HttpContext.Session.GetString("idUser")))).ToList().FirstOrDefault();
+        if (currentUser != null) return RedirectToAction("HomeUser", "HomeUser");
+        return RedirectToAction("Login");
+      }
       return View();
+    }
+
+    public IActionResult Logout()
+    {
+      HttpContext.Session.Remove("idUser");
+      return RedirectToAction("Login");
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login([Bind("Email,Password")] User user)
     {
-      if (ModelState.IsValid)
+      if (ModelState.IsValid && user.Email.Length > 0)
       {
         var currentUser = _context.User.Where(e => e.Email.Equals(user.Email) && e.Password.Equals(user.Password)).ToList();
         if (currentUser.Count() > 0)
         {
-          //add session
-          //   Console.WriteLine(user.Email, user.Password);
-          //   Console.WriteLine(user.Password, user.Password);
-          Console.WriteLine(currentUser.FirstOrDefault().FullName);
-          //   HttpContext.Session.SetString("FullName", currentUser.FirstOrDefault().FullName);
-          //   HttpContext.Session.SetString("Email", currentUser.FirstOrDefault().Email);
-          //   HttpContext.Session.SetString("idUser", currentUser.FirstOrDefault().Id.ToString());
-          //   Console.WriteLine(HttpContext.Session.GetString("FullName"));
+          HttpContext.Session.SetString("idUser", currentUser.FirstOrDefault().Id.ToString());
+          Console.WriteLine(HttpContext.Session.GetString("idUser"));
           return RedirectToAction("HomeUser", "HomeUser");
         }
         else
         {
-          ViewBag.error = "Login failed";
+
+          ViewBag.showAlert = true; // "True"
+          ViewBag.alertMessage = "Username or Password invalid";
           return RedirectToAction("Login");
         }
       }
@@ -58,6 +67,21 @@ namespace DibDibDotNet.Controllers
     public IActionResult SignUp()
     {
       return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> SignUp(User user)
+    {
+      if (ModelState.IsValid && user.Email.Length > 0)
+      {
+        user.IsValid = true;
+        user.IsAdmin = false;
+        _context.Add(user);
+        await _context.SaveChangesAsync();
+        return RedirectToAction("Login");
+      }
+      return View(user);
     }
   }
 }

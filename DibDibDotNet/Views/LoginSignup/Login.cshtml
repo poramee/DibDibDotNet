@@ -120,4 +120,9 @@
     function sentResetLink() {
         alert("The system has successfully sent a link to reset your password.")
     }
+    var showAlert = "@ViewBag.showAlert";
+    var alertMessage = "@ViewBag.alertMessage";
+    if (showAlert === "True") {
+        alert(alertMessage);
+    }
 </script>

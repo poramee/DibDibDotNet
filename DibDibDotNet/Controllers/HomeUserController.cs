@@ -6,21 +6,24 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DibDibDotNet.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace DibDibDotNet.Controllers
 {
-    public class HomeUserController : Controller
+  public class HomeUserController : Controller
+  {
+    private readonly ILogger<HomeUserController> _logger;
+
+    public HomeUserController(ILogger<HomeUserController> logger)
     {
-        private readonly ILogger<HomeUserController> _logger;
-
-        public HomeUserController(ILogger<HomeUserController> logger)
-        {
-            _logger = logger;
-        }
-
-        public IActionResult HomeUser()
-        {
-            return View();
-        }
+      _logger = logger;
     }
+
+    public IActionResult HomeUser()
+    {
+      Console.WriteLine(HttpContext.Session.GetString("idUser"));
+
+      return View();
+    }
+  }
 }

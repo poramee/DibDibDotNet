@@ -38,7 +38,8 @@
                     <i class="material-icons md-20 rc-Muted ">refresh</i>
                 </a>
                 <a class="ParagraphX2 ENG rc-Muted" href="#">Admin</a>
-                <a id="checkLogout" class="ParagraphX2 ENG rc-Muted" href="@Url.Action("Logout", "LoginSignup")">Logout</a>
+                <a id="checkLogout" class="ParagraphX2 ENG rc-Muted"
+                    href="@Url.Action("Logout", "LoginSignup")">Logout</a>
             </div>
         </div>
     </div>
@@ -303,20 +304,21 @@
                         <p class="HeadingX6 ENG rc-Primary">
                             <b>Member</b>
                         </p>
+
                         <table border="0">
                             <tr>
                                 <td>
                                     <p class="Label TH rc-Secondary in-line">Register:</p>
                                 </td>
                                 <td>
-                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;23</p>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@TempData["Register"]</p>
                                 </td>
                             </tr>
                             <td>
                                 <p class="Label TH rc-Secondary in-line">Blacklist:</p>
                             </td>
                             <td>
-                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;4</p>
+                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;TempData["BlackList"]</p>
                             </td>
                         </table>
                     </div>

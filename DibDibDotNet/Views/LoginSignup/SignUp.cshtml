@@ -1,4 +1,4 @@
-@model DibDibDotNet.Models.User
+@model DibDibDotNet.Models.Register
 
 <html>
 <header>
@@ -46,9 +46,14 @@
                 </div>
 
                 <div class="form-group section-row-2">
-                    <span class=" ParagraphX2 ENG rc-Primary">FullName</span><br class="brr md-h5">
-                    <input asp-for="FullName" class="form-control input-login" />
-                    <span asp-validation-for="FullName" class="text-danger"></span>
+                    <span class=" ParagraphX2 ENG rc-Primary">FirstName</span><br class="brr md-h5">
+                    <input asp-for="FirstName" class="form-control input-login" required />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group section-row-3">
+                    <span class=" ParagraphX2 ENG rc-Primary">LastName</span><br class="brr md-h5">
+                    <input asp-for="LastName" class="form-control input-login" required />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
                 <div class="section-row-4">
                     <span class="ParagraphX2 ENG rc-Primary">Email</span><br class="brr md-h5">
@@ -59,9 +64,9 @@
                     <input asp-for="Password" class="input-login" type="password" name="password">
                 </div>
                 <div class="section-row-6">
-                    <span class="ParagraphX2 ENG rc-Primary">Confirm Password</span><br class="brr md-h5">
-                    <input class="input-login" type="password" name="confirm-password">
-                    @* <span asp-validation-for="ConfirmPassword" style="color: red;padding-top: 8px;"></span> *@
+                    <span class="ParagraphX2 ENG rc-Primary">ConfirmPassword</span><br class="brr md-h5">
+                    <input asp-for="ConfirmPassword" class="input-login" type="password">
+                    <span asp-validation-for="ConfirmPassword" style="color: red;padding-top: 8px;"></span>
                 </div>
                 <div class="section-row-7">
                     <input class="btn-login rc-BG ENG HeadingX6" type="submit" value="Sign Up"><br class="brr md-h20">

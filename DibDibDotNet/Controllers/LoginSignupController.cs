@@ -71,17 +71,19 @@ namespace DibDibDotNet.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> SignUp(User user)
+    public async Task<IActionResult> SignUp(Register userInfo)
     {
-      if (ModelState.IsValid && user.Email.Length > 0)
+
+
+      if (ModelState.IsValid && userInfo.Email.Length > 0)
       {
-        user.IsValid = true;
-        user.IsAdmin = false;
-        _context.Add(user);
+        Console.WriteLine("have request", userInfo.Email);
+        var newUser = new User { Email = userInfo.Email, FullName = userInfo.FirstName + ' ' + userInfo.LastName, Password = userInfo.Password, IsAdmin = false, IsValid = true };
+        _context.Add(newUser);
         await _context.SaveChangesAsync();
         return RedirectToAction("Login");
       }
-      return View(user);
+      return View(userInfo);
     }
   }
 }

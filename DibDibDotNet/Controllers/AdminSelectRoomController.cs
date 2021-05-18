@@ -22,18 +22,11 @@ namespace DibDibDotNet.Controllers
     }
     public IActionResult AdminSelectRoom(string roomId)
     {
-      Console.WriteLine(" admin select room ", roomId);
-      //   var ecc501Pic = "/Assets/ImageRoom501.png";
-      //   var ecc502Pic = "/Assets/ImageRoom502.png";
-      //   var ecc504Pic = "/Assets/ImageRoom504.png";
-      //   var ecc601Pic = "/Assets/ImageRoom601.png";
-      //   var ecc602Pic = "/Assets/ImageRoom501.png";
+      Console.WriteLine(" admin select room " + roomId);
       var equipment = _context.Equipment.Where(e => e.Room.Equals(roomId)).ToList().FirstOrDefault();
-      //     var ecc501 = Model.Find(x => x.Room.Equals("ECC-501"));
-      // var ecc502 = Model.Find(x => x.Room.Equals("ECC-502"));
-      // var ecc504 = Model.Find(x => x.Room.Equals("ECC-504"));
-      // var ecc601 = Model.Find(x => x.Room.Equals("ECC-601"));
-      // var ecc602 = Model.Find(x => x.Room.Equals("ECC-602"));
+      var transaction = _context.EquipmentTransaction.Where(e => e.Equipment.Id.Equals(equipment.Id)).ToArray();
+      Console.Write(transaction);
+      equipment.EquipmentTransaction = transaction;
       var userBooking = _context.Transaction.Where(e => e.Equipment.Id.Equals(equipment.Id)).Count();
       equipment.Booking = userBooking;
       switch (roomId)
@@ -41,11 +34,55 @@ namespace DibDibDotNet.Controllers
         case "ECC-501":
           equipment.PicLocation = "/Assets/ImageRoom501.png";
           break;
+        case "ECC-502":
+          equipment.PicLocation = "/Assets/ImageRoom502.png";
+          break;
+        case "ECC-504":
+          equipment.PicLocation = "/Assets/ImageRoom504.png";
+          break;
+        case "ECC-601":
+          equipment.PicLocation = "/Assets/ImageRoom601.png";
+          break;
+        case "ECC-602":
+          equipment.PicLocation = "/Assets/ImageRoom602.png";
+          break;
         default:
           break;
       }
       return View(equipment);
     }
+
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> CreateEquipmentTransaction(Equipment equipment)
+    {
+      Console.WriteLine(equipment.TransactionDate);
+      Console.WriteLine(equipment.Amount);
+      var currentEquipment = _context.Equipment.Where(e => e.Id.Equals(equipment.Id)).ToList().FirstOrDefault();
+      var newEquipmentTransaction = new EquipmentTransaction { Equipment = currentEquipment, CreateAt = equipment.TransactionDate, Amount = equipment.Amount, IsUp = true };
+      currentEquipment.Total = (int.Parse(currentEquipment.Total) + equipment.Amount).ToString();
+      _context.Update(currentEquipment);
+      _context.Add(newEquipmentTransaction);
+      await _context.SaveChangesAsync();
+      return RedirectToAction("AdminSelectRoom", new { roomId = equipment.Room });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> RemoveEquipmentTransaction(Equipment equipment)
+    {
+      Console.WriteLine(equipment.TransactionDate);
+      Console.WriteLine(equipment.Amount);
+      var currentEquipment = _context.Equipment.Where(e => e.Id.Equals(equipment.Id)).ToList().FirstOrDefault();
+      var newEquipmentTransaction = new EquipmentTransaction { Equipment = currentEquipment, CreateAt = equipment.TransactionDate, Amount = equipment.Amount, IsUp = false };
+      currentEquipment.Total = (int.Parse(currentEquipment.Total) - equipment.Amount).ToString();
+      _context.Update(currentEquipment);
+      _context.Add(newEquipmentTransaction);
+      await _context.SaveChangesAsync();
+      return RedirectToAction("AdminSelectRoom", new { roomId = equipment.Room });
+    }
+
     public IActionResult ManageBooking()
     {
       return View();

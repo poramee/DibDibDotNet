@@ -28,8 +28,14 @@ namespace DibDibDotNet.Controllers
 
       TempData["Register"] = userRegistered;
       TempData["BlackList"] = userBlackList;
+      var items = await _context.Equipment.ToListAsync();
+      foreach (var item in items)
+      {
+        var userBooking = _context.Transaction.Where(e => e.Equipment.Id.Equals(item.Id)).Count();
+        item.Booking = userBooking;
 
-      return View(await _context.Equipment.ToListAsync());
+      }
+      return View(items);
     }
   }
 }

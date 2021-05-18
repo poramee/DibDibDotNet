@@ -1,5 +1,5 @@
-@* @model DibDibDotNet.Models.Room; *@
-
+@model DibDibDotNet.Models.Equipment;
+    
 <!DOCTYPE html>
 <html>
 <header>
@@ -31,9 +31,9 @@
                 <i class="icon-back material-icons md-24 rc-Primary ">arrow_back</i>
             </a>
             <p class="HeadingX6 ENG rc-Primary in-line " href="#">
-                <b>@Model.RoomNumber</b>
+                <b>@Model.Room</b>
             </p>
-            <p class="ParagraphX1 ENG rc-Primary in-line li-hi">@Model.EquipmentName</p>
+            <p class="ParagraphX1 ENG rc-Primary in-line li-hi">@Model.Name</p>
         </div>
         <div class=" btn-add-del right">
             <input onclick="openPopAdd()" class="btn-add rc-BG TH ParagraphX1" type="submit" value="เพิ่มรายการ">
@@ -44,20 +44,20 @@
         <!-- left-->
         <div class="contain-col-1-preview">
             <div class="card-preview DS-SS ">
-                <img class="img-card" src="@Model.PicLocation" alt="@Model.EquipmentName">
+                <img class="img-card" src="@Model.PicLocation" alt="@Model.Name">
 
 
                 <p class="HeadingX6 ENG rc-Primary">
-                    <b>@Model.RoomNumber</b>
+                    <b>@Model.Room</b>
                 </p>
-                <p class="ParagraphX1 ENG rc-Primary">@Model.EquipmentName</p><br>
+                <p class="ParagraphX1 ENG rc-Primary">@Model.Name</p><br>
                 <table border="0">
                     <tr>
                         <td>
                             <p class="ParagraphX1 TH rc-Secondary in-line">จำนวนปัจจุบัน</p>
                         </td>
                         <td>
-                            <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;50</p>
+                            <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Total</p>
                         </td>
                         <td>
                             <p class="ParagraphX1 TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -91,7 +91,7 @@
                             <p class="ParagraphX1 TH rc-Secondary in-line">จองทั้งหมด</p>
                         </td>
                         <td>
-                            <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;10</p>
+                            <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Booking</p>
                         </td>
                         <td>
                             <p class="ParagraphX1 TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -102,7 +102,7 @@
                             <p class="ParagraphX1 TH rc-Secondary in-line">คงเหลือทั้งหมด</p>
                         </td>
                         <td>
-                            <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;30</p>
+                            <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Avaliable</p>
                         </td>
                         <td>
                             <p class="ParagraphX1 TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -130,52 +130,31 @@
                                 <p class="ParagraphX1 TH rc-Primary in-line">จำนวน</p>
                             </th>
                             <th>
-                                <p class="ParagraphX1 TH rc-Primary in-line">ยอดรวม</p>
-                            </th>
-                            <th>
                                 <p class="ParagraphX1 TH rc-Primary in-line">วันเวลาที่ทำการ</p>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <p class="ParagraphX1 TH rc-Primary in-line">2</p>
-                            </td>
-                            <td>
-                                <p class="ParagraphX1 TH rc-Primary in-line ">ลด</p>
-                            </td>
-                            <td>
-                                <p class="ParagraphX1 TH rc-Primary in-line">1</p>
-                            </td>
-                            <td>
-                                <p class="ParagraphX1 TH rc-Primary in-line">50</p>
-                            </td>
-                            <td>
-                                <p class="ParagraphX1 TH rc-Primary in-line">
-                                    <span id="datetime"></span>
-                                </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p class="ParagraphX1 TH rc-Primary in-line">1</p>
-                            </td>
-                            <td>
-                                <p class="ParagraphX1 TH rc-Primary in-line ">เพิ่ม</p>
-                            </td>
-                            <td>
-                                <p class="ParagraphX1 TH rc-Primary in-line">8</p>
-                            </td>
-                            <td>
-                                <p class="ParagraphX1 TH rc-Primary in-line">51</p>
-                            </td>
-                            <td>
-                                <p class="ParagraphX1 TH rc-Primary in-line">
-                                    <span id="datetime"></span>
-                                </p>
-                            </td>
-                        </tr>
+                         @foreach (var transaction in Model.EquipmentTransaction.Select((value,i) => new {i, value}))
+                            {
+                                // cut for brevity, need to add back more code from original
+                                 <tr>
+                                    <td>
+                                        <p class="ParagraphX1 TH rc-Primary in-line">@(transaction.i+1)</p>
+                                    </td>
+                                    <td>
+                                        <p class="ParagraphX1 TH rc-Primary in-line ">@(transaction.value.IsUp ? "เพิ่ม":"ลด")</p>
+                                    </td>
+                                    <td>
+                                        <p class="ParagraphX1 TH rc-Primary in-line">@transaction.value.Amount</p>
+                                    </td>
+                                    <td>
+                                        <p class="ParagraphX1 TH rc-Primary in-line">
+                                            @transaction.value.CreateAt
+                                        </p>
+                                    </td>
+                                </tr>
+                            } 
 
                     </tbody>
                 </table>
@@ -187,36 +166,36 @@
                         <i class="material-icons rc-Secondary">close</i>
                     </span>
                     <p class="HeadingX6 ENG rc-Primary in-line">
-                        <b>@Model.RoomNumber</b>
+                        <b>@Model.Room</b>
                     </p>
-                    <p class="ParagraphX1 ENG rc-Primary in-line">@Model.EquipmentName</p><br>
+                    <p class="ParagraphX1 ENG rc-Primary in-line">@Model.Name</p><br>
                     <br>
 
-                    <form action="/action_page.php">
-                        <input class="calendar ParagraphX1 ENG rc-Primary" type="datetime-local" id="dateTimeCurrent"
-                            name="dateTimeCurrent">
-                    </form>
+                    <form asp-action="CreateEquipmentTransaction"  name="form1">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="Room" />
+                        <input asp-for="TransactionDate" class="calendar ParagraphX1 ENG rc-Primary" type="datetime-local" id="dateTimeCurrent"
+                            name="TransactionDate">
                     <div class="add-remove-text">
                         <p class="HeadingX6 TH re-Primary left "> เพิ่มจำนวน</p>
                         <p class="HeadingX6 TH re-Primary right "> เครื่อง</p>
                     </div>
                     <div class="add-remove">
-                        <div class="left">
+                        @* <div class="left">
                             <i onclick="document.form1.input1.value--"
                                 class="btn-remove material-icons md-24 rc-Primary  ">remove</i>
                         </div>
-                        <form name="form1">
                             <input class="input-num" name="input1" value="1" size=10 onfocus="buffer=this.value"
                                 onchange="if (isNaN(this.value)) 
                                 { this.value=buffer}">
                             <div class="right">
                                 <i onclick="document.form1.input1.value++"
                                     class="btn-plus material-icons md-24 rc-Primary ">add</i>
-                            </div>
-                        </form>
-
+                            </div> *@
+                        <input asp-for="Amount" class="input-num" name="Amount" />
                     </div>
                     <input class="btn-pop-add rc-BG TH ParagraphX1 right " type="submit" value="เพิ่ม">
+                    </form>
                 </div>
             </div>
             <!--  pop up del-->
@@ -226,36 +205,39 @@
                         <i class="material-icons rc-Secondary">close</i>
                     </span>
                     <p class="HeadingX6 ENG rc-Primary in-line">
-                        <b>@Model.RoomNumber</b>
+                        <b>@Model.Room</b>
                     </p>
-                    <p class="ParagraphX1 ENG rc-Primary in-line">@Model.EquipmentName</p><br>
+                    <p class="ParagraphX1 ENG rc-Primary in-line">@Model.Name</p><br>
                     <br>
 
-                    <form action="/action_page.php">
-                        <input class="calendar ParagraphX1 ENG rc-Primary" type="datetime-local" id="dateTimeCurrent"
-                            name="dateTimeCurrent">
-                    </form>
+                    <form asp-action="RemoveEquipmentTransaction">
+                          <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="Room" />
+                        <input asp-for="TransactionDate" class="calendar ParagraphX1 ENG rc-Primary" type="datetime-local" id="dateTimeCurrent"
+                            name="TransactionDate">
+                        @* <input class="calendar ParagraphX1 ENG rc-Primary" type="datetime-local" id="dateTimeCurrent"
+                            name="dateTimeCurrent"> *@
                     <div class="add-remove-text">
                         <p class="HeadingX6 TH re-Primary left "> ลบจำนวน</p>
                         <p class="HeadingX6 TH re-Primary right "> เครื่อง</p>
                     </div>
                     <div class="add-remove">
-                        <div class="left">
+                        @* <div class="left">
                             <i onclick="document.form2.input2.value--"
                                 class="btn-remove material-icons md-24 rc-Primary  ">remove</i>
                         </div>
-                        <form name="form2">
                             <input class="input-num" name="input2" value="1" size=10 onfocus="buffer=this.value"
                                 onchange="if (isNaN(this.value)) 
                                 { this.value=buffer}">
                             <div class="right">
                                 <i onclick="document.form2.input2.value++"
                                     class="btn-plus material-icons md-24 rc-Primary ">add</i>
-                            </div>
-                        </form>
-
+                            </div> *@
+                        <input asp-for="Amount" class="input-num" name="Amount" />
                     </div>
                     <input class="btn-pop-remove rc-BG TH ParagraphX1 right " type="submit" value="ลบ">
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -286,7 +268,7 @@
 </html>
 <script>
     var dt = new Date();
-    document.getElementById("datetime").innerHTML = (("0" + dt.getDate()).slice(-2)) + "/" + (("0" + (dt.getMonth() + 1)).slice(-2)) + "/" + (dt.getFullYear()) + " " + (("0" + dt.getHours()).slice(-2)) + ":" + (("0" + dt.getMinutes()).slice(-2));
+    @* document.getElementById("datetime").innerHTML = (("0" + dt.getDate()).slice(-2)) + "/" + (("0" + (dt.getMonth() + 1)).slice(-2)) + "/" + (dt.getFullYear()) + " " + (("0" + dt.getHours()).slice(-2)) + ":" + (("0" + dt.getMinutes()).slice(-2)); *@
 
 
     var modalAdd = document.getElementById("popUp-add");

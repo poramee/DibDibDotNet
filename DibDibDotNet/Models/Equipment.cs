@@ -16,5 +16,10 @@ namespace DibDibDotNet.Models
     public int Booking { get; set; }
     [NotMapped]
     public int Avaliable => int.Parse(Total) - Booking;
+
+    [NotMapped]
+    public string PicLocation { get; set; }
+
+
   }
 }

@@ -1,4 +1,4 @@
-@* @model DibDibDotNet.Models.Room; *@
+@model DibDibDotNet.Models.Equipment;
 
 <!DOCTYPE html>
 <html>
@@ -31,9 +31,9 @@
                 <i class="icon-back material-icons md-24 rc-Primary ">arrow_back</i>
             </a>
             <p class="HeadingX6 ENG rc-Primary in-line " href="#">
-                <b>@Model.RoomNumber</b>
+                <b>@Model.Room</b>
             </p>
-            <p class="ParagraphX1 ENG rc-Primary in-line li-hi">@Model.EquipmentName</p>
+            <p class="ParagraphX1 ENG rc-Primary in-line li-hi">@Model.Name</p>
         </div>
         <div class=" btn-add-del right">
             <input onclick="openPopAdd()" class="btn-add rc-BG TH ParagraphX1" type="submit" value="เพิ่มรายการ">
@@ -44,20 +44,20 @@
         <!-- left-->
         <div class="contain-col-1-preview">
             <div class="card-preview DS-SS ">
-                <img class="img-card" src="@Model.PicLocation" alt="@Model.EquipmentName">
+                <img class="img-card" src="@Model.PicLocation" alt="@Model.Name">
 
 
                 <p class="HeadingX6 ENG rc-Primary">
-                    <b>@Model.RoomNumber</b>
+                    <b>@Model.Room</b>
                 </p>
-                <p class="ParagraphX1 ENG rc-Primary">@Model.EquipmentName</p><br>
+                <p class="ParagraphX1 ENG rc-Primary">@Model.Name</p><br>
                 <table border="0">
                     <tr>
                         <td>
                             <p class="ParagraphX1 TH rc-Secondary in-line">จำนวนปัจจุบัน</p>
                         </td>
                         <td>
-                            <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;50</p>
+                            <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Total</p>
                         </td>
                         <td>
                             <p class="ParagraphX1 TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -91,7 +91,7 @@
                             <p class="ParagraphX1 TH rc-Secondary in-line">จองทั้งหมด</p>
                         </td>
                         <td>
-                            <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;10</p>
+                            <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Booking</p>
                         </td>
                         <td>
                             <p class="ParagraphX1 TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -102,7 +102,7 @@
                             <p class="ParagraphX1 TH rc-Secondary in-line">คงเหลือทั้งหมด</p>
                         </td>
                         <td>
-                            <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;30</p>
+                            <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Avaliable</p>
                         </td>
                         <td>
                             <p class="ParagraphX1 TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -187,9 +187,9 @@
                         <i class="material-icons rc-Secondary">close</i>
                     </span>
                     <p class="HeadingX6 ENG rc-Primary in-line">
-                        <b>@Model.RoomNumber</b>
+                        <b>@Model.Room</b>
                     </p>
-                    <p class="ParagraphX1 ENG rc-Primary in-line">@Model.EquipmentName</p><br>
+                    <p class="ParagraphX1 ENG rc-Primary in-line">@Model.Name</p><br>
                     <br>
 
                     <form action="/action_page.php">
@@ -226,9 +226,9 @@
                         <i class="material-icons rc-Secondary">close</i>
                     </span>
                     <p class="HeadingX6 ENG rc-Primary in-line">
-                        <b>@Model.RoomNumber</b>
+                        <b>@Model.Room</b>
                     </p>
-                    <p class="ParagraphX1 ENG rc-Primary in-line">@Model.EquipmentName</p><br>
+                    <p class="ParagraphX1 ENG rc-Primary in-line">@Model.Name</p><br>
                     <br>
 
                     <form action="/action_page.php">

@@ -11,19 +11,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DibDibDotNet.Controllers
 {
-    public class HomeAdminController : Controller
+  public class HomeAdminController : Controller
+  {
+    private readonly ILogger<HomeAdminController> _logger;
+    private readonly DibDibDotNetContext _context;
+    public HomeAdminController(ILogger<HomeAdminController> logger, DibDibDotNetContext context)
     {
-        private readonly ILogger<HomeAdminController> _logger;
-        private readonly DibDibDotNetContext _context;
-        public HomeAdminController(ILogger<HomeAdminController> logger, DibDibDotNetContext context)
-        {
-            _logger = logger;
-            _context = context;
-        }
-
-        public async Task<IActionResult> HomeAdmin()
-        {
-            return View(await _context.Equipment.ToListAsync());
-        }
+      _logger = logger;
+      _context = context;
     }
+
+    public async Task<IActionResult> HomeAdmin()
+    {
+      var userRegistered = _context.User.Where(e => e.IsValid.Equals(true)).Count();
+      var userBlackList = _context.User.Where(e => e.IsValid.Equals(false)).Count();
+
+      TempData["Register"] = userRegistered;
+      TempData["BlackList"] = userBlackList;
+      var items = await _context.Equipment.ToListAsync();
+      foreach (var item in items)
+      {
+        var userBooking = _context.Transaction.Where(e => e.Equipment.Id.Equals(item.Id)).Count();
+        item.Booking = userBooking;
+
+      }
+      return View(items);
+    }
+  }
 }

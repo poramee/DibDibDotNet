@@ -8,7 +8,6 @@
     var ecc504 = Model.Find(x => x.Room.Equals("ECC-504"));
     var ecc601 = Model.Find(x => x.Room.Equals("ECC-601"));
     var ecc602 = Model.Find(x => x.Room.Equals("ECC-602"));
-
     var ecc501Pic = "/Assets/ImageRoom501.png";
     var ecc502Pic = "/Assets/ImageRoom502.png";
     var ecc504Pic = "/Assets/ImageRoom504.png";
@@ -38,7 +37,8 @@
                     <i class="material-icons md-20 rc-Muted ">refresh</i>
                 </a>
                 <a class="ParagraphX2 ENG rc-Muted" href="#">Admin</a>
-                <a id="checkLogout" class="ParagraphX2 ENG rc-Muted" href="@Url.Action("Logout", "LoginSignup")">Logout</a>
+                <a id="checkLogout" class="ParagraphX2 ENG rc-Muted"
+                    href="@Url.Action("Logout", "LoginSignup")">Logout</a>
             </div>
         </div>
     </div>
@@ -89,7 +89,7 @@
                                     <p class="Label TH rc-Secondary in-line">จอง</p>
                                 </td>
                                 <td>
-                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; -- </p>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; @ecc501?.Booking </p>
                                 </td>
                                 <td>
                                     <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -99,7 +99,7 @@
                                 <p class="Label TH rc-Secondary in-line">คงเหลือ</p>
                             </td>
                             <td>
-                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; -- </p>
+                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; @ecc501?.Avaliable </p>
                             </td>
                             <td>
                                 <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -134,7 +134,7 @@
                                     <p class="Label TH rc-Secondary in-line">จอง</p>
                                 </td>
                                 <td>
-                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; -- </p>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; @ecc502?.Booking </p>
                                 </td>
                                 <td>
                                     <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -144,7 +144,7 @@
                                 <p class="Label TH rc-Secondary in-line">คงเหลือ</p>
                             </td>
                             <td>
-                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; -- </p>
+                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; @ecc502?.Avaliable </p>
                             </td>
                             <td>
                                 <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -178,7 +178,7 @@
                                     <p class="Label TH rc-Secondary in-line">จอง</p>
                                 </td>
                                 <td>
-                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; --</p>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; @ecc504?.Booking </p>
                                 </td>
                                 <td>
                                     <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -188,7 +188,7 @@
                                 <p class="Label TH rc-Secondary in-line">คงเหลือ</p>
                             </td>
                             <td>
-                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; --</p>
+                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; @ecc504?.Avaliable </p>
                             </td>
                             <td>
                                 <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -222,7 +222,7 @@
                                     <p class="Label TH rc-Secondary in-line">จอง</p>
                                 </td>
                                 <td>
-                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; --</p>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; @ecc601?.Booking </p>
                                 </td>
                                 <td>
                                     <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -232,7 +232,7 @@
                                 <p class="Label TH rc-Secondary in-line">คงเหลือ</p>
                             </td>
                             <td>
-                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; --</p>
+                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; @ecc601?.Avaliable </p>
                             </td>
                             <td>
                                 <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -266,7 +266,7 @@
                                     <p class="Label TH rc-Secondary in-line">จอง</p>
                                 </td>
                                 <td>
-                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; --</p>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; @ecc602?.Booking </p>
                                 </td>
                                 <td>
                                     <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -276,7 +276,7 @@
                                 <p class="Label TH rc-Secondary in-line">คงเหลือ</p>
                             </td>
                             <td>
-                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; --</p>
+                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp; @ecc602?.Avaliable </p>
                             </td>
                             <td>
                                 <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -303,20 +303,21 @@
                         <p class="HeadingX6 ENG rc-Primary">
                             <b>Member</b>
                         </p>
+
                         <table border="0">
                             <tr>
                                 <td>
                                     <p class="Label TH rc-Secondary in-line">Register:</p>
                                 </td>
                                 <td>
-                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;23</p>
+                                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@TempData["Register"]</p>
                                 </td>
                             </tr>
                             <td>
                                 <p class="Label TH rc-Secondary in-line">Blacklist:</p>
                             </td>
                             <td>
-                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;4</p>
+                                <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@TempData["BlackList"]</p>
                             </td>
                         </table>
                     </div>

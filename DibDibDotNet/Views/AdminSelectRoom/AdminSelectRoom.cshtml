@@ -1,5 +1,5 @@
 @model DibDibDotNet.Models.Equipment;
-    
+
 <!DOCTYPE html>
 <html>
 <header>
@@ -20,7 +20,7 @@
             <a href="#">
                 <i class="material-icons md-20 rc-Muted ">refresh</i>
             </a>
-            <a class="ParagraphX2 ENG rc-Muted" href="#">Admin</a>
+            <a class="ParagraphX2 ENG rc-Muted" href="@Url.Action("HomeAdmin","HomeAdmin")">Admin</a>
             <a id="checkLogout" onclick="logout()" class="ParagraphX2 ENG rc-Muted"
                 href="@Url.Action("Logout", "LoginSignup")">Logout</a>
         </div>
@@ -135,26 +135,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                         @foreach (var transaction in Model.EquipmentTransaction.Select((value,i) => new {i, value}))
-                            {
-                                // cut for brevity, need to add back more code from original
-                                 <tr>
-                                    <td>
-                                        <p class="ParagraphX1 TH rc-Primary in-line">@(transaction.i+1)</p>
-                                    </td>
-                                    <td>
-                                        <p class="ParagraphX1 TH rc-Primary in-line ">@(transaction.value.IsUp ? "เพิ่ม":"ลด")</p>
-                                    </td>
-                                    <td>
-                                        <p class="ParagraphX1 TH rc-Primary in-line">@transaction.value.Amount</p>
-                                    </td>
-                                    <td>
-                                        <p class="ParagraphX1 TH rc-Primary in-line">
-                                            @transaction.value.CreateAt
-                                        </p>
-                                    </td>
-                                </tr>
-                            } 
+                        @foreach (var transaction in Model.EquipmentTransaction.Select((value, i) => new { i, value }))
+                        {
+                        // cut for brevity, need to add back more code from original
+                            <tr>
+                                <td>
+                                    <p class="ParagraphX1 TH rc-Primary in-line">@(transaction.i+1)</p>
+                                </td>
+                                <td>
+                                    <p class="ParagraphX1 TH rc-Primary in-line ">@(transaction.value.IsUp ? "เพิ่ม":"ลด")
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="ParagraphX1 TH rc-Primary in-line">@transaction.value.Amount</p>
+                                </td>
+                                <td>
+                                    <p class="ParagraphX1 TH rc-Primary in-line">
+                                        @transaction.value.CreateAt
+                                    </p>
+                                </td>
+                            </tr>
+                        }
 
                     </tbody>
                 </table>
@@ -171,30 +172,30 @@
                     <p class="ParagraphX1 ENG rc-Primary in-line">@Model.Name</p><br>
                     <br>
 
-                    <form asp-action="CreateEquipmentTransaction"  name="form1">
+                    <form asp-action="CreateEquipmentTransaction" name="form1">
                         <input type="hidden" asp-for="Id" />
                         <input type="hidden" asp-for="Room" />
-                        <input asp-for="TransactionDate" class="calendar ParagraphX1 ENG rc-Primary" type="datetime-local" id="dateTimeCurrent"
-                            name="TransactionDate">
-                    <div class="add-remove-text">
-                        <p class="HeadingX6 TH re-Primary left "> เพิ่มจำนวน</p>
-                        <p class="HeadingX6 TH re-Primary right "> เครื่อง</p>
-                    </div>
-                    <div class="add-remove">
-                        @* <div class="left">
-                            <i onclick="document.form1.input1.value--"
-                                class="btn-remove material-icons md-24 rc-Primary  ">remove</i>
+                        <input asp-for="TransactionDate" class="calendar ParagraphX1 ENG rc-Primary"
+                            type="datetime-local" id="dateTimeCurrent" name="TransactionDate">
+                        <div class="add-remove-text">
+                            <p class="HeadingX6 TH re-Primary left "> เพิ่มจำนวน</p>
+                            <p class="HeadingX6 TH re-Primary right "> เครื่อง</p>
                         </div>
-                            <input class="input-num" name="input1" value="1" size=10 onfocus="buffer=this.value"
-                                onchange="if (isNaN(this.value)) 
+                        <div class="add-remove">
+                            @* <div class="left">
+                                <i onclick="document.form1.input1.value--"
+                                class="btn-remove material-icons md-24 rc-Primary ">remove</i>
+                                </div>
+                                <input class="input-num" name="input1" value="1" size=10 onfocus="buffer=this.value"
+                                onchange="if (isNaN(this.value))
                                 { this.value=buffer}">
-                            <div class="right">
+                                <div class="right">
                                 <i onclick="document.form1.input1.value++"
-                                    class="btn-plus material-icons md-24 rc-Primary ">add</i>
-                            </div> *@
-                        <input asp-for="Amount" class="input-num" name="Amount" />
-                    </div>
-                    <input class="btn-pop-add rc-BG TH ParagraphX1 right " type="submit" value="เพิ่ม">
+                                class="btn-plus material-icons md-24 rc-Primary ">add</i>
+                                </div> *@
+                            <input asp-for="Amount" class="input-num" name="Amount" />
+                        </div>
+                        <input class="btn-pop-add rc-BG TH ParagraphX1 right " type="submit" value="เพิ่ม">
                     </form>
                 </div>
             </div>
@@ -211,31 +212,31 @@
                     <br>
 
                     <form asp-action="RemoveEquipmentTransaction">
-                          <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="Id" />
                         <input type="hidden" asp-for="Room" />
-                        <input asp-for="TransactionDate" class="calendar ParagraphX1 ENG rc-Primary" type="datetime-local" id="dateTimeCurrent"
-                            name="TransactionDate">
+                        <input asp-for="TransactionDate" class="calendar ParagraphX1 ENG rc-Primary"
+                            type="datetime-local" id="dateTimeCurrent" name="TransactionDate">
                         @* <input class="calendar ParagraphX1 ENG rc-Primary" type="datetime-local" id="dateTimeCurrent"
                             name="dateTimeCurrent"> *@
-                    <div class="add-remove-text">
-                        <p class="HeadingX6 TH re-Primary left "> ลบจำนวน</p>
-                        <p class="HeadingX6 TH re-Primary right "> เครื่อง</p>
-                    </div>
-                    <div class="add-remove">
-                        @* <div class="left">
-                            <i onclick="document.form2.input2.value--"
-                                class="btn-remove material-icons md-24 rc-Primary  ">remove</i>
+                        <div class="add-remove-text">
+                            <p class="HeadingX6 TH re-Primary left "> ลบจำนวน</p>
+                            <p class="HeadingX6 TH re-Primary right "> เครื่อง</p>
                         </div>
-                            <input class="input-num" name="input2" value="1" size=10 onfocus="buffer=this.value"
-                                onchange="if (isNaN(this.value)) 
+                        <div class="add-remove">
+                            @* <div class="left">
+                                <i onclick="document.form2.input2.value--"
+                                class="btn-remove material-icons md-24 rc-Primary ">remove</i>
+                                </div>
+                                <input class="input-num" name="input2" value="1" size=10 onfocus="buffer=this.value"
+                                onchange="if (isNaN(this.value))
                                 { this.value=buffer}">
-                            <div class="right">
+                                <div class="right">
                                 <i onclick="document.form2.input2.value++"
-                                    class="btn-plus material-icons md-24 rc-Primary ">add</i>
-                            </div> *@
-                        <input asp-for="Amount" class="input-num" name="Amount" />
-                    </div>
-                    <input class="btn-pop-remove rc-BG TH ParagraphX1 right " type="submit" value="ลบ">
+                                class="btn-plus material-icons md-24 rc-Primary ">add</i>
+                                </div> *@
+                            <input asp-for="Amount" class="input-num" name="Amount" />
+                        </div>
+                        <input class="btn-pop-remove rc-BG TH ParagraphX1 right " type="submit" value="ลบ">
                     </form>
 
                 </div>

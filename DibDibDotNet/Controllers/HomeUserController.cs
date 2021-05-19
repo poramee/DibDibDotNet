@@ -53,11 +53,12 @@ namespace DibDibDotNet.Controllers
             HomeUserViewModel homeUserModel = new HomeUserViewModel();
             homeUserModel.CurrentUser = _context.User.Find(idUser);
             var equipmentList = _context.Equipment.ToList();
+            
             foreach (var e in equipmentList)
             {
+                e.Booking = _context.Transaction.Count(a => a.Equipment.Id.Equals(e.Id));
                 homeUserModel.Equipments.Add(e.Room, e);
             }
-
             return View(homeUserModel);
         }
     }

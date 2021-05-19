@@ -89,7 +89,30 @@ namespace DibDibDotNet.Controllers
     }
     public IActionResult MemberRoom()
     {
-      return View();
+      var userList = _context.User.ToList();
+      foreach (var item in userList)
+      {
+        item.FirstName = item.FullName.Split(" ")[0];
+        item.LastName = item.FullName.Split(" ")[1];
+      }
+      return View(userList);
+    }
+
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteUser(string userId)
+    {
+      // Console.WriteLine(equipment.TransactionDate);
+      // Console.WriteLine(equipment.Amount);
+      // var currentEquipment = _context.Equipment.Where(e => e.Id.Equals(equipment.Id)).ToList().FirstOrDefault();
+      // var newEquipmentTransaction = new EquipmentTransaction { Equipment = currentEquipment, CreateAt = equipment.TransactionDate, Amount = equipment.Amount, IsUp = false };
+      // currentEquipment.Total = (int.Parse(currentEquipment.Total) - equipment.Amount).ToString();
+      // _context.Update(currentEquipment);
+      // _context.Add(newEquipmentTransaction);
+      // await _context.SaveChangesAsync();
+      Console.WriteLine("Call this");
+      return RedirectToAction("MemberRoom");
     }
   }
 }

@@ -1,71 +1,137 @@
+@model List<DibDibDotNet.Models.User>;
 <!DOCTYPE html>
 <html>
-    <header>
-        <title>Admin member</title>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
-        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/template/Global.css"> <!-- change -> /template/Global.css  -->
-        <link rel="stylesheet" href="/css/AdminSelectRoom/memberRoom.css"> <!-- Edit name for import Css of this document -->
-    </header>
-    <body class="BGG unselectable">
-        <div class="topnav">
-            <div class="right">
-                <a href="#"><i class="material-icons md-20 rc-Muted ">refresh</i></a>
-                <a class="ParagraphX2 ENG rc-Muted" href="#">Admin</a>
-                <a id="checkLogout" onclick="logout()"class="ParagraphX2 ENG rc-Muted" href="@Url.Action("Login","LoginSignup")">Logout</a>
-            </div>
+<header>
+    <title>Admin member</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/template/Global.css"> <!-- change -> /template/Global.css  -->
+    <link rel="stylesheet" href="/css/AdminSelectRoom/memberRoom.css">
+    <!-- Edit name for import Css of this document -->
+</header>
+
+<body class="BGG unselectable">
+    <div class="topnav">
+        <div class="right">
+            <a href="#"><i class="material-icons md-20 rc-Muted ">refresh</i></a>
+            <a class="ParagraphX2 ENG rc-Muted" href="#">Admin</a>
+            <a id="checkLogout" onclick="logout()" class="ParagraphX2 ENG rc-Muted"
+                href="@Url.Action("Login","LoginSignup")">Logout</a>
         </div>
-        <div class="room-name">
-            <div class="left">
-                <a href="#"><i class="icon-back material-icons md-24 rc-Primary ">arrow_back</i></a>
-                <p class="HeadingX6 ENG rc-Primary in-line " href="#"><b>&nbsp;&nbsp;Members</b></p>
-            </div>
-            <div class="right">
-                <p class="ParagraphX1 TH rc-Primary in-line " href="#">จำนวนผู้สมัครใช้งานทั้งหมดในปัจจุบัน 23 คน</p>
-            </div>
+    </div>
+    <div class="room-name">
+        <div class="left">
+            <a href="#"><i class="icon-back material-icons md-24 rc-Primary ">arrow_back</i></a>
+            <p class="HeadingX6 ENG rc-Primary in-line " href="#"><b>&nbsp;&nbsp;Members</b></p>
         </div>
-        <div class="contain-col-2-history ">
-            <div  class="scroll-table" >
-                <div class="container-table ">
-                    <table class="w3-table w3-bordered w3-centered"  >
-                        <thead class="hd-table ">
-                            <tr >
-                                <th><p class="ParagraphX1 ENG rc-Primary in-line">#</p></th>
-                                <th><p class="ParagraphX1 ENG rc-Primary in-line ">Date</p></th>
-                                <th><p class="ParagraphX1 ENG rc-Primary in-line ">First Name</p></th>
-                                <th><p class="ParagraphX1 ENG rc-Primary in-line">Last Name</p></th>
-                                <th><p class="ParagraphX1 ENG rc-Primary">Email</p></th>
-                                <th><p class="ParagraphX1 ENG rc-Primary in-line">Delete</p></th>
-                                <th><p class="ParagraphX1 ENG rc-Primary in-line">Backlist</p></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+        <div class="right">
+            <p class="ParagraphX1 TH rc-Primary in-line " href="#">จำนวนผู้สมัครใช้งานทั้งหมดในปัจจุบัน 23 คน</p>
+        </div>
+    </div>
+    <div class="contain-col-2-history ">
+        <div class="scroll-table">
+            <div class="container-table ">
+                <table class="w3-table w3-bordered w3-centered">
+                    <thead class="hd-table ">
+                        <tr>
+                            <th>
+                                <p class="ParagraphX1 ENG rc-Primary in-line">#</p>
+                            </th>
+                            <th>
+                                <p class="ParagraphX1 ENG rc-Primary in-line ">Date</p>
+                            </th>
+                            <th>
+                                <p class="ParagraphX1 ENG rc-Primary in-line ">First Name</p>
+                            </th>
+                            <th>
+                                <p class="ParagraphX1 ENG rc-Primary in-line">Last Name</p>
+                            </th>
+                            <th>
+                                <p class="ParagraphX1 ENG rc-Primary">Email</p>
+                            </th>
+                            <th>
+                                <p class="ParagraphX1 ENG rc-Primary in-line">Delete</p>
+                            </th>
+                            <th>
+                                <p class="ParagraphX1 ENG rc-Primary in-line">Backlist</p>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Select((value, i) => new { i, value }))
+                        {
                             <tr>
-                                <td><p class="ParagraphX1 ENG rc-Primary">1</p></td>
-                                <td><p class="ParagraphX1 ENG rc-Primary">00/00/00</p></td>
-                                <td><p class="ParagraphX1 ENG rc-Primary">Piyathida</p></td>
-                                <td><p class="ParagraphX1 ENG rc-Primary">Choojan</p></td>
-                                <td><p class="ParagraphX1 ENG rc-Primary">fai@hotmail.com</p></td>
-                                <td><p class="ParagraphX1 ENG rc-Primary"><i class=" del-mem material-icons rc-Error">delete</i></p></td>
-                                <td><p class="ParagraphX1 ENG rc-Primary"> <input  class="btn-pop-bl rc-Primary TH ParagraphX1" type="submit" value="Backlist"></p></td>
+                                <td>
+                                    <p class="ParagraphX1 ENG rc-Primary">@(item.i+1)</p>
+                                </td>
+                                <td>
+                                    <p class="ParagraphX1 ENG rc-Primary">00/00/00</p>
+                                </td>
+                                <td>
+                                    <p class="ParagraphX1 ENG rc-Primary">@(item.value.FirstName)</p>
+                                </td>
+                                <td>
+                                    <p class="ParagraphX1 ENG rc-Primary">@(item.value.LastName)</p>
+                                </td>
+                                <td>
+                                    <p class="ParagraphX1 ENG rc-Primary">@item.value.Email</p>
+                                </td>
+                                <td>
+                                    <p class="ParagraphX1 ENG rc-Primary">
+                                        <i class=" del-mem material-icons rc-Error"
+                                        onclick="location.href='@Url.Action("DeleteUser",new {userId=2})'">
+                                            delete</i>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="ParagraphX1 ENG rc-Primary"> <input
+                                        class="btn-pop-bl rc-Primary TH ParagraphX1" type="submit" value="Backlist"></p>
+                                </td>
                             </tr>
-                        </tbody>   
-                    </table>
-                </div>
-            </div> <!-- scroll-->
-        </div> <!-- col 2-->
-     
-    </body>
+                        }
+                        @* <tr>
+                            <td>
+                            <p class="ParagraphX1 ENG rc-Primary">1</p>
+                            </td>
+                            <td>
+                            <p class="ParagraphX1 ENG rc-Primary">00/00/00</p>
+                            </td>
+                            <td>
+                            <p class="ParagraphX1 ENG rc-Primary">Piyathida</p>
+                            </td>
+                            <td>
+                            <p class="ParagraphX1 ENG rc-Primary">Choojan</p>
+                            </td>
+                            <td>
+                            <p class="ParagraphX1 ENG rc-Primary">fai@hotmail.com</p>
+                            </td>
+                            <td>
+                            <p class="ParagraphX1 ENG rc-Primary"><i
+                            class=" del-mem material-icons rc-Error">delete</i></p>
+                            </td>
+                            <td>
+                            <p class="ParagraphX1 ENG rc-Primary"> <input
+                            class="btn-pop-bl rc-Primary TH ParagraphX1" type="submit" value="Backlist"></p>
+                            </td>
+                            </tr> *@
+                    </tbody>
+                </table>
+            </div>
+        </div> <!-- scroll-->
+    </div> <!-- col 2-->
+
+</body>
+
 </html>
 <script>
 
-function logout(){
-    var logout = confirm("Confirm to Log out")
-    if (!logout){
-        document.getElementById("checkLogout").href="./manageBooking.html"; 
+    function logout() {
+        var logout = confirm("Confirm to Log out")
+        if (!logout) {
+            document.getElementById("checkLogout").href = "./manageBooking.html";
+        }
     }
-}
 </script>

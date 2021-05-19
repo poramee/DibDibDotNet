@@ -73,8 +73,6 @@ namespace DibDibDotNet.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> SignUp(Register userInfo)
     {
-
-
       if (ModelState.IsValid && userInfo.Email.Length > 0)
       {
         Console.WriteLine("have request", userInfo.Email);

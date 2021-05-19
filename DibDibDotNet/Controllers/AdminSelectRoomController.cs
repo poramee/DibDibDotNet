@@ -99,18 +99,14 @@ namespace DibDibDotNet.Controllers
     }
 
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult DeleteUser(string userId)
+    public async Task<IActionResult> DeleteUser(string userId)
     {
-      // Console.WriteLine(equipment.TransactionDate);
-      // Console.WriteLine(equipment.Amount);
-      // var currentEquipment = _context.Equipment.Where(e => e.Id.Equals(equipment.Id)).ToList().FirstOrDefault();
-      // var newEquipmentTransaction = new EquipmentTransaction { Equipment = currentEquipment, CreateAt = equipment.TransactionDate, Amount = equipment.Amount, IsUp = false };
-      // currentEquipment.Total = (int.Parse(currentEquipment.Total) - equipment.Amount).ToString();
-      // _context.Update(currentEquipment);
-      // _context.Add(newEquipmentTransaction);
-      // await _context.SaveChangesAsync();
+      Console.WriteLine(userId);
+      var user = new User { Id = int.Parse(userId) };
+      var transactionList = _context.Transaction.Where(e => e.User.Id.Equals(user.Id)).ToList();
+      _context.RemoveRange(transactionList);
+      _context.Remove(user);
+      await _context.SaveChangesAsync();
       Console.WriteLine("Call this");
       return RedirectToAction("MemberRoom");
     }

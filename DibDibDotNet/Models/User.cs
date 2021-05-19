@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace DibDibDotNet.Models
 {
   public class User
@@ -17,5 +19,11 @@ namespace DibDibDotNet.Models
 
     public bool IsAdmin { get; set; }
     public bool IsValid { get; set; }
+
+    [NotMapped]
+    public string FirstName { get; set; }
+    [NotMapped]
+    public string LastName { get; set; }
+
   }
 }

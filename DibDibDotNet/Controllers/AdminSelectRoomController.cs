@@ -89,7 +89,34 @@ namespace DibDibDotNet.Controllers
     }
     public IActionResult MemberRoom()
     {
-      return View();
+      var userList = _context.User.ToList();
+      foreach (var item in userList)
+      {
+        item.FirstName = item.FullName.Split(" ")[0];
+        item.LastName = item.FullName.Split(" ")[1];
+      }
+      return View(userList);
+    }
+
+
+    public async Task<IActionResult> DeleteUser(string userId)
+    {
+      Console.WriteLine(userId);
+      var user = new User { Id = int.Parse(userId) };
+      var transactionList = _context.Transaction.Where(e => e.User.Id.Equals(user.Id)).ToList();
+      _context.RemoveRange(transactionList);
+      _context.Remove(user);
+      await _context.SaveChangesAsync();
+      return RedirectToAction("MemberRoom");
+    }
+
+    public async Task<IActionResult> BlackListUser(string userId)
+    {
+      var user = _context.User.Where(e => e.Id.Equals(int.Parse(userId))).ToList().FirstOrDefault();
+      user.IsValid = !user.IsValid;
+      _context.Update(user);
+      await _context.SaveChangesAsync();
+      return RedirectToAction("MemberRoom");
     }
   }
 }

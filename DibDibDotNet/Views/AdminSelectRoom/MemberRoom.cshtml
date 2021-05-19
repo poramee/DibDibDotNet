@@ -87,8 +87,13 @@
                                     </p>
                                 </td>
                                 <td>
-                                    <p class="ParagraphX1 ENG rc-Primary"> <input
-                                        class="btn-pop-bl rc-Primary TH ParagraphX1" type="submit" value="Backlist"></p>
+                                    <p class="ParagraphX1 ENG rc-Primary">
+                                        @* //TODO: Change Button Color When State is Banded and Not Banded *@
+                                        <button class="btn-pop-bl rc-Primary TH ParagraphX1" style="text-align: center;"
+                                        onclick="location.href='@Url.Action("BlackListUser",new {userId=item.value.Id})'">
+                                            @(item.value.IsValid ?"Blacklist":"Whitelist")
+                                        </button>
+                                    </p>
                                 </td>
                             </tr>
                         }

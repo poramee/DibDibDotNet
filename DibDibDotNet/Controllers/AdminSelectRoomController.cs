@@ -107,7 +107,15 @@ namespace DibDibDotNet.Controllers
       _context.RemoveRange(transactionList);
       _context.Remove(user);
       await _context.SaveChangesAsync();
-      Console.WriteLine("Call this");
+      return RedirectToAction("MemberRoom");
+    }
+
+    public async Task<IActionResult> BlackListUser(string userId)
+    {
+      var user = _context.User.Where(e => e.Id.Equals(int.Parse(userId))).ToList().FirstOrDefault();
+      user.IsValid = !user.IsValid;
+      _context.Update(user);
+      await _context.SaveChangesAsync();
       return RedirectToAction("MemberRoom");
     }
   }

@@ -1,3 +1,4 @@
+@model List<DibDibDotNet.Models.Booking>;
 <!DOCTYPE html>
 <html>
 <header>
@@ -23,20 +24,23 @@
     </div>
     <div class="room-name">
         <div class="left">
-            <a href="@Url.Action("AdminSelectRoom","AdminSelectRoom")"><i
+            <a href="@Url.Action("AdminSelectRoom","AdminSelectRoom",new {roomId = @TempData["RoomName"]})"><i
                     class="icon-back material-icons md-24 rc-Primary ">arrow_back</i></a>
-            <p class="HeadingX6 ENG rc-Primary in-line " href="#"><b>ECC-602</b></p>
-            <p class="ParagraphX1 ENG rc-Primary in-line li-hi">STM32-nucleo f767zi&nbsp;&nbsp;&nbsp;/</p>
+            <p class="HeadingX6 ENG rc-Primary in-line " href="#"><b>@TempData["RoomName"]</b></p>
+            <p class="ParagraphX1 ENG rc-Primary in-line li-hi">@TempData["EquipmentName"]&nbsp;&nbsp;&nbsp;/</p>
             <p class="ParagraphX1 TH rc-Primary in-line li-hi">จัดการการจอง</p>
         </div>
     </div>
     <!-- righ -->
     <div class="contain-col-2-history ">
         <form class="month-sel" action="/action_page.php">
-            <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser">
+            <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser"
+                value="@TempData["CurrentMonth"]">
             <div class="right update-text ">
-                <p class="ParagraphX1 TH rc-Primary a-right">จำนวนเครื่องทั้งหมด : 50 เครื่อง <br>อัปเดตล่าสุด : 6 / 01
-                    / 2021 10.00น.</p>
+                <p class="ParagraphX1 TH rc-Primary a-right">จำนวนเครื่องทั้งหมด : @TempData["Total"] เครื่อง
+                    <br>อัปเดตล่าสุด : 6 / 01
+                    / 2021 10.00น.
+                </p>
             </div>
         </form>
         <div class="scroll-table">
@@ -71,43 +75,83 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td><br><br>
+                                    <p class="HeadingX6 TH rc-Primary in-line">@item.Day</p>
+                                </td>
+                                <td onclick="openCell()" class="book "><br>
+                                    <p class="HeadingX6 TH rc-Success in-line ">จอง 1 เครื่อง<br>
+                                    <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                                        class="Paragraph1 TH rc-Error in-line">4</span> เครื่อง</p>
+                                    </p>
+                                    <p class="Label TH rc-Error ">* ไม่สามารถเปลี่ยนแปลงได้ แต่สามารถยกเลิกการจองได้ที่
+                                        "รถเข็น"</p>
+                                </td>
+                                <td onclick="openCell()" class="full"><br>
+                                    <p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br><i
+                                    class="material-icons md-48 rc-Grey6 ">access_time</i>
+                                </td>
+                                <td onclick="openCell()" class="remain"><br><br>
+                                    <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                                        class=" HeadingX6 TH rc-Error in-line">12</span> เครื่อง</p>
+                                </td>
+                                <td onclick="openCell()" class="remain"><br><br>
+                                    <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                                        class=" HeadingX6 TH rc-Error in-line">8</span> เครื่อง</p>
+                                </td>
+                                <td onclick="openCell()" class="full"><br>
+                                    <p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br><i
+                                    class="material-icons md-48 rc-Grey6 ">access_time</i>
+                                </td>
+                                <td onclick="openCell()" class="remain"><br><br>
+                                    <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                                        class=" HeadingX6 TH rc-Error in-line">5</span> เครื่อง</p>
+                                </td>
+                                <td onclick="openCell()" class="remain"><br><br>
+                                    <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                                        class=" HeadingX6 TH rc-Error in-line">10</span> เครื่อง</p>
+                                </td>
+                            </tr>
+                        }
+                        @* <tr>
                             <td><br><br>
-                                <p class="HeadingX6 TH rc-Primary in-line">1</p>
+                            <p class="HeadingX6 TH rc-Primary in-line">1</p>
                             </td>
                             <td onclick="openCell()" class="book "><br>
-                                <p class="HeadingX6 TH rc-Success in-line ">จอง 1 เครื่อง<br>
-                                <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
-                                        class="Paragraph1 TH rc-Error in-line">4</span> เครื่อง</p>
-                                </p>
-                                <p class="Label TH rc-Error ">* ไม่สามารถเปลี่ยนแปลงได้ แต่สามารถยกเลิกการจองได้ที่
-                                    "รถเข็น"</p>
+                            <p class="HeadingX6 TH rc-Success in-line ">จอง 1 เครื่อง<br>
+                            <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                            class="Paragraph1 TH rc-Error in-line">4</span> เครื่อง</p>
+                            </p>
+                            <p class="Label TH rc-Error ">* ไม่สามารถเปลี่ยนแปลงได้ แต่สามารถยกเลิกการจองได้ที่
+                            "รถเข็น"</p>
                             </td>
                             <td onclick="openCell()" class="full"><br>
-                                <p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br><i
-                                    class="material-icons md-48 rc-Grey6 ">access_time</i>
+                            <p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br><i
+                            class="material-icons md-48 rc-Grey6 ">access_time</i>
                             </td>
                             <td onclick="openCell()" class="remain"><br><br>
-                                <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
-                                        class=" HeadingX6 TH rc-Error in-line">12</span> เครื่อง</p>
+                            <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                            class=" HeadingX6 TH rc-Error in-line">12</span> เครื่อง</p>
                             </td>
                             <td onclick="openCell()" class="remain"><br><br>
-                                <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
-                                        class=" HeadingX6 TH rc-Error in-line">8</span> เครื่อง</p>
+                            <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                            class=" HeadingX6 TH rc-Error in-line">8</span> เครื่อง</p>
                             </td>
                             <td onclick="openCell()" class="full"><br>
-                                <p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br><i
-                                    class="material-icons md-48 rc-Grey6 ">access_time</i>
+                            <p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br><i
+                            class="material-icons md-48 rc-Grey6 ">access_time</i>
                             </td>
                             <td onclick="openCell()" class="remain"><br><br>
-                                <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
-                                        class=" HeadingX6 TH rc-Error in-line">5</span> เครื่อง</p>
+                            <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                            class=" HeadingX6 TH rc-Error in-line">5</span> เครื่อง</p>
                             </td>
                             <td onclick="openCell()" class="remain"><br><br>
-                                <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
-                                        class=" HeadingX6 TH rc-Error in-line">10</span> เครื่อง</p>
+                            <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                            class=" HeadingX6 TH rc-Error in-line">10</span> เครื่อง</p>
                             </td>
-                        </tr>
+                            </tr> *@
                     </tbody>
                 </table>
             </div>

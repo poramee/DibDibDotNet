@@ -83,9 +83,26 @@ namespace DibDibDotNet.Controllers
       return RedirectToAction("AdminSelectRoom", new { roomId = equipment.Room });
     }
 
-    public IActionResult ManageBooking()
+    public IActionResult ManageBooking(string roomId, string month)
     {
-      return View();
+      var CurrentDate = DateTime.Now;
+      TempData["CurrentMonth"] = month;
+      TempData["RoomName"] = roomId;
+      var equipment = _context.Equipment.Where(equipment => equipment.Room.Equals(roomId)).ToList().FirstOrDefault();
+      TempData["EquipmentName"] = equipment.Room;
+      TempData["Total"] = equipment.Total;
+      int days = DateTime.DaysInMonth(int.Parse(month.Split("-")[0]), int.Parse(month.Split("-")[1]));
+      Console.WriteLine(days);
+      var BookSlots = new List<Booking>();
+      for (int i = 0; i < days; i++)
+      {
+        BookSlots.Add(new Booking { Day = i + 1 });
+      }
+      // for (int i = 0; i < BookSlots; i++)
+      // {
+      //   BookSlots.Append(new Booking { Day = i + 1 });
+      // }
+      return View(BookSlots.ToList());
     }
     public IActionResult MemberRoom()
     {

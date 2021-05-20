@@ -109,7 +109,8 @@
                         </td>
                     </tr>
                 </table>
-                <a href="@Url.Action("ManageBooking", "AdminSelectRoom")" target="_parent">
+                <a href="@Url.Action("ManageBooking", "AdminSelectRoom",new {roomId=Model.Room,month = DateTime.Now.Year.ToString() + '-' + DateTime.Now.Month.ToString().PadLeft(2, '0')})"
+                    target="_parent">
                     <input class="btn-manage rc-BG TH ParagraphX1" type="submit" value="จัดการการจอง">
                 </a>
             </div>

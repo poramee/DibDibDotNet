@@ -61,5 +61,12 @@ namespace DibDibDotNet.Controllers
             }
             return View(homeUserModel);
         }
+        
+        public IActionResult EquipmentReserveList(){
+            Console.WriteLine("EquipmentReserveList");
+            var month = Request.Form["monthUser"];
+            Console.WriteLine();
+            return PartialView()
+        }
     }
 }

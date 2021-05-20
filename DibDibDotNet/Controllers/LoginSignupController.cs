@@ -41,7 +41,7 @@ namespace DibDibDotNet.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Login([Bind("Email,Password")] User user)
+    public IActionResult Login([Bind("Email,Password")] User user)
     {
       if (ModelState.IsValid && user.Email.Length > 0)
       {

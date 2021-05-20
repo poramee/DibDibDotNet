@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DibDibDotNet.Models;
 using DibDibDotNet.Data;
-
 namespace DibDibDotNet.Controllers
 {
   public class AdminSelectRoomController : Controller
@@ -161,9 +160,24 @@ namespace DibDibDotNet.Controllers
       return RedirectToAction("MemberRoom");
     }
 
-    public string GetTransaction(string userId)
+    [HttpPost]
+    [Route("AdminSelectRoom/GetTransaction")]
+    public JsonResult GetTransaction(string Year, string Month, string Date, string EquipmentId, string SlotId)
     {
-      return "done";
+      DateTime requestDate = new DateTime(int.Parse(Year), int.Parse(Month), int.Parse(Date));
+      var transactions = _context.Transaction.Where(e => e.Equipment.Id.Equals(int.Parse(EquipmentId)) && DateTime.Equals(e.Date, requestDate) && e.Period.Equals(int.Parse(SlotId))).Select(e => new { e.User, e.Amount, TxId = e.Id }).ToList();
+      // TempData["ModalTransaction"] = transaction;
+      return Json(transactions);
+    }
+
+    [HttpPost]
+    [Route("AdminSelectRoom/DeleteTransaction")]
+    public async Task<JsonResult> DeleteTransaction(string TxId)
+    {
+      var transaction = new Transaction { Id = int.Parse(TxId) };
+      _context.Remove(transaction);
+      await _context.SaveChangesAsync();
+      return Json(TxId);
     }
   }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 namespace DibDibDotNet.Models
 {
   public class Booking
@@ -6,7 +7,7 @@ namespace DibDibDotNet.Models
     {
     }
     public int Day { get; set; }
-    public virtual TimeSlot[] TimeSlots { get; set; }
+    public List<TimeSlot> TimeSlots { get; set; }
   }
 
   public class TimeSlot

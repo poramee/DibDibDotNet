@@ -94,14 +94,34 @@ namespace DibDibDotNet.Controllers
       int days = DateTime.DaysInMonth(int.Parse(month.Split("-")[0]), int.Parse(month.Split("-")[1]));
       Console.WriteLine(days);
       var BookSlots = new List<Booking>();
+
       for (int i = 0; i < days; i++)
       {
-        BookSlots.Add(new Booking { Day = i + 1 });
+        BookSlots.Add(new Booking { Day = i + 1, TimeSlots = new List<TimeSlot>() });
+        for (int timeSlotIndex = 9; timeSlotIndex <= 15; timeSlotIndex++)
+        {
+          DateTime SlotDate = new DateTime(int.Parse(month.Split("-")[0]), int.Parse(month.Split("-")[1]), i + 1);
+          Console.WriteLine(SlotDate);
+          var TransactionInPeriod = _context.Transaction.Where(e => e.Equipment.Id.Equals(equipment.Id) && DateTime.Equals(e.Date, SlotDate) && e.Period.Equals(timeSlotIndex)).ToList();
+          int TransactionBookAmount = 0;
+          foreach (var item in TransactionInPeriod)
+          {
+            TransactionBookAmount += item.Amount;
+          }
+          Console.WriteLine("Count " + TransactionBookAmount + " " + equipment.Id);
+
+          BookSlots[i].TimeSlots.Add(new TimeSlot { Slot = timeSlotIndex, BookCount = TransactionBookAmount, Balance = int.Parse(equipment.Total) - TransactionBookAmount });
+        }
+        // for (int timeSlotIndex = 0; timeSlotIndex < BookSlots[i].TimeSlots.Length; timeSlotIndex++)
+        // {
+        //   BookSlots[i].TimeSlots.Append(new TimeSlot { Slot = timeSlotIndex + 9 });
+        // }
+        // @foreach (var item in BookSlots[i].TimeSlots)
+        // {
+        //     ite,
+        // }
+
       }
-      // for (int i = 0; i < BookSlots; i++)
-      // {
-      //   BookSlots.Append(new Booking { Day = i + 1 });
-      // }
       return View(BookSlots.ToList());
     }
     public IActionResult MemberRoom()

@@ -314,7 +314,8 @@
     }
     spanList.onclick = function () {
         modalList.style.display = "none";
-          $("#popUp-list > div > div > div > table > tbody *tr").remove();
+        $("#popUp-list > div > div > div > table > tbody *tr").remove();
+        window.location.href = '@Url.Action("ManageBooking", "AdminSelectRoom")'+ '/' + window.location.search;
     }
 
     function  onDeleteTransaction(TxId){
@@ -326,7 +327,6 @@
                 traditional: true,
                 success: function (data) {
                     $(`#popUp-list > div > div > div > table > tbody > #${TxId}`).remove();
-            
                 },
             });
     

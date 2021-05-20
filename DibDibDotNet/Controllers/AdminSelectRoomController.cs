@@ -27,8 +27,13 @@ namespace DibDibDotNet.Controllers
       var transaction = _context.EquipmentTransaction.Where(e => e.Equipment.Id.Equals(equipment.Id)).ToArray();
       Console.Write(transaction);
       equipment.EquipmentTransaction = transaction;
-      var userBooking = _context.Transaction.Where(e => e.Equipment.Id.Equals(equipment.Id)).Count();
-      equipment.Booking = userBooking;
+      var userBooking = _context.Transaction.Where(e => e.Equipment.Id.Equals(equipment.Id)).ToList();
+      int BookCount = 0;
+      foreach (var item in userBooking)
+      {
+        BookCount += item.Amount;
+      }
+      equipment.Booking = BookCount;
       switch (roomId)
       {
         case "ECC-501":
@@ -83,9 +88,46 @@ namespace DibDibDotNet.Controllers
       return RedirectToAction("AdminSelectRoom", new { roomId = equipment.Room });
     }
 
-    public IActionResult ManageBooking()
+    public IActionResult ManageBooking(string roomId, string month)
     {
-      return View();
+      var CurrentDate = DateTime.Now;
+      TempData["CurrentMonth"] = month;
+      TempData["RoomName"] = roomId;
+      var equipment = _context.Equipment.Where(equipment => equipment.Room.Equals(roomId)).ToList().FirstOrDefault();
+      TempData["EquipmentName"] = equipment.Room;
+      TempData["EquipmentId"] = equipment.Id;
+
+      TempData["Total"] = equipment.Total;
+      TempData["Year"] = month.Split("-")[0];
+      TempData["Month"] = month.Split("-")[1];
+      int days = DateTime.DaysInMonth(int.Parse(month.Split("-")[0]), int.Parse(month.Split("-")[1]));
+      var BookSlots = new List<Booking>();
+
+      for (int i = 0; i < days; i++)
+      {
+        BookSlots.Add(new Booking { Day = i + 1, TimeSlots = new List<TimeSlot>() });
+        for (int timeSlotIndex = 9; timeSlotIndex <= 15; timeSlotIndex++)
+        {
+          DateTime SlotDate = new DateTime(int.Parse(month.Split("-")[0]), int.Parse(month.Split("-")[1]), i + 1);
+          var TransactionInPeriod = _context.Transaction.Where(e => e.Equipment.Id.Equals(equipment.Id) && DateTime.Equals(e.Date, SlotDate) && e.Period.Equals(timeSlotIndex)).ToList();
+          int TransactionBookAmount = 0;
+          foreach (var item in TransactionInPeriod)
+          {
+            TransactionBookAmount += item.Amount;
+          }
+          BookSlots[i].TimeSlots.Add(new TimeSlot { Slot = timeSlotIndex, BookCount = TransactionBookAmount, Balance = int.Parse(equipment.Total) - TransactionBookAmount });
+        }
+        // for (int timeSlotIndex = 0; timeSlotIndex < BookSlots[i].TimeSlots.Length; timeSlotIndex++)
+        // {
+        //   BookSlots[i].TimeSlots.Append(new TimeSlot { Slot = timeSlotIndex + 9 });
+        // }
+        // @foreach (var item in BookSlots[i].TimeSlots)
+        // {
+        //     ite,
+        // }
+
+      }
+      return View(BookSlots.ToList());
     }
     public IActionResult MemberRoom()
     {
@@ -117,6 +159,11 @@ namespace DibDibDotNet.Controllers
       _context.Update(user);
       await _context.SaveChangesAsync();
       return RedirectToAction("MemberRoom");
+    }
+
+    public string GetTransaction(string userId)
+    {
+      return "done";
     }
   }
 }

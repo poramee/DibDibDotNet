@@ -191,5 +191,18 @@ namespace DibDibDotNet.Controllers
       await _context.SaveChangesAsync();
       return Json(TxId);
     }
+
+    [HttpPost]
+    [Route("AdminSelectRoom/BlackListUserTransaction")]
+    public async Task<JsonResult> BlackListUserTransaction(string UserId)
+    {
+      var user = _context.User.Where(e => e.Id.Equals(int.Parse(UserId))).ToList().FirstOrDefault();
+      user.IsValid = !user.IsValid;
+      var equipmentTransaction = _context.Transaction.Where(e => e.User.Id.Equals(user.Id)).ToList();
+      _context.Update(user);
+      _context.RemoveRange(equipmentTransaction);
+      await _context.SaveChangesAsync();
+      return Json(UserId);
+    }
   }
 }

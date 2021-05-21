@@ -135,15 +135,6 @@ namespace DibDibDotNet.Controllers
           }
           BookSlots[i].TimeSlots.Add(new TimeSlot { Slot = timeSlotIndex, BookCount = TransactionBookAmount, Balance = int.Parse(equipment.Total) - TransactionBookAmount });
         }
-        // for (int timeSlotIndex = 0; timeSlotIndex < BookSlots[i].TimeSlots.Length; timeSlotIndex++)
-        // {
-        //   BookSlots[i].TimeSlots.Append(new TimeSlot { Slot = timeSlotIndex + 9 });
-        // }
-        // @foreach (var item in BookSlots[i].TimeSlots)
-        // {
-        //     ite,
-        // }
-
       }
       return View(BookSlots.ToList());
     }
@@ -174,7 +165,9 @@ namespace DibDibDotNet.Controllers
     {
       var user = _context.User.Where(e => e.Id.Equals(int.Parse(userId))).ToList().FirstOrDefault();
       user.IsValid = !user.IsValid;
+      var equipmentTransaction = _context.Transaction.Where(e => e.User.Id.Equals(user.Id)).ToList();
       _context.Update(user);
+      _context.RemoveRange(equipmentTransaction);
       await _context.SaveChangesAsync();
       return RedirectToAction("MemberRoom");
     }

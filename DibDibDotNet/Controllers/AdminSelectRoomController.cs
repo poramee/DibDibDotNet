@@ -33,6 +33,25 @@ namespace DibDibDotNet.Controllers
         BookCount += item.Amount;
       }
       equipment.Booking = BookCount;
+
+      var equipmentTransactions = _context.EquipmentTransaction.Where(e => e.Equipment.Id.Equals(equipment.Id)).ToList();
+      int upCount = 0;
+      int downCount = 0;
+      foreach (var item in equipmentTransactions)
+      {
+        if (item.IsUp)
+        {
+          upCount += item.Amount;
+        }
+        else
+        {
+          downCount += item.Amount;
+        }
+
+      }
+      TempData["UpCount"] = upCount;
+      TempData["DownCount"] = downCount;
+
       switch (roomId)
       {
         case "ECC-501":

@@ -118,6 +118,7 @@ namespace DibDibDotNet.Controllers
       TempData["Total"] = equipment.Total;
       TempData["Year"] = month.Split("-")[0];
       TempData["Month"] = month.Split("-")[1];
+      TempData["LastReloadDate"] = DateTime.Now;
       int days = DateTime.DaysInMonth(int.Parse(month.Split("-")[0]), int.Parse(month.Split("-")[1]));
       var BookSlots = new List<Booking>();
 
@@ -197,7 +198,7 @@ namespace DibDibDotNet.Controllers
     public async Task<JsonResult> BlackListUserTransaction(string UserId)
     {
       var user = _context.User.Where(e => e.Id.Equals(int.Parse(UserId))).ToList().FirstOrDefault();
-      user.IsValid = !user.IsValid;
+      user.IsValid = false;
       var equipmentTransaction = _context.Transaction.Where(e => e.User.Id.Equals(user.Id)).ToList();
       _context.Update(user);
       _context.RemoveRange(equipmentTransaction);

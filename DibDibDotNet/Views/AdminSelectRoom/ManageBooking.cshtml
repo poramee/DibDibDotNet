@@ -1,132 +1,355 @@
+@model List<DibDibDotNet.Models.Booking>;
 <!DOCTYPE html>
 <html>
-    <header>
-        <title>Admin</title>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
-        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/template/Global.css"> <!-- change -> /template/Global.css  -->
-        <link rel="stylesheet" href="/css/AdminSelectRoom/manageBooking.css"> <!-- Edit name for import Css of this document -->
-    </header>
-    <body class="BGG unselectable">
-        <div class="topnav">    
-            <div class="right">
-                <a href="#"><i class="material-icons md-20 rc-Muted ">refresh</i></a>
-                <a class="ParagraphX2 ENG rc-Muted" href="#">Admin</a>
-                <a id="checkLogout" onclick="logout()" class="ParagraphX2 ENG rc-Muted" href="@Url.Action("Login","LoginSignup")">Logout</a>
-            </div>      
-        </div>        
-        <div class="room-name">
-            <div class="left">
-                <a href="@Url.Action("AdminSelectRoom","AdminSelectRoom")"><i class="icon-back material-icons md-24 rc-Primary ">arrow_back</i></a>
-                <p class="HeadingX6 ENG rc-Primary in-line " href="#"><b>ECC-602</b></p>
-                <p class="ParagraphX1 ENG rc-Primary in-line li-hi" >STM32-nucleo f767zi&nbsp;&nbsp;&nbsp;/</p><p class="ParagraphX1 TH rc-Primary in-line li-hi" >จัดการการจอง</p>
+<header>
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/template/Global.css"> <!-- change -> /template/Global.css  -->
+    <link rel="stylesheet" href="/css/AdminSelectRoom/manageBooking.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Edit name for import Css of this document -->
+</header>
+
+<body class="BGG unselectable">
+    <div class="topnav">
+        <div class="right">
+            <a href="#"><i class="material-icons md-20 rc-Muted ">refresh</i></a>
+            <a class="ParagraphX2 ENG rc-Muted" href="@Url.Action("HomeAdmin","HomeAdmin")">Admin</a>
+            <a id="checkLogout" onclick="logout()" class="ParagraphX2 ENG rc-Muted"
+                href="@Url.Action("Login","LoginSignup")">Logout</a>
+        </div>
+    </div>
+    <div class="room-name">
+        <div class="left">
+            <a href="@Url.Action("AdminSelectRoom","AdminSelectRoom",new {roomId = @TempData["RoomName"]})"><i
+                    class="icon-back material-icons md-24 rc-Primary ">arrow_back</i></a>
+            <p class="HeadingX6 ENG rc-Primary in-line " href="#"><b>@TempData["RoomName"]</b></p>
+            <p class="ParagraphX1 ENG rc-Primary in-line li-hi">@TempData["EquipmentName"]&nbsp;&nbsp;&nbsp;/</p>
+            <p class="ParagraphX1 TH rc-Primary in-line li-hi">จัดการการจอง</p>
+        </div>
+    </div>
+    <!-- righ -->
+    <div class="contain-col-2-history ">
+        <form class="month-sel" action="/action_page.php">
+            <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser"
+                value="@TempData["CurrentMonth"]" onchange="changeMonth(event)">
+            <div class="right update-text ">
+                <p class="ParagraphX1 TH rc-Primary a-right">จำนวนเครื่องทั้งหมด : @TempData["Total"] เครื่อง
+                    <br>อัปเดตล่าสุด : 6 / 01
+                    / 2021 10.00น.
+                </p>
             </div>
-        </div> 
-        <!-- righ -->
-        <div class="contain-col-2-history ">
-            <form class="month-sel" action="/action_page.php">
-                <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser">
-                <div class="right update-text ">
-                    <p class="ParagraphX1 TH rc-Primary a-right">จำนวนเครื่องทั้งหมด : 50 เครื่อง <br>อัปเดตล่าสุด : 6 / 01 / 2021  10.00น.</p>
-                </div>
-            </form>
-            <div  class="scroll-table" >
-                <div class="container-table ">
-                    <table class="w3-table w3-bordered w3-centered"  >
-                        <thead class="hd-table ">
-                            <tr >
-                                <th><p class="ParagraphX1 TH rc-Primary in-line">วัน/เวลา</p></th>
-                                <th><p class="ParagraphX1 TH rc-Primary in-line ">9:00 น</p></th>
-                                <th><p class="ParagraphX1 TH rc-Primary in-line">10.00 น.</p></th>
-                                <th><p class="ParagraphX1 TH rc-Primary in-line">11.00 น.</p></th>
-                                <th><p class="ParagraphX1 TH rc-Primary in-line">12.00 น.</p></th>
-                                <th><p class="ParagraphX1 TH rc-Primary in-line">13.00 น.</p></th>
-                                <th><p class="ParagraphX1 TH rc-Primary in-line">14.00 น.</p></th>
-                                <th><p class="ParagraphX1 TH rc-Primary in-line">15.00 น.</p></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+        </form>
+        <div class="scroll-table">
+            <div class="container-table ">
+                <table class="w3-table w3-bordered w3-centered">
+                    <thead class="hd-table ">
+                        <tr>
+                            <th>
+                                <p class="ParagraphX1 TH rc-Primary in-line">วัน/เวลา</p>
+                            </th>
+                            <th>
+                                <p class="ParagraphX1 TH rc-Primary in-line ">9:00 น</p>
+                            </th>
+                            <th>
+                                <p class="ParagraphX1 TH rc-Primary in-line">10.00 น.</p>
+                            </th>
+                            <th>
+                                <p class="ParagraphX1 TH rc-Primary in-line">11.00 น.</p>
+                            </th>
+                            <th>
+                                <p class="ParagraphX1 TH rc-Primary in-line">12.00 น.</p>
+                            </th>
+                            <th>
+                                <p class="ParagraphX1 TH rc-Primary in-line">13.00 น.</p>
+                            </th>
+                            <th>
+                                <p class="ParagraphX1 TH rc-Primary in-line">14.00 น.</p>
+                            </th>
+                            <th>
+                                <p class="ParagraphX1 TH rc-Primary in-line">15.00 น.</p>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
                             <tr>
-                                <td><br><br><p class="HeadingX6 TH rc-Primary in-line">1</p></td>
-                                <td onclick="openCell()" class="book "><br><p class="HeadingX6 TH rc-Success in-line ">จอง 1 เครื่อง<br><p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span class="Paragraph1 TH rc-Error in-line">4</span> เครื่อง</p></p><p class="Label TH rc-Error ">* ไม่สามารถเปลี่ยนแปลงได้ แต่สามารถยกเลิกการจองได้ที่ "รถเข็น"</p></td>
-                                <td onclick="openCell()" class="full"><br><p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br><i class="material-icons md-48 rc-Grey6 ">access_time</i></td>
-                                <td onclick="openCell()" class="remain"><br><br><p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span class=" HeadingX6 TH rc-Error in-line">12</span> เครื่อง</p></td>
-                                <td onclick="openCell()" class="remain"><br><br><p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span class=" HeadingX6 TH rc-Error in-line">8</span> เครื่อง</p></td>
-                                <td onclick="openCell()" class="full"><br><p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br><i class="material-icons md-48 rc-Grey6 ">access_time</i></td>
-                                <td onclick="openCell()" class="remain"><br><br><p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span class=" HeadingX6 TH rc-Error in-line">5</span> เครื่อง</p></td>
-                                <td onclick="openCell()" class="remain"><br><br><p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span class=" HeadingX6 TH rc-Error in-line">10</span> เครื่อง</p></td>
+                                <td><br><br>
+                                    <p class="HeadingX6 TH rc-Primary in-line">@item.Day</p>
+                                </td>
+                                @foreach (var slot in item.TimeSlots)
+                                {
+
+                                    @if (slot.BookCount > 0 && slot.Balance >0)
+                                    {
+                                        <td onclick="openCell(@TempData["Year"],@TempData["Month"],@item.Day,@TempData["EquipmentId"],@slot.Slot)" class="book" ><br><br>
+                                            <p class="HeadingX6 TH rc-Success in-line ">จอง @slot.BookCount เครื่อง<br>
+                                            <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ
+                                                <span class="Paragraph1 TH rc-Error in-line">@slot.Balance</span> เครื่อง
+                                            </p>
+                                            <p class="Label TH rc-Error ">* ไม่สามารถเปลี่ยนแปลงได้ แต่สามารถยกเลิกการจองได้ที่
+                                                "รถเข็น"</p>
+                                        </td>
+                                    }
+                                    else if(slot.Balance == 0){
+                                         <td onclick="openCell(@TempData["Year"],@TempData["Month"],@item.Day,@TempData["EquipmentId"],@slot.Slot)" class="full"><br>
+                                            <p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br>
+                                            <i class="material-icons md-48 rc-Grey6 ">access_time</i>
+                                    </td>
+                                    }
+                                    else
+
+                                    {
+                                        <td onclick="openCell(@TempData["Year"],@TempData["Month"],@item.Day,@TempData["EquipmentId"],@slot.Slot)" class="remain"><br><br>
+                                            <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ
+                                                <span class=" HeadingX6 TH rc-Error in-line">@slot.Balance</span> เครื่อง</p>
+                                        </td>
+                                    }
+
+                                }
+                                @* <td><br><br>
+                                    <p class="HeadingX6 TH rc-Primary in-line">@item.Day</p>
+                                    </td>
+                                    <td onclick="openCell()" class="book "><br>
+                                    <p class="HeadingX6 TH rc-Success in-line ">จอง 1 เครื่อง<br>
+                                    <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                                    class="Paragraph1 TH rc-Error in-line">4</span> เครื่อง</p>
+                                    </p>
+                                    <p class="Label TH rc-Error ">* ไม่สามารถเปลี่ยนแปลงได้ แต่สามารถยกเลิกการจองได้ที่
+                                    "รถเข็น"</p>
+                                    </td>
+                                    <td onclick="openCell()" class="full"><br>
+                                    <p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br><i
+                                    class="material-icons md-48 rc-Grey6 ">access_time</i>
+                                    </td>
+                                    <td onclick="openCell()" class="remain"><br><br>
+                                    <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                                    class=" HeadingX6 TH rc-Error in-line">12</span> เครื่อง</p>
+                                    </td>
+                                    <td onclick="openCell()" class="remain"><br><br>
+                                    <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                                    class=" HeadingX6 TH rc-Error in-line">8</span> เครื่อง</p>
+                                    </td>
+                                    <td onclick="openCell()" class="full"><br>
+                                    <p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br><i
+                                    class="material-icons md-48 rc-Grey6 ">access_time</i>
+                                    </td>
+                                    <td onclick="openCell()" class="remain"><br><br>
+                                    <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                                    class=" HeadingX6 TH rc-Error in-line">5</span> เครื่อง</p>
+                                    </td>
+                                    <td onclick="openCell()" class="remain"><br><br>
+                                    <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                                    class=" HeadingX6 TH rc-Error in-line">10</span> เครื่อง</p>
+                                    </td> *@
                             </tr>
-                        </tbody>   
-                    </table>
-                </div>
-            </div> <!-- scroll-->
-            <!--  pop up list-->
-            <div id="popUp-list" class="modal">
-                <div class="modal-content DS-SS">
-                    <span class="close-list"> <i class="material-icons rc-Secondary">close</i></span>
-                    <p class="HeadingX6 ENG rc-Primary in-line"><b>ECC-602</b></p>
-                    <p class="ParagraphX1 ENG rc-Primary in-line">STM32-nucleo f767zi</p><br>
-                    <br>
-                    <p class="ParagraphX1 ENG rc-Primary in-line"><b>1/02/2021</b></p><p class="ParagraphX1 ENG rc-Primary in-line">&nbsp;&nbsp;&nbsp;<b>11:00 - 12:00 </b></p><p class="ParagraphX1 TH rc-Primary in-line">&nbsp;น.</p>
-                    <div  class="scroll-table-mem" >
-                        <div class="container-table ">
-                            <table class="w3-table w3-bordered "  >
-                                <thead class="hd-table ">
-                                    <tr >
-                                        <th><p class="ParagraphX1 ENG rc-Primary in-line">#</p></th>
-                                        <th><p class="ParagraphX1 ENG rc-Primary in-line ">First Name</p></th>
-                                        <th><p class="ParagraphX1 ENG rc-Primary in-line">Last Name</p></th>
-                                        <th><p class="ParagraphX1 ENG rc-Primary in-line">Email</p></th>
-                                        <th><p class="ParagraphX1 ENG rc-Primary in-line">Booking amount</p></th>
-                                        <th><p class="ParagraphX1 ENG rc-Primary in-line">Delete</p></th>
-                                        <th><p class="ParagraphX1 ENG rc-Primary in-line">Backlist</p></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><p class="ParagraphX1 ENG rc-Primary">1</p></td>
-                                        <td><p class="ParagraphX1 ENG rc-Primary">Piyathida</p></td>
-                                        <td><p class="ParagraphX1 ENG rc-Primary">Choojan</p></td>
-                                        <td><p class="ParagraphX1 ENG rc-Primary">fai@hotmail.com</p></td>
-                                        <td><p class="ParagraphX1 ENG rc-Primary">2</p></td>
-                                        <td><p class="ParagraphX1 ENG rc-Primary"><i class=" del-mem material-icons rc-Error">delete</i></p></td>
-                                        <td><p class="ParagraphX1 ENG rc-Primary"> <input  class="btn-pop-bl rc-Primary TH ParagraphX1" type="submit" value="Backlist"></p></td>
-                                    </tr>
-                           
-                     
-                                </tbody>   
-                            </table>
-                        </div>
-                    </div> <!-- scroll-->
-                </div>
+                        }
+                        @* <tr>
+                            <td><br><br>
+                            <p class="HeadingX6 TH rc-Primary in-line">1</p>
+                            </td>
+                            <td onclick="openCell()" class="book "><br>
+                            <p class="HeadingX6 TH rc-Success in-line ">จอง 1 เครื่อง<br>
+                            <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                            class="Paragraph1 TH rc-Error in-line">4</span> เครื่อง</p>
+                            </p>
+                            <p class="Label TH rc-Error ">* ไม่สามารถเปลี่ยนแปลงได้ แต่สามารถยกเลิกการจองได้ที่
+                            "รถเข็น"</p>
+                            </td>
+                            <td onclick="openCell()" class="full"><br>
+                            <p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br><i
+                            class="material-icons md-48 rc-Grey6 ">access_time</i>
+                            </td>
+                            <td onclick="openCell()" class="remain"><br><br>
+                            <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                            class=" HeadingX6 TH rc-Error in-line">12</span> เครื่อง</p>
+                            </td>
+                            <td onclick="openCell()" class="remain"><br><br>
+                            <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                            class=" HeadingX6 TH rc-Error in-line">8</span> เครื่อง</p>
+                            </td>
+                            <td onclick="openCell()" class="full"><br>
+                            <p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br><i
+                            class="material-icons md-48 rc-Grey6 ">access_time</i>
+                            </td>
+                            <td onclick="openCell()" class="remain"><br><br>
+                            <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                            class=" HeadingX6 TH rc-Error in-line">5</span> เครื่อง</p>
+                            </td>
+                            <td onclick="openCell()" class="remain"><br><br>
+                            <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
+                            class=" HeadingX6 TH rc-Error in-line">10</span> เครื่อง</p>
+                            </td>
+                            </tr> *@
+                    </tbody>
+                </table>
             </div>
-        </div> <!-- col 2-->
-    </body>
+        </div> <!-- scroll-->
+        <!--  pop up list-->
+        <div id="popUp-list" class="modal">
+            <div class="modal-content DS-SS">
+                <span class="close-list"> <i class="material-icons rc-Secondary">close</i></span>
+                <p class="HeadingX6 ENG rc-Primary in-line"><b>ECC-602</b></p>
+                <p class="ParagraphX1 ENG rc-Primary in-line">STM32-nucleo f767zi</p><br>
+                <br>
+                <p class="ParagraphX1 ENG rc-Primary in-line"><b>1/02/2021</b></p>
+                <p class="ParagraphX1 ENG rc-Primary in-line">&nbsp;&nbsp;&nbsp;<b>11:00 - 12:00 </b></p>
+                <p class="ParagraphX1 TH rc-Primary in-line">&nbsp;น.</p>
+                <div class="scroll-table-mem">
+                    <div class="container-table ">
+                        <table class="w3-table w3-bordered ">
+                            <thead class="hd-table ">
+                                <tr>
+                                    <th>
+                                        <p class="ParagraphX1 ENG rc-Primary in-line">#</p>
+                                    </th>
+                                    <th>
+                                        <p class="ParagraphX1 ENG rc-Primary in-line ">First Name</p>
+                                    </th>
+                                    <th>
+                                        <p class="ParagraphX1 ENG rc-Primary in-line">Last Name</p>
+                                    </th>
+                                    <th>
+                                        <p class="ParagraphX1 ENG rc-Primary in-line">Email</p>
+                                    </th>
+                                    <th>
+                                        <p class="ParagraphX1 ENG rc-Primary in-line">Booking amount</p>
+                                    </th>
+                                    <th>
+                                        <p class="ParagraphX1 ENG rc-Primary in-line">Delete</p>
+                                    </th>
+                                    <th>
+                                        <p class="ParagraphX1 ENG rc-Primary in-line">Backlist</p>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @* <tr>
+                                    <td>
+                                        <p class="ParagraphX1 ENG rc-Primary">1</p>
+                                    </td>
+                                    <td>
+                                        <p class="ParagraphX1 ENG rc-Primary">Piyathida</p>
+                                    </td>
+                                    <td>
+                                        <p class="ParagraphX1 ENG rc-Primary">Choojan</p>
+                                    </td>
+                                    <td>
+                                        <p class="ParagraphX1 ENG rc-Primary">fai@hotmail.com</p>
+                                    </td>
+                                    <td>
+                                        <p class="ParagraphX1 ENG rc-Primary">2</p>
+                                    </td>
+                                    <td>
+                                        <p class="ParagraphX1 ENG rc-Primary"><i
+                                                class=" del-mem material-icons rc-Error">delete</i></p>
+                                    </td>
+                                    <td>
+                                        <p class="ParagraphX1 ENG rc-Primary"> <input
+                                                class="btn-pop-bl rc-Primary TH ParagraphX1" type="submit"
+                                                value="Backlist"></p>
+                                    </td>
+                                </tr> *@
+                            </tbody>
+                        </table>
+                    </div>
+                </div> <!-- scroll-->
+            </div>
+        </div>
+    </div> <!-- col 2-->
+</body>
+
 </html>
 <script>
-var modalList = document.getElementById("popUp-list");
-var spanList = document.getElementsByClassName("close-list")[0];
-function openCell() {
-    modalList.style.display = "block";
-}
-spanList.onclick = function() {
-    modalList.style.display = "none";
-}
+    var modalList = document.getElementById("popUp-list");
+    var spanList = document.getElementsByClassName("close-list")[0];
+    function openCell(Year,Month,Date,EquipmentId,SlotId) {
+        modalList.style.display = "block";
+       $.ajax({
+                type: "Post",
+                url: '@Url.Action("GetTransaction", "AdminSelectRoom")',
+                data: { Year,Month,Date,EquipmentId,SlotId },
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    console.log(data);
+                      for(let v=0; v < data.length; v++){
+    	                    $("#popUp-list > div > div > div > table > tbody").append(
+                                `<tr id="${data[v].txId}">
+                                    <td>
+                                        <p class="ParagraphX1 ENG rc-Primary">${v+1}</p>
+                                    </td>
+                                    <td>
+                                        <p class="ParagraphX1 ENG rc-Primary">${data[v].user.fullName.split(" ")[0]}</p>
+                                    </td>
+                                    <td>
+                                        <p class="ParagraphX1 ENG rc-Primary">${data[v].user.fullName.split(" ")[1]}</p>
+                                    </td>
+                                    <td>
+                                        <p class="ParagraphX1 ENG rc-Primary">${data[v].user.email}</p>
+                                    </td>
+                                    <td>
+                                        <p class="ParagraphX1 ENG rc-Primary">${data[v].amount}</p>
+                                    </td>
+                                    <td>
+                                        <p class="ParagraphX1 ENG rc-Primary"><i
+                                                class=" del-mem material-icons rc-Error" onClick="onDeleteTransaction(${data[v].txId})">delete</i></p>
+                                    </td>
+                                    <td>
+                                        <p class="ParagraphX1 ENG rc-Primary"> <input
+                                                class="btn-pop-bl rc-Primary TH ParagraphX1" type="submit"
+                                                value="Backlist"></p>
+                                    </td>
+                                </tr>`
+                            )  
 
-/* date time */
-var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-var dateTime = date+' '+time;
-  /*document.getElementById("datetime").value = dateTime;*/
-
-function logout(){
-    var logout = confirm("Confirm to Log out")
-    if (!logout){
-        document.getElementById("checkLogout").href="./manageBooking.html"; 
+                        }
+                },
+            });
     }
-}
+    spanList.onclick = function () {
+        modalList.style.display = "none";
+        $("#popUp-list > div > div > div > table > tbody *tr").remove();
+        window.location.href = '@Url.Action("ManageBooking", "AdminSelectRoom")'+ '/' + window.location.search;
+    }
+
+    function  onDeleteTransaction(TxId){
+           $.ajax({
+                type: "Post",
+                url: '@Url.Action("DeleteTransaction", "AdminSelectRoom")',
+                data: { TxId },
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    $(`#popUp-list > div > div > div > table > tbody > #${TxId}`).remove();
+                },
+            });
+    
+    }
+
+    /* date time */
+    var today = new Date();
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date + ' ' + time;
+    /*document.getElementById("datetime").value = dateTime;*/
+
+    function changeMonth(e){
+        console.log("Change Month",e);
+        var url = new URL(window.location.href);
+        var roomId = url.searchParams.get("roomId");
+        window.location.href = '@Url.Action("ManageBooking", "AdminSelectRoom")'+`?roomId=${roomId}&month=${e.target.value}`;
+        console.log(c);
+    }
+    function logout() {
+        var logout = confirm("Confirm to Log out")
+        if (!logout) {
+            document.getElementById("checkLogout").href = "./manageBooking.html";
+        }
+    }
 </script>

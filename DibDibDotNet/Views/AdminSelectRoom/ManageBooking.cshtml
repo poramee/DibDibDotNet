@@ -36,7 +36,7 @@
     <div class="contain-col-2-history ">
         <form class="month-sel" action="/action_page.php">
             <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser"
-                value="@TempData["CurrentMonth"]">
+                value="@TempData["CurrentMonth"]" onchange="changeMonth(event)">
             <div class="right update-text ">
                 <p class="ParagraphX1 TH rc-Primary a-right">จำนวนเครื่องทั้งหมด : @TempData["Total"] เครื่อง
                     <br>อัปเดตล่าสุด : 6 / 01
@@ -339,6 +339,13 @@
     var dateTime = date + ' ' + time;
     /*document.getElementById("datetime").value = dateTime;*/
 
+    function changeMonth(e){
+        console.log("Change Month",e);
+        var url = new URL(window.location.href);
+        var roomId = url.searchParams.get("roomId");
+        window.location.href = '@Url.Action("ManageBooking", "AdminSelectRoom")'+`?roomId=${roomId}&month=${e.target.value}`;
+        console.log(c);
+    }
     function logout() {
         var logout = confirm("Confirm to Log out")
         if (!logout) {

@@ -13,7 +13,16 @@
     <link rel="stylesheet" href="/template/Global.css"> <!-- change -> /template/Global.css  -->
     <link rel="stylesheet" href="/css/HomeUser/HomeUserv2.css"> <!-- Edit name for import Css of this document -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <script>
+    function onMonthSelected(){
+        $.ajax({
+            url: "/HomeUser/GetUserReservationMonth",
+            type: "GET",
+            data: $("#monthSelectForm").serialize(),
+        });
+        return false;
+    }
+    </script>
 </header>
 
 <body class="BGG unselectable ">
@@ -84,14 +93,14 @@
             <p class="HeadingX6 ENG rc-Primary">
                 <b>ECC-501</b>
             </p>
-            <p class="ParagraphX1 ENG rc-Primary">@Model.Equipments["ECC-501"].Name</p>
+            <p class="ParagraphX1 ENG rc-Primary">@Model.Equipments[2].Name</p>
             <table border="0">
                 <tr>
                     <td>
                         <p class="Label TH rc-Secondary in-line">จอง</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments["ECC-501"].Booking</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[2].Booking</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -102,7 +111,7 @@
                         <p class="Label TH rc-Secondary in-line">คงเหลือ</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments["ECC-501"].Avaliable</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[2].Avaliable</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -113,7 +122,7 @@
                         <p class="Label TH rc-Secondary in-line">ทั้งหมด</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments["ECC-501"].Total</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[2].Total</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -131,14 +140,14 @@
             <p class="HeadingX6 ENG rc-Primary">
                 <b>ECC-502</b>
             </p>
-            <p class="ParagraphX1 ENG rc-Primary">@Model.Equipments["ECC-502"].Name</p>
+            <p class="ParagraphX1 ENG rc-Primary">@Model.Equipments[3].Name</p>
             <table border="0">
                 <tr>
                     <td>
                         <p class="Label TH rc-Secondary in-line">จอง</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments["ECC-502"].Booking</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[3].Booking</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -149,7 +158,7 @@
                         <p class="Label TH rc-Secondary in-line">คงเหลือ</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments["ECC-502"].Avaliable</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[3].Avaliable</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -160,7 +169,7 @@
                         <p class="Label TH rc-Secondary in-line">ทั้งหมด</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments["ECC-502"].Total</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[3].Total</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -177,14 +186,14 @@
             <p class="HeadingX6 ENG rc-Primary">
                 <b>ECC-504</b>
             </p>
-            <p class="ParagraphX1 ENG rc-Primary">@Model.Equipments["ECC-504"].Name</p>
+            <p class="ParagraphX1 ENG rc-Primary">@Model.Equipments[4].Name</p>
             <table border="0">
                 <tr>
                     <td>
                         <p class="Label TH rc-Secondary in-line">จอง</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments["ECC-504"].Booking</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[4].Booking</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -194,7 +203,7 @@
                     <p class="Label TH rc-Secondary in-line">คงเหลือ</p>
                 </td>
                 <td>
-                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments["ECC-504"].Avaliable</p>
+                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[4].Avaliable</p>
                 </td>
                 <td>
                     <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -204,7 +213,7 @@
                         <p class="Label TH rc-Secondary in-line">ทั้งหมด</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments["ECC-504"].Total</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[4].Total</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -221,14 +230,14 @@
             <p class="HeadingX6 ENG rc-Primary">
                 <b>ECC-601</b>
             </p>
-            <p class="ParagraphX1 ENG rc-Primary">@Model.Equipments["ECC-601"].Name</p>
+            <p class="ParagraphX1 ENG rc-Primary">@Model.Equipments[6].Name</p>
             <table border="0">
                 <tr>
                     <td>
                         <p class="Label TH rc-Secondary in-line">จอง</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments["ECC-601"].Booking</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[6].Booking</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -238,7 +247,7 @@
                     <p class="Label TH rc-Secondary in-line">คงเหลือ</p>
                 </td>
                 <td>
-                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments["ECC-601"].Avaliable</p>
+                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[6].Avaliable</p>
                 </td>
                 <td>
                     <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -248,7 +257,7 @@
                         <p class="Label TH rc-Secondary in-line">ทั้งหมด</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments["ECC-601"].Total</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[6].Total</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -265,14 +274,14 @@
             <p class="HeadingX6 ENG rc-Primary">
                 <b>ECC-602</b>
             </p>
-            <p class="ParagraphX1 ENG rc-Primary">@Model.Equipments["ECC-602"].Name</p>
+            <p class="ParagraphX1 ENG rc-Primary">@Model.Equipments[5].Name</p>
             <table border="0">
                 <tr>
                     <td>
                         <p class="Label TH rc-Secondary in-line">จอง</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments["ECC-602"].Booking</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[5].Booking</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -282,7 +291,7 @@
                     <p class="Label TH rc-Secondary in-line">คงเหลือ</p>
                 </td>
                 <td>
-                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments["ECC-602"].Avaliable</p>
+                    <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[5].Avaliable</p>
                 </td>
                 <td>
                     <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -292,7 +301,7 @@
                         <p class="Label TH rc-Secondary in-line">ทั้งหมด</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments["ECC-602"].Total</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[5].Total</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -356,7 +365,22 @@
 </div>
 
 <!--  pop up cart-->
-<partial name="_EquipmentReserveListPartial" />
+<div id="popUp-cart" class="modal-cart">
+    <div class="modal-content-cart DS-SS">
+        <span class="close-cart">
+            <i class="material-icons rc-Secondary">close</i>
+        </span>
+        <p class="HeadingX5 ENG rc-Primary in-line margin10">
+            <b>Equipment reservation list</b>
+        </p>
+        <form id="monthSelectForm" class="month-sel in-line">
+            <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser" onchange="onMonthSelected();"/>
+        </form>
+        <div id="EquipmentReserveListPartial">
+            <partial name="_EquipmentReserveListPartial"/>
+        </div>
+    </div>
+</div>
 
 </body>
 

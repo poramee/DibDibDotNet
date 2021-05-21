@@ -19,6 +19,10 @@
             url: "/HomeUser/GetUserReservationMonth",
             type: "GET",
             data: $("#monthSelectForm").serialize(),
+            success: function (result){
+                console.log(result);
+                $("#EquipmentReserveListPartial").html(result);
+            }
         });
         return false;
     }

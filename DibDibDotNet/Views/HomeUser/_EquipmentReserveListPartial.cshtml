@@ -1,3 +1,6 @@
+@using System.ComponentModel
+@using System.Collections
+
 <header>
     <title>User</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -13,8 +16,10 @@
 
 <div class="scroll-table-mem">
 
-    @foreach (Transaction transaction in ViewBag.TransactionList)
+    @foreach (var transaction in ViewBag.TransactionList)
     {
+        
+        
         <button type="button" class="collapsible ParagraphX1 ENG rc-Primary">@transaction.Date.ToShortDateString()</button>
         <div class="content">
             <div class="container-table ">
@@ -88,13 +93,15 @@
                                 </p>
                             </div>
                         </td>
-
+    
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     }
+    
+    
 
 
 
@@ -206,3 +213,79 @@
     @* </div> *@
 
 </div> <!-- scroll-->
+
+<script>
+    function goRoom() {
+        document.getElementById("roomID").href = "../UserSelecteRoom/userSelecteRoom.html";
+    }
+
+
+
+    var modal = document.getElementById("popUp-account");
+    var btn = document.getElementById("openPopUp-account");
+
+    var modal1 = document.getElementById("popUp-accountSetting");
+    var btn1 = document.getElementById("openPopUp-accountSetting");
+    var span = document.getElementsByClassName("close")[0];
+
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    btn1.onclick = function () {
+        modal1.style.display = "block";
+    }
+    span.onclick = function () {
+        modal1.style.display = "none";
+    }
+    function sentResetLink() {
+        alert("The system has successfully sent a link to reset your password.")
+    }
+
+    var modalCart = document.getElementById("popUp-cart");
+    var btnCart = document.getElementById("openPopUp-cart");
+    var spanCart = document.getElementsByClassName("close-cart")[0];
+
+    btnCart.onclick = function () {
+        modalCart.style.display = "block";
+    }
+    spanCart.onclick = function () {
+        modalCart.style.display = "none";
+    }
+
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            }
+            else {
+                content.style.display = "block";
+            }
+        });
+    }
+
+    /* date time */
+    var today = new Date();
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date + ' ' + time;
+    
+    
+    /* Show Alert from Controller*/
+    var showAlert = "@ViewBag.showAlert";
+    var alertMessage = "@ViewBag.alertMessage";
+    if (showAlert === "True"){
+        alert(alertMessage);
+    }
+</script>

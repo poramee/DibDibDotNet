@@ -75,27 +75,19 @@ namespace DibDibDotNet.Controllers
 
             var searchResult = _context.Transaction.Where(t => t.User.Id.Equals(idUser));
 
-            var searchResultList = searchResult.ToList();
+            var dateTimeUser = DateTime.Parse(monthUser + "-1");
+            searchResult =
+                searchResult.Where(t => t.Date.Year == dateTimeUser.Year && t.Date.Month == dateTimeUser.Month);
+            
             // foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(searchResultList[0]))
             // {
             //     string name = descriptor.Name;
             //     object value = descriptor.GetValue(searchResultList[0]);
             //     Console.WriteLine("{0}={1}", name, value);
             // }
-
-            var dateTimeUser = DateTime.Parse(monthUser + "-1");
-            searchResult =
-                searchResult.Where(t => t.Date.Year == dateTimeUser.Year && t.Date.Month == dateTimeUser.Month);
-
-
-            ViewBag.TransactionList = searchResult.ToList();
-            // foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(ViewBag.TransactionList[0]))
-            // {
-            //     string name = descriptor.Name;
-            //     object value = descriptor.GetValue(ViewBag.TransactionList[0]);
-            //     Console.WriteLine("{0}={1}", name, value);
-            // }
-
+            
+            ViewBag.TransactionList = searchResult.Select(t => new EquipmentReservationListViewModel{Equipment = t.Equipment, Date = t.Date, Period = t.Period, Amount = t.Amount}).ToList();
+            
             return PartialView("_EquipmentReserveListPartial");
         }
     }

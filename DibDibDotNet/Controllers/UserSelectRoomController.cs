@@ -31,8 +31,7 @@ namespace DibDibDotNet.Controllers
             Console.WriteLine(yearMonth);
             var equipmentInfo = _context.Equipment.FirstOrDefault(e => e.Room.Equals(roomId));
             ViewBag.Month = yearMonth;
-            ViewBag.EquipmentName = equipmentInfo.Name;
-            ViewBag.EquipmentRoom = equipmentInfo.Room;
+            ViewBag.Equipment = equipmentInfo;
 
             int daysInMonth =
                 DateTime.DaysInMonth(int.Parse(yearMonth.Split("-")[0]), int.Parse(yearMonth.Split("-")[1]));
@@ -64,15 +63,38 @@ namespace DibDibDotNet.Controllers
                     {
                         currentUserBookAmount += item.Amount;
                     }
-
-                    Console.WriteLine("UserSelectRoom");
-                    Console.WriteLine(currentUserBookAmount);
                     currentBookingData.TimeSlots.Add(new TimeSlot{Slot=slotI, BookCount = currentUserBookAmount, Balance = int.Parse(equipmentInfo.Total) - transactionBookAmount});
                 }
                 booking.Add(currentBookingData);
             }
 
             return View(booking);
+        }
+
+        [HttpGet]
+        [Route("UserSelectRoom/MakeReservation")]
+        public JsonResult MakeReservation(string date, int slot,int equipmentId, int amount)
+        {
+            var reservationDate = new DateTime(Int32.Parse(date.Split('-')[0]), Int32.Parse(date.Split('-')[1]), Int32.Parse(date.Split('-')[2]));
+            var userId = HttpContext.Session.GetString("idUser");
+            Console.WriteLine("MakeReservation");
+            Console.WriteLine(userId);
+            Console.WriteLine(reservationDate.ToString());
+            Console.WriteLine(slot);
+            Console.WriteLine(amount);
+
+            var newTransaction = new Transaction {
+                User = new User{Id = Int32.Parse(userId)},
+                Equipment = new Equipment{Id = equipmentId},
+                Period = slot,
+                Amount = amount,
+                Date = reservationDate
+            };
+            // 
+            
+            
+            
+            return Json("'status': 'success ");
         }
     }
 }

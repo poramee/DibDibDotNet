@@ -1,5 +1,6 @@
 @using System.Net.Sockets
 @using System.Reflection.Metadata
+@using Microsoft.AspNetCore.Http
 @using Microsoft.CodeAnalysis.CSharp.Syntax
 @using Microsoft.Extensions.WebEncoders.Testing
 @model List<Booking>
@@ -16,6 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/template/Global.css"> <!-- change -> /template/Global.css  -->
     <link rel="stylesheet" href="/css/UserSelectRoom/userSelectRoom.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Edit name for import Css of this document -->
 </header>
 
@@ -45,9 +47,9 @@
             <i class=" icon-back material-icons md-24 rc-Primary ">arrow_back</i>
         </a>
         <p class="HeadingX6 ENG rc-Primary in-line " href="#">
-            <b>@ViewBag.EquipmentRoom</b>
+            <b>@ViewBag.Equipment.Room</b>
         </p>
-        <p class="ParagraphX1 ENG rc-Primary in-line li-hi">@ViewBag.EquipmentName</p>
+        <p class="ParagraphX1 ENG rc-Primary in-line li-hi">@ViewBag.Equipment.Name</p>
     </div>
 
 </div>
@@ -57,8 +59,8 @@
     <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser" value="@ViewBag.Month" onchange="onMonthSelected()">
     <div class="right update-text ">
         <p class="ParagraphX1 TH rc-Primary a-right">
-            จำนวนเครื่องทั้งหมด : 50 เครื่อง <br>อัปเดตล่าสุด : 6 / 01
-            / 2021 10.00น.
+            จำนวนเครื่องทั้งหมด : @ViewBag.Equipment.Total เครื่อง <br>อัปเดตล่าสุด :
+            <span id="LastReload"> 6 / 01 / 2021 10.00น. </span>
         </p>
     </div>
 </form>
@@ -128,7 +130,7 @@
                         }
                         else if (slot.Balance > 0)
                         {
-                            <td onclick="openBook()" class="remain">
+                            <td onclick="openBook('@item.Day','@slot.Slot')" class="remain">
                                 <br><br>
                                 <p class="Paragraph1 TH rc-Primary in-line">
                                     คงเหลือ
@@ -164,23 +166,24 @@
             <i class="material-icons rc-Secondary">close</i>
         </span>
         <p class="HeadingX6 ENG rc-Primary in-line">
-            <b>ECC-602</b>
+            <b>@ViewBag.Equipment.Room</b>
         </p>
-        <p class="ParagraphX1 ENG rc-Primary in-line">STM32-nucleo f767zi</p><br>
+        <p class="ParagraphX1 ENG rc-Primary in-line">@ViewBag.Equipment.Name</p><br>
         <br>
         <p class="ParagraphX1 ENG rc-Primary in-line">
-            <b>1/02/2021</b>
+            <b id="popUp-book_date"></b>
         </p>
-        <p class="ParagraphX1 ENG rc-Primary in-line">&nbsp;&nbsp;&nbsp;<b>11:00 - 12:00 </b></p>
+        <p class="ParagraphX1 ENG rc-Primary in-line">&nbsp;&nbsp;&nbsp;<b id="popUp-book_slot"></b></p>
         <p class="ParagraphX1 TH rc-Primary in-line">&nbsp;น.</p>
         <div class="add-remove-text">
             <p class="HeadingX6 TH re-Primary left "> จองจำนวน</p>
             <p class="HeadingX6 TH re-Primary right "> เครื่อง</p>
         </div>
+        
         <form name="form1">
             <div class="add-remove">
                 <div class="left">
-                    <i onclick="document.form1.input1.value--"
+                    <i onclick="document.form1.input1.value > 1? document.form1.input1.value-- : null"
                        class="btn-remove material-icons md-24 rc-Primary  ">
                         remove
                     </i>
@@ -200,8 +203,8 @@
                 *สามารถตรวจสอบรายการจองหรือยกเลิกรายการจองได้จากรถเข็น<br> กรุณาตรวจสอบจำนวน เวลา และวันที่
                 อีกครั้งก่อนการยืนยัน
             </p>
-            <input class="btn-pop-book rc-BG ENG ParagraphX1 right " type="submit" value="Ok">
         </form>
+        <button class="btn-pop-book rc-BG ENG ParagraphX1 right " onclick="makeReservation();">Ok</button>
     </div>
 </div>
 </div> <!-- col 2-->
@@ -211,9 +214,22 @@
 <script>
     var modalBook = document.getElementById("popUp-book");
     var spanBook = document.getElementsByClassName("close-book")[0];
-    function openBook() {
+    
+    var currentSlotPopUp = 0;
+    var currentDatePopUp = 0;
+    
+    function openBook(day, slot) {
         modalBook.style.display = "block";
+        var date = document.getElementById("monthUser").value + "-" + day;
+        var dateObj = new Date(date);
+        
+        currentDatePopUp = date;
+        currentSlotPopUp = slot;
+        
+        document.getElementById("popUp-book_date").innerHTML = dateObj.getDate() + " / " + (dateObj.getMonth() + 1) + " / " + dateObj.getFullYear();
+        document.getElementById("popUp-book_slot").innerHTML = `${slot}:00 - ${parseInt(slot) + 1}:00`;        
     }
+    
     spanBook.onclick = function () {
         modalBook.style.display = "none";
     }
@@ -224,7 +240,12 @@
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date + ' ' + time;
     /*document.getElementById("datetime").value = dateTime;*/
-
+    
+    
+    var lastReloadDate = today.getDate() + ' / ' + (today.getMonth() + 1) + ' / ' + today.getFullYear() ;
+    var lastReloadTime = today.getHours() + ":" + today.getMinutes() + " น.";
+    document.getElementById("LastReload").innerHTML = lastReloadDate + "  " + lastReloadTime;
+    
     function logout() {
         var logout = confirm("Confirm to Log out")
         if (!logout) {
@@ -236,5 +257,27 @@
         var roomId = url.searchParams.get("roomId");
         var monthValue = document.getElementById("monthUser").value;
         window.location.href = '@Url.Action("UserSelectRoom", "UserSelectRoom")' + "?roomId=" + roomId + "&yearMonth=" + monthValue;
+    }
+    
+    
+    function makeReservation(){
+         var dataToSend = {
+            date: currentDatePopUp, 
+            slot: parseInt(currentSlotPopUp),
+            equipmentId: parseInt('@ViewBag.Equipment.Id'),
+            amount: document.form1.input1.value
+         }
+        
+        $.ajax({
+            url: "@Url.Action("MakeReservation", "UserSelectRoom")",
+            type: "GET",
+            data: dataToSend,
+            success: function (result){
+                window.alert("การจองสำเร็จ");
+                console.log(result);
+            }
+        });
+         window.location.reload(true);
+         return false;
     }
 </script>

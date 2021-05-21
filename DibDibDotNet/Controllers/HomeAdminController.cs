@@ -33,7 +33,6 @@ namespace DibDibDotNet.Controllers
       {
         var userBooking = _context.Transaction.Where(e => e.Equipment.Id.Equals(item.Id)).Count();
         item.Booking = userBooking;
-
       }
       return View(items);
     }

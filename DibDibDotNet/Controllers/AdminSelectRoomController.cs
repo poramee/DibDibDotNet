@@ -33,6 +33,25 @@ namespace DibDibDotNet.Controllers
         BookCount += item.Amount;
       }
       equipment.Booking = BookCount;
+
+      var equipmentTransactions = _context.EquipmentTransaction.Where(e => e.Equipment.Id.Equals(equipment.Id)).ToList();
+      int upCount = 0;
+      int downCount = 0;
+      foreach (var item in equipmentTransactions)
+      {
+        if (item.IsUp)
+        {
+          upCount += item.Amount;
+        }
+        else
+        {
+          downCount += item.Amount;
+        }
+
+      }
+      TempData["UpCount"] = upCount;
+      TempData["DownCount"] = downCount;
+
       switch (roomId)
       {
         case "ECC-501":
@@ -99,6 +118,7 @@ namespace DibDibDotNet.Controllers
       TempData["Total"] = equipment.Total;
       TempData["Year"] = month.Split("-")[0];
       TempData["Month"] = month.Split("-")[1];
+      TempData["LastReloadDate"] = DateTime.Now;
       int days = DateTime.DaysInMonth(int.Parse(month.Split("-")[0]), int.Parse(month.Split("-")[1]));
       var BookSlots = new List<Booking>();
 
@@ -116,15 +136,6 @@ namespace DibDibDotNet.Controllers
           }
           BookSlots[i].TimeSlots.Add(new TimeSlot { Slot = timeSlotIndex, BookCount = TransactionBookAmount, Balance = int.Parse(equipment.Total) - TransactionBookAmount });
         }
-        // for (int timeSlotIndex = 0; timeSlotIndex < BookSlots[i].TimeSlots.Length; timeSlotIndex++)
-        // {
-        //   BookSlots[i].TimeSlots.Append(new TimeSlot { Slot = timeSlotIndex + 9 });
-        // }
-        // @foreach (var item in BookSlots[i].TimeSlots)
-        // {
-        //     ite,
-        // }
-
       }
       return View(BookSlots.ToList());
     }
@@ -155,7 +166,9 @@ namespace DibDibDotNet.Controllers
     {
       var user = _context.User.Where(e => e.Id.Equals(int.Parse(userId))).ToList().FirstOrDefault();
       user.IsValid = !user.IsValid;
+      var equipmentTransaction = _context.Transaction.Where(e => e.User.Id.Equals(user.Id)).ToList();
       _context.Update(user);
+      _context.RemoveRange(equipmentTransaction);
       await _context.SaveChangesAsync();
       return RedirectToAction("MemberRoom");
     }
@@ -178,6 +191,19 @@ namespace DibDibDotNet.Controllers
       _context.Remove(transaction);
       await _context.SaveChangesAsync();
       return Json(TxId);
+    }
+
+    [HttpPost]
+    [Route("AdminSelectRoom/BlackListUserTransaction")]
+    public async Task<JsonResult> BlackListUserTransaction(string UserId)
+    {
+      var user = _context.User.Where(e => e.Id.Equals(int.Parse(UserId))).ToList().FirstOrDefault();
+      user.IsValid = false;
+      var equipmentTransaction = _context.Transaction.Where(e => e.User.Id.Equals(user.Id)).ToList();
+      _context.Update(user);
+      _context.RemoveRange(equipmentTransaction);
+      await _context.SaveChangesAsync();
+      return Json(UserId);
     }
   }
 }

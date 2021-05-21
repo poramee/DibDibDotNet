@@ -17,7 +17,7 @@
 <body class="BGG unselectable">
     <div class="topnav">
         <div class="right">
-            <a href="#"><i class="material-icons md-20 rc-Muted ">refresh</i></a>
+            <a href="javascript:window.location.reload(true)"><i class="material-icons md-20 rc-Muted ">refresh</i></a>
             <a class="ParagraphX2 ENG rc-Muted" href="@Url.Action("HomeAdmin","HomeAdmin")">Admin</a>
             <a id="checkLogout" onclick="logout()" class="ParagraphX2 ENG rc-Muted"
                 href="@Url.Action("Login","LoginSignup")">Logout</a>
@@ -39,8 +39,7 @@
                 value="@TempData["CurrentMonth"]" onchange="changeMonth(event)">
             <div class="right update-text ">
                 <p class="ParagraphX1 TH rc-Primary a-right">จำนวนเครื่องทั้งหมด : @TempData["Total"] เครื่อง
-                    <br>อัปเดตล่าสุด : 6 / 01
-                    / 2021 10.00น.
+                    <br>อัปเดตล่าสุด : @TempData["LastReloadDate"]
                 </p>
             </div>
         </form>
@@ -300,9 +299,9 @@
                                         <p class="ParagraphX1 ENG rc-Primary"><i
                                                 class=" del-mem material-icons rc-Error" onClick="onDeleteTransaction(${data[v].txId})">delete</i></p>
                                     </td>
-                                    <td>
+                                    <td id="${data[v].user.id}">
                                         <p class="ParagraphX1 ENG rc-Primary"> <input
-                                                class="btn-pop-bl rc-Primary TH ParagraphX1" type="submit"
+                                                class="btn-pop-bl rc-Primary TH ParagraphX1" type="submit" onClick="onBlackListUser(${data[v].user.id})"
                                                 value="Backlist"></p>
                                     </td>
                                 </tr>`
@@ -327,6 +326,26 @@
                 traditional: true,
                 success: function (data) {
                     $(`#popUp-list > div > div > div > table > tbody > #${TxId}`).remove();
+                },
+            });
+    
+    }
+
+        function  onBlackListUser(UserId){
+           $.ajax({
+                type: "Post",
+                url: '@Url.Action("BlackListUserTransaction", "AdminSelectRoom")',
+                data: { UserId },
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                $(`#popUp-list > div > div > div > table > tbody > *tr > #${UserId}`).replaceWith(`
+                        <td id="${UserId}">
+                            <p class="ParagraphX1 ENG rc-Primary">
+                                <input class="btn-pop-bl rc-Primary TH ParagraphX1"  type="submit" value="Done">
+                            </p>
+                        </td>`);
+                   console.log("Black List Done");
                 },
             });
     

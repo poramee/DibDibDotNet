@@ -17,7 +17,7 @@
 <body class="BGG">
     <div class="topnav">
         <div class="right">
-            <a href="#">
+            <a href="javascript:window.location.reload(true)">
                 <i class="material-icons md-20 rc-Muted ">refresh</i>
             </a>
             <a class="ParagraphX2 ENG rc-Muted" href="@Url.Action("HomeAdmin","HomeAdmin")">Admin</a>
@@ -67,7 +67,7 @@
                         <p class="ParagraphX1 TH rc-Secondary in-line">เพิ่มทั้งหมด</p>
                     </td>
                     <td>
-                        <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;13</p>
+                        <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;@TempData["UpCount"]</p>
                     </td>
                     <td>
                         <p class="ParagraphX1 TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -77,7 +77,7 @@
                             <p class="ParagraphX1 TH rc-Secondary in-line">ลบทั้งหมด</p>
                         </td>
                         <td>
-                            <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;1</p>
+                            <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;@TempData["DownCount"]</p>
                         </td>
                         <td>
                             <p class="ParagraphX1 TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>

@@ -52,6 +52,9 @@ namespace DibDibDotNet.Controllers
             int idUser = Int32.Parse(HttpContext.Session.GetString("idUser"));
             HomeUserViewModel homeUserModel = new HomeUserViewModel();
             homeUserModel.CurrentUser = _context.User.Find(idUser);
+            homeUserModel.CurrentUser.FirstName = homeUserModel.CurrentUser.FullName.Split(" ")[0];
+            homeUserModel.CurrentUser.LastName = homeUserModel.CurrentUser.FullName.Split(" ")[1];
+        
             var equipmentList = _context.Equipment.ToList();
 
             foreach (var e in equipmentList)
@@ -60,7 +63,7 @@ namespace DibDibDotNet.Controllers
                 homeUserModel.Equipments.Add(e.Id, e);
             }
 
-            ViewBag.TransactionList = new List<Transaction>();
+            ViewBag.TransactionList = new List<EquipmentReservationListViewModel>();
 
             return View(homeUserModel);
         }

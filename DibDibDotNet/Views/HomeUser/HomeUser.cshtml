@@ -341,17 +341,17 @@
             <p class="ParagraphX1 ENG rc-Primary">Change your information</p><br class="brr md-h15">
 
             <span class="ParagraphX2 ENG rc-Secondary">First Name</span><br class="brr md-h5">
-            <input class="input-login" asp-for="NewAccountInfo.FirstName" required/> <br class="brr md-h20">
+            <input class="input-login" asp-for="NewAccountInfo.FirstName" value="@Model.CurrentUser.FirstName" required/> <br class="brr md-h20">
             <span asp-validation-for="NewAccountInfo.FirstName" class="text-danger"></span>
             @* <input class="input-login" type="text" name="firstName"> <br class="brr md-h20"> *@
 
             <span class="ParagraphX2 ENG rc-Secondary">Last Name</span><br class="brr md-h5">
-            <input class="input-login" asp-for="NewAccountInfo.LastName" required/> <br class="brr md-h20">
+            <input class="input-login" asp-for="NewAccountInfo.LastName" value="@Model.CurrentUser.LastName" required/> <br class="brr md-h20">
             <span asp-validation-for="NewAccountInfo.LastName" class="text-danger"></span>
             @* <input class="input-login" type="text" name="lastName"> <br class="brr md-h20"> *@
 
             <span class="ParagraphX2 ENG rc-Secondary">Email</span><br class="brr md-h5">
-            <input asp-for="NewAccountInfo.Email" class="input-login" type="email"> <br class="brr md-h20">
+            <input asp-for="NewAccountInfo.Email" class="input-login" type="email" value="@Model.CurrentUser.Email"> <br class="brr md-h20">
             @* <input class="input-login" type="email" name="email"> <br class="brr md-h20"> *@
 
             <span class="ParagraphX2 ENG rc-Secondary">Current Password</span><br class="brr md-h5">

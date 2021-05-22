@@ -26,9 +26,10 @@
         }
     }
     
-    @foreach (var transaction in ViewBag.TransactionList)
+    @foreach (var tt in ViewBag.TransactionList)
     {
-        <button type="button" class="collapsible ParagraphX1 ENG rc-Primary">@transaction.Date.ToShortDateString()</button>
+        EquipmentReservationListViewModel transaction = tt;
+        <button type="button" class="collapsible ParagraphX1 ENG rc-Primary">@transaction.Date.Day / @transaction.Date.Month / @transaction.Date.Year</button>
         <div class="content">
             <div class="container-table ">
                 <table class="w3-table w3-bordered ">

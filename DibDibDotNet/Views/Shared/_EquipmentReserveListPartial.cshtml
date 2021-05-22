@@ -16,6 +16,15 @@
 
 
 <div class="scroll-table-mem">
+    @{
+        List<EquipmentReservationListViewModel> transactionList = ViewBag.TransactionList;
+        if (transactionList.Count() == 0)
+        {
+            <span>
+                No Record
+            </span>
+        }
+    }
     
     @foreach (var transaction in ViewBag.TransactionList)
     {
@@ -86,9 +95,10 @@
                         <td>
                             <div class="verticalLine">
                                 <p class="ParagraphX1 ENG rc-Secondary">
-                                    <input
-                                        class="btn-pop-bl rc-Primary TH ParagraphX1" type="submit"
-                                        value="Cancel">
+                                    <button
+                                        class="btn-pop-bl rc-Primary TH ParagraphX1" onclick="cancelTransaction('@transaction.TransactionId')">
+                                    Cancel
+                                    </button>
                                 </p>
                             </div>
                         </td>
@@ -226,6 +236,20 @@
             }
             else {
                 content.style.display = "block";
+            }
+        });
+    }
+    
+    function cancelTransaction(transactionId){
+        $.ajax({
+            url: "/HomeUser/CancelTransaction",
+            type: "GET",
+            data: {
+                transactionId: transactionId
+            },
+            success: function (result){
+                window.alert("Cancel Complete");
+                location.reload();
             }
         });
     }

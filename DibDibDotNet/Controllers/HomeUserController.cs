@@ -95,10 +95,23 @@ namespace DibDibDotNet.Controllers
             //     Console.WriteLine("{0}={1}", name, value);
             // }
             
-            var temp = searchResult.Select(t => new EquipmentReservationListViewModel{Equipment = t.Equipment, Date = t.Date, Period = t.Period, Amount = t.Amount}).ToList();
+            var temp = searchResult.Select(t => new EquipmentReservationListViewModel{TransactionId = t.Id,Equipment = t.Equipment, Date = t.Date, Period = t.Period, Amount = t.Amount}).ToList();
 
             ViewBag.TransactionList = temp;
             return PartialView("_EquipmentReserveListPartial");
+        }
+        
+        
+        [HttpGet]
+        public JsonResult CancelTransaction(int transactionId)
+        {
+            Console.WriteLine("CancelTransaction");
+            Console.WriteLine(transactionId);
+            var transaction = new Transaction { Id = transactionId }; 
+            _context.Remove(transaction); 
+            _context.SaveChanges();
+            
+            return Json("'status': 'success'");
         }
     }
 }

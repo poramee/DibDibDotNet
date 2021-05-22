@@ -25,6 +25,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    overflow: scroll;
 }
 
 
@@ -104,4 +105,13 @@
 .btn-pop-bl:hover{
     background-color:  #4a494d;
     color: var(--Bright);
+}
+
+.scroll-table-mem{
+    position: relative;
+    top:20px;
+    /*overflow: auto;*/
+    margin: auto;
+    width: 100%;
+    height: 80%;
 }

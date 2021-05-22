@@ -73,6 +73,9 @@ namespace DibDibDotNet.Controllers
     public async Task<IActionResult> SignUp(Register userInfo)
     {
       // TODO: Make Register Validation Here
+      
+      
+      
       if (ModelState.IsValid && userInfo.Email.Length > 0)
       {
         var newUser = new User { Email = userInfo.Email, FullName = userInfo.FirstName + ' ' + userInfo.LastName, Password = userInfo.Password, IsAdmin = false, IsValid = true };

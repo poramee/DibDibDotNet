@@ -9,13 +9,14 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/template/Global.css"> <!-- change -> /template/Global.css  -->
-    <link rel="stylesheet" href="/css/HomeUser/HomeUserv2.css"> <!-- Edit name for import Css of this document -->
+    @* <link rel="stylesheet" href="/css/HomeUser/HomeUserv2.css"> <!-- Edit name for import Css of this document --> *@
+    <link rel="stylesheet" href="/css/EquipmentReserveListPartial/EquipmentReserveListPartial.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </header>
 
 
 <div class="scroll-table-mem">
-
+    
     @foreach (var transaction in ViewBag.TransactionList)
     {
         <button type="button" class="collapsible ParagraphX1 ENG rc-Primary">@transaction.Date.ToShortDateString()</button>
@@ -91,15 +92,15 @@
                                 </p>
                             </div>
                         </td>
-    
+
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     }
-    
-    
+
+
 
 
 
@@ -213,50 +214,6 @@
 </div> <!-- scroll-->
 
 <script>
-    function goRoom() {
-        document.getElementById("roomID").href = "../UserSelecteRoom/userSelecteRoom.html";
-    }
-
-
-
-    var modal = document.getElementById("popUp-account");
-    var btn = document.getElementById("openPopUp-account");
-
-    var modal1 = document.getElementById("popUp-accountSetting");
-    var btn1 = document.getElementById("openPopUp-accountSetting");
-    var span = document.getElementsByClassName("close")[0];
-
-    btn.onclick = function () {
-        modal.style.display = "block";
-    }
-
-    window.onclick = function (event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    }
-
-    btn1.onclick = function () {
-        modal1.style.display = "block";
-    }
-    span.onclick = function () {
-        modal1.style.display = "none";
-    }
-    function sentResetLink() {
-        alert("The system has successfully sent a link to reset your password.")
-    }
-
-    var modalCart = document.getElementById("popUp-cart");
-    var btnCart = document.getElementById("openPopUp-cart");
-    var spanCart = document.getElementsByClassName("close-cart")[0];
-
-    btnCart.onclick = function () {
-        modalCart.style.display = "block";
-    }
-    spanCart.onclick = function () {
-        modalCart.style.display = "none";
-    }
-
     var coll = document.getElementsByClassName("collapsible");
     var i;
 
@@ -271,19 +228,5 @@
                 content.style.display = "block";
             }
         });
-    }
-
-    /* date time */
-    var today = new Date();
-    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date + ' ' + time;
-    
-    
-    /* Show Alert from Controller*/
-    var showAlert = "@ViewBag.showAlert";
-    var alertMessage = "@ViewBag.alertMessage";
-    if (showAlert === "True"){
-        alert(alertMessage);
     }
 </script>

@@ -16,31 +16,34 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/template/Global.css"> <!-- change -> /template/Global.css  -->
+    <link rel="stylesheet" href="/css/EquipmentReserveListPartial/EquipmentReserveListPartial.css">
     <link rel="stylesheet" href="/css/UserSelectRoom/userSelectRoom.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Edit name for import Css of this document -->
 </header>
 
 <body class="BGG unselectable">
+
 <div class="topnav">
     <div class="right">
         <a href="javascript:window.location.reload(true)">
             <i class="material-icons md-20 rc-Muted ">refresh</i>
         </a>
-        <a href="#">
+        <a id="openPopUp-cart" target="_parent">
             <i class="material-icons md-20 rc-Muted ">add_shopping_cart</i>
             <mark
                 class="noti-cart Label ENG rc-Bright">
-                30
+                @ViewBag.NumUserBooked
             </mark>
         </a>
-        <p class="ParagraphX2 ENG rc-Muted" href="#">Quota: 4</p>
+        <p class="ParagraphX2 ENG rc-Muted" href="#">Quota: @(5 - ViewBag.NumUserBooked)</p>
         <a href="#">
             <i class="material-icons md-20 rc-Success ">account_circle</i>
         </a>
         <!-- <a id="checkLogout" onclick="logout()"class="ParagraphX2 ENG rc-Muted" href="../LoginSignup/Login.html">Logout</a>-->
     </div>
 </div>
+
 <div class="room-name">
     <div class="left">
         <a href="@Url.Action("HomeUser", "HomeUser")">
@@ -53,112 +56,115 @@
     </div>
 
 </div>
+
 <!-- righ -->
 <div class="contain-col-2-history ">
-<form class="month-sel" action="/action_page.php">
-    <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser" value="@ViewBag.Month" onchange="onMonthSelected()">
-    <div class="right update-text ">
-        <p class="ParagraphX1 TH rc-Primary a-right">
-            จำนวนเครื่องทั้งหมด : @ViewBag.Equipment.Total เครื่อง <br>อัปเดตล่าสุด :
-            <span id="LastReload"> 6 / 01 / 2021 10.00น. </span>
-        </p>
-    </div>
-</form>
-<div class="scroll-table">
-    <div class="container-table ">
-        <table class="w3-table w3-bordered w3-centered">
-            <thead class="hd-table ">
-            <tr>
-                <th>
-                    <p class="ParagraphX1 TH rc-Primary in-line">วัน/เวลา</p>
-                </th>
-                <th>
-                    <p class="ParagraphX1 TH rc-Primary in-line ">9:00 น</p>
-                </th>
-                <th>
-                    <p class="ParagraphX1 TH rc-Primary in-line">10.00 น.</p>
-                </th>
-                <th>
-                    <p class="ParagraphX1 TH rc-Primary in-line">11.00 น.</p>
-                </th>
-                <th>
-                    <p class="ParagraphX1 TH rc-Primary in-line">12.00 น.</p>
-                </th>
-                <th>
-                    <p class="ParagraphX1 TH rc-Primary in-line">13.00 น.</p>
-                </th>
-                <th>
-                    <p class="ParagraphX1 TH rc-Primary in-line">14.00 น.</p>
-                </th>
-                <th>
-                    <p class="ParagraphX1 TH rc-Primary in-line">15.00 น.</p>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model)
-            {
+    <form class="month-sel" action="/action_page.php">
+        <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser" value="@ViewBag.Month" onchange="onMonthSelected()">
+        <div class="right update-text ">
+            <p class="ParagraphX1 TH rc-Primary a-right">
+                จำนวนเครื่องทั้งหมด : @ViewBag.Equipment.Total เครื่อง <br>อัปเดตล่าสุด :
+                <span id="LastReload"> 6 / 01 / 2021 10.00น. </span>
+            </p>
+        </div>
+    </form>
+    <div class="scroll-table">
+        <div class="container-table ">
+            <table class="w3-table w3-bordered w3-centered">
+                <thead class="hd-table ">
                 <tr>
-                    @if (item.Day == 0)
-                    {
-                        continue;
-                    }
-                    <td>
-                        <br><br>
-                        <p class="HeadingX6 TH rc-Primary in-line">@item.Day</p>
-                    </td>
-
-                    @foreach (var slot in item.TimeSlots)
-                    {
-                        @if (slot.BookCount > 0)
-                        {
-                            <td class="book ">
-                                <br>
-                                <p class="HeadingX6 TH rc-Success in-line ">จอง @slot.BookCount เครื่อง</p><br>
-                                <p class="Paragraph1 TH rc-Primary in-line">
-                                    คงเหลือ
-                                    <span
-                                        class="Paragraph1 TH rc-Error in-line">
-                                        @slot.Balance
-                                    </span> เครื่อง
-                                </p>
-                                <p class="Label TH rc-Error ">
-                                    * ไม่สามารถเปลี่ยนแปลงได้ แต่สามารถยกเลิกการจองได้ที่
-                                    "รถเข็น"
-                                </p>
-                            </td>
-                        }
-                        else if (slot.Balance > 0)
-                        {
-                            <td onclick="openBook('@item.Day','@slot.Slot')" class="remain">
-                                <br><br>
-                                <p class="Paragraph1 TH rc-Primary in-line">
-                                    คงเหลือ
-                                    <span
-                                        class=" HeadingX6 TH rc-Error in-line">
-                                        @slot.Balance
-                                    </span> เครื่อง
-                                </p>
-                            </td>
-                        }
-                        else
-                        {
-                            <td class="full">
-                                <br>
-                                <p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br>
-                                <i
-                                    class="material-icons md-48 rc-Grey6 ">
-                                    access_time
-                                </i>
-                            </td>
-                        }
-                    }
+                    <th>
+                        <p class="ParagraphX1 TH rc-Primary in-line">วัน/เวลา</p>
+                    </th>
+                    <th>
+                        <p class="ParagraphX1 TH rc-Primary in-line ">9:00 น</p>
+                    </th>
+                    <th>
+                        <p class="ParagraphX1 TH rc-Primary in-line">10.00 น.</p>
+                    </th>
+                    <th>
+                        <p class="ParagraphX1 TH rc-Primary in-line">11.00 น.</p>
+                    </th>
+                    <th>
+                        <p class="ParagraphX1 TH rc-Primary in-line">12.00 น.</p>
+                    </th>
+                    <th>
+                        <p class="ParagraphX1 TH rc-Primary in-line">13.00 น.</p>
+                    </th>
+                    <th>
+                        <p class="ParagraphX1 TH rc-Primary in-line">14.00 น.</p>
+                    </th>
+                    <th>
+                        <p class="ParagraphX1 TH rc-Primary in-line">15.00 น.</p>
+                    </th>
                 </tr>
-            }
-            </tbody>
-        </table>
-    </div>
-</div> <!-- scroll-->
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @if (item.Day == 0)
+                        {
+                            continue;
+                        }
+                        <td>
+                            <br><br>
+                            <p class="HeadingX6 TH rc-Primary in-line">@item.Day</p>
+                        </td>
+
+                        @foreach (var slot in item.TimeSlots)
+                        {
+                            @if (slot.BookCount > 0)
+                            {
+                                <td class="book ">
+                                    <br>
+                                    <p class="HeadingX6 TH rc-Success in-line ">จอง @slot.BookCount เครื่อง</p><br>
+                                    <p class="Paragraph1 TH rc-Primary in-line">
+                                        คงเหลือ
+                                        <span
+                                            class="Paragraph1 TH rc-Error in-line">
+                                            @slot.Balance
+                                        </span> เครื่อง
+                                    </p>
+                                    <p class="Label TH rc-Error ">
+                                        * ไม่สามารถเปลี่ยนแปลงได้ แต่สามารถยกเลิกการจองได้ที่
+                                        "รถเข็น"
+                                    </p>
+                                </td>
+                            }
+                            else if (slot.Balance > 0)
+                            {
+                                <td onclick="openBook('@item.Day','@slot.Slot')" class="remain">
+                                    <br><br>
+                                    <p class="Paragraph1 TH rc-Primary in-line">
+                                        คงเหลือ
+                                        <span
+                                            class=" HeadingX6 TH rc-Error in-line">
+                                            @slot.Balance
+                                        </span> เครื่อง
+                                    </p>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="full">
+                                    <br>
+                                    <p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br>
+                                    <i
+                                        class="material-icons md-48 rc-Grey6 ">
+                                        access_time
+                                    </i>
+                                </td>
+                            }
+                        }
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div> <!-- scroll-->
+</div> <!-- col 2-->
+
 <!--  pop up add-->
 <div id="popUp-book" class="modal">
     <div class="modal-content DS-SS">
@@ -179,7 +185,7 @@
             <p class="HeadingX6 TH re-Primary left "> จองจำนวน</p>
             <p class="HeadingX6 TH re-Primary right "> เครื่อง</p>
         </div>
-        
+
         <form name="form1">
             <div class="add-remove">
                 <div class="left">
@@ -207,10 +213,29 @@
         <button class="btn-pop-book rc-BG ENG ParagraphX1 right " onclick="makeReservation();">Ok</button>
     </div>
 </div>
-</div> <!-- col 2-->
+
+<!--  pop up cart-->
+<div id="popUp-cart" class="modal-cart" display="none">
+    <div class="modal-content-cart DS-SS">
+        <span class="close-cart">
+            <i class="material-icons rc-Secondary">close</i>
+        </span>
+        <p class="HeadingX5 ENG rc-Primary in-line margin10">
+            <b>Equipment reservation list</b>
+        </p>
+        <form id="monthSelectForm" class="month-sel in-line">
+            <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser" value="@ViewBag.Month" onchange="onMonthCartSelected();"/>
+        </form>
+        <div id="EquipmentReserveListPartial">
+            @Html.Partial("~/Views/Shared/_EquipmentReserveListPartial.cshtml");
+        </div>
+    </div>
+</div>
+
 </body>
 
 </html>
+
 <script>
     var modalBook = document.getElementById("popUp-book");
     var spanBook = document.getElementsByClassName("close-book")[0];
@@ -233,6 +258,19 @@
     spanBook.onclick = function () {
         modalBook.style.display = "none";
     }
+    
+    // Cart
+    var modalCart = document.getElementById("popUp-cart");
+    var btnCart = document.getElementById("openPopUp-cart");
+    var spanCart = document.getElementsByClassName("close-cart")[0];
+
+    btnCart.onclick = function () {
+        modalCart.style.display = "block";
+        onMonthCartSelected();
+    }
+    spanCart.onclick = function () {
+        modalCart.style.display = "none";
+    }
 
     /* date time */
     var today = new Date();
@@ -244,6 +282,7 @@
     
     var lastReloadDate = today.getDate() + ' / ' + (today.getMonth() + 1) + ' / ' + today.getFullYear() ;
     var lastReloadTime = today.getHours() + ":" + today.getMinutes().toString().padStart(2,"0") + " น.";
+    
     document.getElementById("LastReload").innerHTML = lastReloadDate + "  " + lastReloadTime;
     
     function logout() {
@@ -277,5 +316,18 @@
                 console.log(result);
             }
         });
+    }
+    
+    function onMonthCartSelected(){
+        $.ajax({
+            url: "/HomeUser/GetUserReservationMonth",
+            type: "GET",
+            data: $("#monthSelectForm").serialize(),
+            success: function (result){
+                console.log(result);
+                $("#EquipmentReserveListPartial").html(result);
+            }
+        });
+        return false;
     }
 </script>

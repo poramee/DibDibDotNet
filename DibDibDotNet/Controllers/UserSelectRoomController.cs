@@ -25,8 +25,17 @@ namespace DibDibDotNet.Controllers
 
         public IActionResult UserSelectRoom(string roomId, string yearMonth)
         {
-
             var currentUser = Int32.Parse(HttpContext.Session.GetString("idUser"));
+
+            ViewBag.TransactionList = new List<EquipmentReservationListViewModel>(); // For Cart Popup
+            ViewBag.NumUserBooked = 0;
+            var userTransactionListAll= _context.Transaction.Where(t => t.User.Id.Equals(currentUser));
+            foreach (var transaction in userTransactionListAll)
+            {
+                ViewBag.NumUserBooked += transaction.Amount;
+            }
+
+            
             Console.WriteLine(roomId);
             Console.WriteLine(yearMonth);
             var equipmentInfo = _context.Equipment.FirstOrDefault(e => e.Room.Equals(roomId));

@@ -2,8 +2,7 @@
 @model DibDibDotNet.Models.HomeUserViewModel;
 
 @{
-    
-    ViewBag.YearMonthForRedirect = DateTime.Now.Year.ToString() + '-' + DateTime.Now.Month.ToString().PadLeft(2, '0');
+    ViewBag.CurrentYearMonth = DateTime.Now.Year.ToString() + '-' + DateTime.Now.Month.ToString().PadLeft(2, '0');
 }
 
 
@@ -45,10 +44,10 @@
             <i class="material-icons md-20 rc-Muted ">add_shopping_cart</i>
             <mark
                 class="noti-cart Label ENG rc-Bright">
-                30
+                 @ViewBag.NumUserBooked 
             </mark>
         </a>
-        <p class="ParagraphX2 ENG rc-Muted" href="#">Quota: 4</p>
+        <p class="ParagraphX2 ENG rc-Muted" href="#">Quota: @(5 - ViewBag.NumUserBooked)</p>
         <a id="openPopUp-account" target="_parent">
             <i
                 class="material-icons md-20 rc-Success ">
@@ -98,7 +97,7 @@
 <div class="parent-card">
 @* ECC-501  Id = 2*@
 <div class="div1-grid">
-    <a href="@Url.Action("UserSelectRoom", "UserSelectRoom", new {roomId = "ECC-501", yearMonth=ViewBag.YearMonthForRedirect})">
+    <a href="@Url.Action("UserSelectRoom", "UserSelectRoom", new {roomId = "ECC-501", yearMonth=ViewBag.CurrentYearMonth})">
         <div class="card-preview DS-SS">
             <img class="img-card" src="/Assets/ImageRoom501.png" alt="Room501">
             <p class="HeadingX6 ENG rc-Primary">
@@ -145,7 +144,7 @@
 </div>
 @* ECC-502  Id = 3*@
 <div class="div2-grid">
-    <a href="@Url.Action("UserSelectRoom", "UserSelectRoom", new {roomId = "ECC-502", yearMonth=ViewBag.YearMonthForRedirect})">
+    <a href="@Url.Action("UserSelectRoom", "UserSelectRoom", new {roomId = "ECC-502", yearMonth=ViewBag.CurrentYearMonth})">
         <div class="card-preview DS-SS">
             <img class="img-card" src="/Assets/ImageRoom502.png" alt="Room502">
             <p class="HeadingX6 ENG rc-Primary">
@@ -193,7 +192,7 @@
 
 @* ECC-504  Id = 4*@
 <div class="div3-grid">
-    <a href="@Url.Action("UserSelectRoom", "UserSelectRoom", new {roomId = "ECC-504", yearMonth=ViewBag.YearMonthForRedirect})">
+    <a href="@Url.Action("UserSelectRoom", "UserSelectRoom", new {roomId = "ECC-504", yearMonth=ViewBag.CurrentYearMonth})">
         <div class="card-preview DS-SS">
             <img class="img-card" src="/Assets/ImageRoom504.png" alt="Room504">
             <p class="HeadingX6 ENG rc-Primary">
@@ -239,7 +238,7 @@
 
 @* ECC-601  Id = 6*@
 <div class="div4-grid">
-    <a href="@Url.Action("UserSelectRoom", "UserSelectRoom", new {roomId = "ECC-601", yearMonth=ViewBag.YearMonthForRedirect})">
+    <a href="@Url.Action("UserSelectRoom", "UserSelectRoom", new {roomId = "ECC-601", yearMonth=ViewBag.CurrentYearMonth})">
         <div class="card-preview DS-SS">
             <img class="img-card" src="/Assets/ImageRoom601.png" alt="Room601">
             <p class="HeadingX6 ENG rc-Primary">
@@ -285,7 +284,7 @@
 
 @* ECC-602  Id = 5*@
 <div class="div5-grid">
-    <a href="@Url.Action("UserSelectRoom", "UserSelectRoom", new {roomId = "ECC-602", yearMonth=ViewBag.YearMonthForRedirect})">
+    <a href="@Url.Action("UserSelectRoom", "UserSelectRoom", new {roomId = "ECC-602", yearMonth=ViewBag.CurrentYearMonth})">
         <div class="card-preview DS-SS">
             <img class="img-card" src="/Assets/ImageRoom602.png" alt="Room602">
             <p class="HeadingX6 ENG rc-Primary">
@@ -391,10 +390,10 @@
             <b>Equipment reservation list</b>
         </p>
         <form id="monthSelectForm" class="month-sel in-line">
-            <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser" onchange="onMonthSelected();"/>
+            <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser" value="@ViewBag.CurrentYearMonth" onchange="onMonthSelected();"/>
         </form>
         <div id="EquipmentReserveListPartial">
-            <partial name="_EquipmentReserveListPartial"/>
+            @Html.PartialAsync("~/Views/Shared/_EquipmentReserveListPartial.cshtml");
         </div>
     </div>
 </div>
@@ -408,8 +407,6 @@
     function goRoom() {
         document.getElementById("roomID").href = "../UserSelecteRoom/userSelecteRoom.html";
     }
-
-
 
     var modal = document.getElementById("popUp-account");
     var btn = document.getElementById("openPopUp-account");
@@ -444,6 +441,7 @@
 
     btnCart.onclick = function () {
         modalCart.style.display = "block";
+        onMonthSelected();
     }
     spanCart.onclick = function () {
         modalCart.style.display = "none";
@@ -470,6 +468,8 @@
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date + ' ' + time;
+    
+    
     
     
     /* Show Alert from Controller*/

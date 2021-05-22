@@ -59,12 +59,18 @@ namespace DibDibDotNet.Controllers
 
             foreach (var e in equipmentList)
             {
-                e.Booking = _context.Transaction.Count(a => a.Equipment.Id.Equals(e.Id));
+                e.Booking = _context.Transaction.Count(a => a.Equipment.Id.Equals(e.Id)); // TODO: This algorithm might be wrong.
                 homeUserModel.Equipments.Add(e.Id, e);
             }
 
             ViewBag.TransactionList = new List<EquipmentReservationListViewModel>();
-
+            ViewBag.NumUserBooked = 0;
+            var userTransactionList= _context.Transaction.Where(t => t.User.Id.Equals(idUser));
+            foreach (var transaction in userTransactionList)
+            {
+                ViewBag.NumUserBooked += transaction.Amount;
+            }
+            
             return View(homeUserModel);
         }
 
@@ -89,8 +95,9 @@ namespace DibDibDotNet.Controllers
             //     Console.WriteLine("{0}={1}", name, value);
             // }
             
-            ViewBag.TransactionList = searchResult.Select(t => new EquipmentReservationListViewModel{Equipment = t.Equipment, Date = t.Date, Period = t.Period, Amount = t.Amount}).ToList();
-            
+            var temp = searchResult.Select(t => new EquipmentReservationListViewModel{Equipment = t.Equipment, Date = t.Date, Period = t.Period, Amount = t.Amount}).ToList();
+
+            ViewBag.TransactionList = temp;
             return PartialView("_EquipmentReserveListPartial");
         }
     }

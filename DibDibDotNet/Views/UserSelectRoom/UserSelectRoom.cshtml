@@ -1,4 +1,10 @@
-@* @model DibDibDotNet.Models.Room; *@
+@using System.Net.Sockets
+@using System.Reflection.Metadata
+@using Microsoft.AspNetCore.Http
+@using Microsoft.CodeAnalysis.CSharp.Syntax
+@using Microsoft.Extensions.WebEncoders.Testing
+@model List<Booking>
+
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
@@ -10,162 +16,260 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/template/Global.css"> <!-- change -> /template/Global.css  -->
+    <link rel="stylesheet" href="/css/EquipmentReserveListPartial/EquipmentReserveListPartial.css">
     <link rel="stylesheet" href="/css/UserSelectRoom/userSelectRoom.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Edit name for import Css of this document -->
 </header>
 
 <body class="BGG unselectable">
-    <div class="topnav">
-        <div class="right">
-            <a href="javascript:window.location.reload(true)"><i class="material-icons md-20 rc-Muted ">refresh</i></a>
-            <a href="#"><i class="material-icons md-20 rc-Muted ">add_shopping_cart</i><mark
-                    class="noti-cart Label ENG rc-Bright">30</mark></a>
-            <p class="ParagraphX2 ENG rc-Muted" href="#">Quota: 4</p>
-            <a href="#"><i class="material-icons md-20 rc-Success ">account_circle</i></a>
-            <!-- <a id="checkLogout" onclick="logout()"class="ParagraphX2 ENG rc-Muted" href="../LoginSignup/Login.html">Logout</a>-->
-        </div>
+
+<div class="topnav">
+    <div class="right">
+        <a href="javascript:window.location.reload(true)">
+            <i class="material-icons md-20 rc-Muted ">refresh</i>
+        </a>
+        <a id="openPopUp-cart" target="_parent">
+            <i class="material-icons md-20 rc-Muted ">add_shopping_cart</i>
+            <mark
+                class="noti-cart Label ENG rc-Bright">
+                @ViewBag.NumUserBooked
+            </mark>
+        </a>
+        <p class="ParagraphX2 ENG rc-Muted" href="#">Quota: @(5 - ViewBag.NumUserBooked)</p>
+        <a href="#">
+            <i class="material-icons md-20 rc-Success ">account_circle</i>
+        </a>
+        <!-- <a id="checkLogout" onclick="logout()"class="ParagraphX2 ENG rc-Muted" href="../LoginSignup/Login.html">Logout</a>-->
     </div>
-    <div class="room-name">
-        <div class="left">
-            <a href="@Url.Action("HomeUser", "HomeUser")">
-                <i class=" icon-back material-icons md-24 rc-Primary ">arrow_back</i>
-            </a>
-            <p class="HeadingX6 ENG rc-Primary in-line " href="#">
-                <b>@Model.RoomNumber</b>
+</div>
+
+<div class="room-name">
+    <div class="left">
+        <a href="@Url.Action("HomeUser", "HomeUser")">
+            <i class=" icon-back material-icons md-24 rc-Primary ">arrow_back</i>
+        </a>
+        <p class="HeadingX6 ENG rc-Primary in-line " href="#">
+            <b>@ViewBag.Equipment.Room</b>
+        </p>
+        <p class="ParagraphX1 ENG rc-Primary in-line li-hi">@ViewBag.Equipment.Name</p>
+    </div>
+
+</div>
+
+<!-- righ -->
+<div class="contain-col-2-history ">
+    <form class="month-sel" action="/action_page.php">
+        <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser" value="@ViewBag.Month" onchange="onMonthSelected()">
+        <div class="right update-text ">
+            <p class="ParagraphX1 TH rc-Primary a-right">
+                จำนวนเครื่องทั้งหมด : @ViewBag.Equipment.Total เครื่อง <br>อัปเดตล่าสุด :
+                <span id="LastReload"> 6 / 01 / 2021 10.00น. </span>
             </p>
-            <p class="ParagraphX1 ENG rc-Primary in-line li-hi">@Model.EquipmentName</p>
+        </div>
+    </form>
+    <div class="scroll-table">
+        <div class="container-table ">
+            <table class="w3-table w3-bordered w3-centered">
+                <thead class="hd-table ">
+                <tr>
+                    <th>
+                        <p class="ParagraphX1 TH rc-Primary in-line">วัน/เวลา</p>
+                    </th>
+                    <th>
+                        <p class="ParagraphX1 TH rc-Primary in-line ">9:00 น</p>
+                    </th>
+                    <th>
+                        <p class="ParagraphX1 TH rc-Primary in-line">10.00 น.</p>
+                    </th>
+                    <th>
+                        <p class="ParagraphX1 TH rc-Primary in-line">11.00 น.</p>
+                    </th>
+                    <th>
+                        <p class="ParagraphX1 TH rc-Primary in-line">12.00 น.</p>
+                    </th>
+                    <th>
+                        <p class="ParagraphX1 TH rc-Primary in-line">13.00 น.</p>
+                    </th>
+                    <th>
+                        <p class="ParagraphX1 TH rc-Primary in-line">14.00 น.</p>
+                    </th>
+                    <th>
+                        <p class="ParagraphX1 TH rc-Primary in-line">15.00 น.</p>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @if (item.Day == 0)
+                        {
+                            continue;
+                        }
+                        <td>
+                            <br><br>
+                            <p class="HeadingX6 TH rc-Primary in-line">@item.Day</p>
+                        </td>
+
+                        @foreach (var slot in item.TimeSlots)
+                        {
+                            @if (slot.BookCount > 0)
+                            {
+                                <td class="book ">
+                                    <br>
+                                    <p class="HeadingX6 TH rc-Success in-line ">จอง @slot.BookCount เครื่อง</p><br>
+                                    <p class="Paragraph1 TH rc-Primary in-line">
+                                        คงเหลือ
+                                        <span
+                                            class="Paragraph1 TH rc-Error in-line">
+                                            @slot.Balance
+                                        </span> เครื่อง
+                                    </p>
+                                    <p class="Label TH rc-Error ">
+                                        * ไม่สามารถเปลี่ยนแปลงได้ แต่สามารถยกเลิกการจองได้ที่
+                                        "รถเข็น"
+                                    </p>
+                                </td>
+                            }
+                            else if (slot.Balance > 0)
+                            {
+                                <td onclick="openBook('@item.Day','@slot.Slot')" class="remain">
+                                    <br><br>
+                                    <p class="Paragraph1 TH rc-Primary in-line">
+                                        คงเหลือ
+                                        <span
+                                            class=" HeadingX6 TH rc-Error in-line">
+                                            @slot.Balance
+                                        </span> เครื่อง
+                                    </p>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="full">
+                                    <br>
+                                    <p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br>
+                                    <i
+                                        class="material-icons md-48 rc-Grey6 ">
+                                        access_time
+                                    </i>
+                                </td>
+                            }
+                        }
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div> <!-- scroll-->
+</div> <!-- col 2-->
+
+<!--  pop up add-->
+<div id="popUp-book" class="modal">
+    <div class="modal-content DS-SS">
+        <span class="close-book">
+            <i class="material-icons rc-Secondary">close</i>
+        </span>
+        <p class="HeadingX6 ENG rc-Primary in-line">
+            <b>@ViewBag.Equipment.Room</b>
+        </p>
+        <p class="ParagraphX1 ENG rc-Primary in-line">@ViewBag.Equipment.Name</p><br>
+        <br>
+        <p class="ParagraphX1 ENG rc-Primary in-line">
+            <b id="popUp-book_date"></b>
+        </p>
+        <p class="ParagraphX1 ENG rc-Primary in-line">&nbsp;&nbsp;&nbsp;<b id="popUp-book_slot"></b></p>
+        <p class="ParagraphX1 TH rc-Primary in-line">&nbsp;น.</p>
+        <div class="add-remove-text">
+            <p class="HeadingX6 TH re-Primary left "> จองจำนวน</p>
+            <p class="HeadingX6 TH re-Primary right "> เครื่อง</p>
         </div>
 
-    </div>
-    <!-- righ -->
-    <div class="contain-col-2-history ">
-        <form class="month-sel" action="/action_page.php">
-            <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser">
-            <div class="right update-text ">
-                <p class="ParagraphX1 TH rc-Primary a-right">จำนวนเครื่องทั้งหมด : 50 เครื่อง <br>อัปเดตล่าสุด : 6 / 01
-                    / 2021 10.00น.</p>
-            </div>
-        </form>
-        <div class="scroll-table">
-            <div class="container-table ">
-                <table class="w3-table w3-bordered w3-centered">
-                    <thead class="hd-table ">
-                        <tr>
-                            <th>
-                                <p class="ParagraphX1 TH rc-Primary in-line">วัน/เวลา</p>
-                            </th>
-                            <th>
-                                <p class="ParagraphX1 TH rc-Primary in-line ">9:00 น</p>
-                            </th>
-                            <th>
-                                <p class="ParagraphX1 TH rc-Primary in-line">10.00 น.</p>
-                            </th>
-                            <th>
-                                <p class="ParagraphX1 TH rc-Primary in-line">11.00 น.</p>
-                            </th>
-                            <th>
-                                <p class="ParagraphX1 TH rc-Primary in-line">12.00 น.</p>
-                            </th>
-                            <th>
-                                <p class="ParagraphX1 TH rc-Primary in-line">13.00 น.</p>
-                            </th>
-                            <th>
-                                <p class="ParagraphX1 TH rc-Primary in-line">14.00 น.</p>
-                            </th>
-                            <th>
-                                <p class="ParagraphX1 TH rc-Primary in-line">15.00 น.</p>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><br><br>
-                                <p class="HeadingX6 TH rc-Primary in-line">1</p>
-                            </td>
-                            <td class="book "><br>
-                                <p class="HeadingX6 TH rc-Success in-line ">จอง 1 เครื่อง</p><br>
-                                <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
-                                        class="Paragraph1 TH rc-Error in-line">4</span> เครื่อง</p>
-                                <p class="Label TH rc-Error ">* ไม่สามารถเปลี่ยนแปลงได้ แต่สามารถยกเลิกการจองได้ที่
-                                    "รถเข็น"</p>
-                            </td>
-                            <td class="full"><br>
-                                <p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br><i
-                                    class="material-icons md-48 rc-Grey6 ">access_time</i>
-                            </td>
-                            <td onclick="openBook()" class="remain"><br><br>
-                                <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
-                                        class=" HeadingX6 TH rc-Error in-line">12</span> เครื่อง</p>
-                            </td>
-                            <td onclick="openBook()" class="remain"><br><br>
-                                <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
-                                        class=" HeadingX6 TH rc-Error in-line">8</span> เครื่อง</p>
-                            </td>
-                            <td class="full"><br>
-                                <p class="HeadingX6 TH rc-Grey6 in-line">ยอดจองเต็ม</p><br><i
-                                    class="material-icons md-48 rc-Grey6 ">access_time</i>
-                            </td>
-                            <td onclick="openBook()" class="remain"><br><br>
-                                <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
-                                        class=" HeadingX6 TH rc-Error in-line">5</span> เครื่อง</p>
-                            </td>
-                            <td onclick="openBook()" class="remain"><br><br>
-                                <p class="Paragraph1 TH rc-Primary in-line">คงเหลือ <span
-                                        class=" HeadingX6 TH rc-Error in-line">10</span> เครื่อง</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div> <!-- scroll-->
-        <!--  pop up add-->
-        <div id="popUp-book" class="modal">
-            <div class="modal-content DS-SS">
-                <span class="close-book"> <i class="material-icons rc-Secondary">close</i></span>
-                <p class="HeadingX6 ENG rc-Primary in-line"><b>ECC-602</b></p>
-                <p class="ParagraphX1 ENG rc-Primary in-line">STM32-nucleo f767zi</p><br>
-                <br>
-                <p class="ParagraphX1 ENG rc-Primary in-line"><b>1/02/2021</b></p>
-                <p class="ParagraphX1 ENG rc-Primary in-line">&nbsp;&nbsp;&nbsp;<b>11:00 - 12:00 </b></p>
-                <p class="ParagraphX1 TH rc-Primary in-line">&nbsp;น.</p>
-                <div class="add-remove-text">
-                    <p class="HeadingX6 TH re-Primary left "> จองจำนวน</p>
-                    <p class="HeadingX6 TH re-Primary right "> เครื่อง</p>
+        <form name="form1">
+            <div class="add-remove">
+                <div class="left">
+                    <i onclick="document.form1.input1.value > 1? document.form1.input1.value-- : null"
+                       class="btn-remove material-icons md-24 rc-Primary  ">
+                        remove
+                    </i>
                 </div>
-                <form name="form1">
-                    <div class="add-remove">
-                        <div class="left">
-                            <i onclick="document.form1.input1.value--"
-                                class="btn-remove material-icons md-24 rc-Primary  ">remove</i>
-                        </div>
 
-                        <input class="input-num" name="input1" value="1" size=10 onfocus="buffer=this.value" onchange="if (isNaN(this.value)) 
+                <input class="input-num" name="input1" value="1" size=10 onfocus="buffer=this.value" onchange="if (isNaN(this.value)) 
                             { this.value=buffer}">
-                        <div class="right">
-                            <i onclick="document.form1.input1.value++"
-                                class="btn-plus material-icons md-24 rc-Primary ">add</i>
-                        </div>
-                    </div>
-                    <br>
-                    <p class="warn-text Label TH rc-Error left ">
-                        *สามารถตรวจสอบรายการจองหรือยกเลิกรายการจองได้จากรถเข็น<br> กรุณาตรวจสอบจำนวน เวลา และวันที่
-                        อีกครั้งก่อนการยืนยัน</p>
-                    <input class="btn-pop-book rc-BG ENG ParagraphX1 right " type="submit" value="Ok">
-                </form>
+                <div class="right">
+                    <i onclick="document.form1.input1.value++"
+                       class="btn-plus material-icons md-24 rc-Primary ">
+                        add
+                    </i>
+                </div>
             </div>
+            <br>
+            <p class="warn-text Label TH rc-Error left ">
+                *สามารถตรวจสอบรายการจองหรือยกเลิกรายการจองได้จากรถเข็น<br> กรุณาตรวจสอบจำนวน เวลา และวันที่
+                อีกครั้งก่อนการยืนยัน
+            </p>
+        </form>
+        <button class="btn-pop-book rc-BG ENG ParagraphX1 right " onclick="makeReservation();">Ok</button>
+    </div>
+</div>
+
+<!--  pop up cart-->
+<div id="popUp-cart" class="modal-cart" display="none">
+    <div class="modal-content-cart DS-SS">
+        <span class="close-cart">
+            <i class="material-icons rc-Secondary">close</i>
+        </span>
+        <p class="HeadingX5 ENG rc-Primary in-line margin10">
+            <b>Equipment reservation list</b>
+        </p>
+        <form id="monthSelectForm" class="month-sel in-line">
+            <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser" value="@ViewBag.Month" onchange="onMonthCartSelected();"/>
+        </form>
+        <div id="EquipmentReserveListPartial">
+            @Html.Partial("~/Views/Shared/_EquipmentReserveListPartial.cshtml");
         </div>
-    </div> <!-- col 2-->
+    </div>
+</div>
+
 </body>
 
 </html>
+
 <script>
     var modalBook = document.getElementById("popUp-book");
     var spanBook = document.getElementsByClassName("close-book")[0];
-    function openBook() {
+    
+    var currentSlotPopUp = 0;
+    var currentDatePopUp = 0;
+    
+    function openBook(day, slot) {
         modalBook.style.display = "block";
+        var date = document.getElementById("monthUser").value + "-" + day;
+        var dateObj = new Date(date);
+        
+        currentDatePopUp = date;
+        currentSlotPopUp = slot;
+        
+        document.getElementById("popUp-book_date").innerHTML = dateObj.getDate() + " / " + (dateObj.getMonth() + 1) + " / " + dateObj.getFullYear();
+        document.getElementById("popUp-book_slot").innerHTML = `${slot}:00 - ${parseInt(slot) + 1}:00`;        
     }
+    
     spanBook.onclick = function () {
         modalBook.style.display = "none";
+    }
+    
+    // Cart
+    var modalCart = document.getElementById("popUp-cart");
+    var btnCart = document.getElementById("openPopUp-cart");
+    var spanCart = document.getElementsByClassName("close-cart")[0];
+
+    btnCart.onclick = function () {
+        modalCart.style.display = "block";
+        onMonthCartSelected();
+    }
+    spanCart.onclick = function () {
+        modalCart.style.display = "none";
     }
 
     /* date time */
@@ -174,11 +278,56 @@
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date + ' ' + time;
     /*document.getElementById("datetime").value = dateTime;*/
-
+    
+    
+    var lastReloadDate = today.getDate() + ' / ' + (today.getMonth() + 1) + ' / ' + today.getFullYear() ;
+    var lastReloadTime = today.getHours() + ":" + today.getMinutes().toString().padStart(2,"0") + " น.";
+    
+    document.getElementById("LastReload").innerHTML = lastReloadDate + "  " + lastReloadTime;
+    
     function logout() {
         var logout = confirm("Confirm to Log out")
         if (!logout) {
             document.getElementById("checkLogout").href = "./adminSelecteRoom.html";
         }
+    }
+    function onMonthSelected(){
+        var url = new URL(window.location.href);
+        var roomId = url.searchParams.get("roomId");
+        var monthValue = document.getElementById("monthUser").value;
+        window.location.href = '@Url.Action("UserSelectRoom", "UserSelectRoom")' + "?roomId=" + roomId + "&yearMonth=" + monthValue;
+    }
+    
+    
+    function makeReservation(){
+         var dataToSend = {
+            date: currentDatePopUp, 
+            slot: parseInt(currentSlotPopUp),
+            equipmentId: parseInt('@ViewBag.Equipment.Id'),
+            amount: document.form1.input1.value
+         }
+        
+        $.ajax({
+            url: "@Url.Action("MakeReservation", "UserSelectRoom")",
+            type: "GET",
+            data: dataToSend,
+            success: function (result){
+                window.location.reload(true);
+                console.log(result);
+            }
+        });
+    }
+    
+    function onMonthCartSelected(){
+        $.ajax({
+            url: "/HomeUser/GetUserReservationMonth",
+            type: "GET",
+            data: $("#monthSelectForm").serialize(),
+            success: function (result){
+                console.log(result);
+                $("#EquipmentReserveListPartial").html(result);
+            }
+        });
+        return false;
     }
 </script>

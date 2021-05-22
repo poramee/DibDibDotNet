@@ -38,6 +38,7 @@
         <!-- righ -->
         <div class="contain-col-2-Form DS-SS">
             <form asp-action="SignUp">
+
                 <div class="section-row-1">
                     <h1 class="HeadingX4 ENG rc-Primary">Create an account</h1><br class="brr md-h20">
                     <p class="ParagraphX1 ENG rc-Primary">Already have an account?</p><br class="brr md-h5">
@@ -46,24 +47,29 @@
                 </div>
 
                 <div class="form-group section-row-2">
+                    @* //TODO: First Name Validate => Empty String *@
                     <span class=" ParagraphX2 ENG rc-Primary">FirstName</span><br class="brr md-h5">
                     <input asp-for="FirstName" class="form-control input-login" required />
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
                 <div class="form-group section-row-3">
+                    @* //TODO: Name Name Validate => Empty String *@
                     <span class=" ParagraphX2 ENG rc-Primary">LastName</span><br class="brr md-h5">
                     <input asp-for="LastName" class="form-control input-login" required />
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
                 <div class="section-row-4">
+                    @* //TODO: Email Validate => Empty String And Format *@
                     <span class="ParagraphX2 ENG rc-Primary">Email</span><br class="brr md-h5">
                     <input asp-for="Email" class="input-login" type="email" name="email">
                 </div>
                 <div class="section-row-5">
+                    @* //TODO: Password Validate => Empty String And Length > 6 *@
                     <span class="ParagraphX2 ENG rc-Primary">Password</span><br class="brr md-h5">
                     <input asp-for="Password" class="input-login" type="password" name="password">
                 </div>
                 <div class="section-row-6">
+                    @* //TODO: Password Validate => Empty String ,Length > 6 And Match Password*@
                     <span class="ParagraphX2 ENG rc-Primary">ConfirmPassword</span><br class="brr md-h5">
                     <input asp-for="ConfirmPassword" class="input-login" type="password">
                     <span asp-validation-for="ConfirmPassword" style="color: red;padding-top: 8px;"></span>

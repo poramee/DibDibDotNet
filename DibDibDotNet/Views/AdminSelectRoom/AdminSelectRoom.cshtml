@@ -176,6 +176,7 @@
                     <form asp-action="CreateEquipmentTransaction" name="form1">
                         <input type="hidden" asp-for="Id" />
                         <input type="hidden" asp-for="Room" />
+                        @* //TODO: Default Value Is ToDay *@
                         <input asp-for="TransactionDate" class="calendar ParagraphX1 ENG rc-Primary"
                             type="datetime-local" id="dateTimeCurrent" name="TransactionDate">
                         <div class="add-remove-text">
@@ -183,17 +184,7 @@
                             <p class="HeadingX6 TH re-Primary right "> เครื่อง</p>
                         </div>
                         <div class="add-remove">
-                            @* <div class="left">
-                                <i onclick="document.form1.input1.value--"
-                                class="btn-remove material-icons md-24 rc-Primary ">remove</i>
-                                </div>
-                                <input class="input-num" name="input1" value="1" size=10 onfocus="buffer=this.value"
-                                onchange="if (isNaN(this.value))
-                                { this.value=buffer}">
-                                <div class="right">
-                                <i onclick="document.form1.input1.value++"
-                                class="btn-plus material-icons md-24 rc-Primary ">add</i>
-                                </div> *@
+                            @* //TODO: Default Value Is 1 *@
                             <input asp-for="Amount" class="input-num" name="Amount" />
                         </div>
                         <input class="btn-pop-add rc-BG TH ParagraphX1 right " type="submit" value="เพิ่ม">
@@ -215,26 +206,15 @@
                     <form asp-action="RemoveEquipmentTransaction">
                         <input type="hidden" asp-for="Id" />
                         <input type="hidden" asp-for="Room" />
+                        @* // TODO: Default Date Is Today *@
                         <input asp-for="TransactionDate" class="calendar ParagraphX1 ENG rc-Primary"
                             type="datetime-local" id="dateTimeCurrent" name="TransactionDate">
-                        @* <input class="calendar ParagraphX1 ENG rc-Primary" type="datetime-local" id="dateTimeCurrent"
-                            name="dateTimeCurrent"> *@
                         <div class="add-remove-text">
                             <p class="HeadingX6 TH re-Primary left "> ลบจำนวน</p>
                             <p class="HeadingX6 TH re-Primary right "> เครื่อง</p>
                         </div>
                         <div class="add-remove">
-                            @* <div class="left">
-                                <i onclick="document.form2.input2.value--"
-                                class="btn-remove material-icons md-24 rc-Primary ">remove</i>
-                                </div>
-                                <input class="input-num" name="input2" value="1" size=10 onfocus="buffer=this.value"
-                                onchange="if (isNaN(this.value))
-                                { this.value=buffer}">
-                                <div class="right">
-                                <i onclick="document.form2.input2.value++"
-                                class="btn-plus material-icons md-24 rc-Primary ">add</i>
-                                </div> *@
+                            @* // TODO: Default Value Is 1 *@
                             <input asp-for="Amount" class="input-num" name="Amount" />
                         </div>
                         <input class="btn-pop-remove rc-BG TH ParagraphX1 right " type="submit" value="ลบ">
@@ -270,9 +250,6 @@
 </html>
 <script>
     var dt = new Date();
-    @* document.getElementById("datetime").innerHTML = (("0" + dt.getDate()).slice(-2)) + "/" + (("0" + (dt.getMonth() + 1)).slice(-2)) + "/" + (dt.getFullYear()) + " " + (("0" + dt.getHours()).slice(-2)) + ":" + (("0" + dt.getMinutes()).slice(-2)); *@
-
-
     var modalAdd = document.getElementById("popUp-add");
     var spanAdd = document.getElementsByClassName("close-add")[0];
 
@@ -292,19 +269,10 @@
     spanDel.onclick = function () {
         modalDel.style.display = "none";
     }
-    /*window.onclick = function(event) {
-        if (event.target == modalAdd) {
-            modalAdd.style.display = "none";
-        }
-        else if (event.target == modalDel) {
-            modalDel.style.display = "none";
-        }
-    }*/
     /* date time */
     var today = new Date();
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date + ' ' + time;
-  /*document.getElementById("datetime").value = dateTime;*/
 
 </script>

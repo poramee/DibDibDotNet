@@ -49,12 +49,11 @@ namespace DibDibDotNet.Controllers
         if (currentUser.Count() > 0)
         {
           HttpContext.Session.SetString("idUser", currentUser.FirstOrDefault().Id.ToString());
-          Console.WriteLine(HttpContext.Session.GetString("idUser"));
+          // TODO: Check Is Admin And Redirect To Home Admin Page
           return RedirectToAction("HomeUser", "HomeUser");
         }
         else
         {
-
           ViewBag.showAlert = true; // "True"
           ViewBag.alertMessage = "Username or Password invalid";
           return RedirectToAction("Login");
@@ -73,9 +72,9 @@ namespace DibDibDotNet.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> SignUp(Register userInfo)
     {
+      // TODO: Make Register Validation Here
       if (ModelState.IsValid && userInfo.Email.Length > 0)
       {
-        Console.WriteLine("have request", userInfo.Email);
         var newUser = new User { Email = userInfo.Email, FullName = userInfo.FirstName + ' ' + userInfo.LastName, Password = userInfo.Password, IsAdmin = false, IsValid = true };
         _context.Add(newUser);
         await _context.SaveChangesAsync();

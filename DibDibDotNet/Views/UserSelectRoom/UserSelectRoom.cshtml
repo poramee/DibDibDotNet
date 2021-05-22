@@ -64,7 +64,7 @@
         <div class="right update-text ">
             <p class="ParagraphX1 TH rc-Primary a-right">
                 จำนวนเครื่องทั้งหมด : @ViewBag.Equipment.Total เครื่อง <br>อัปเดตล่าสุด :
-                <span id="LastReload"> 6 / 01 / 2021 10.00น. </span>
+                <span id="LastReload"></span>
             </p>
         </div>
     </form>
@@ -99,7 +99,7 @@
                     </th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody style="background-color: white">
                 @foreach (var item in Model)
                 {
                     <tr>

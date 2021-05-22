@@ -30,17 +30,17 @@
     {
         EquipmentReservationListViewModel transaction = tt;
         <button type="button" class="collapsible ParagraphX1 ENG rc-Primary">@transaction.Date.Day / @transaction.Date.Month / @transaction.Date.Year</button>
-        <div class="content">
-            <div class="container-table ">
-                <table class="w3-table w3-bordered ">
-                    <tbody>
+        <div class="content" style="border: 0;">
+            <div class="container-table " style="border: 0;">
+                <table class="w3-table" style="border: 0;">
+                    <tbody style="border: none;">
                     <tr>
                         <td>
-                            <table border="0">
+                            <table style="border: 0;">
                                 <tr>
                                     <td>
                                         <p class="ParagraphX1 ENG rc-Primary">
-                                            <b>@transaction.Equipment.Room :</b>
+                                            <b>@transaction.Equipment.Room</b>
                                         </p>
                                     </td>
                                 </tr>
@@ -48,7 +48,7 @@
                         </td>
                         <td>
                             <div class="verticalLine">
-                                <table border="0">
+                                <table style="border: 0;">
                                     <tr>
                                         <td>
                                             <p class="ParagraphX1 ENG rc-Secondary">@transaction.Equipment.Name</p>
@@ -59,7 +59,7 @@
                         </td>
                         <td>
                         <div class="verticalLine">
-                            <table border="0">
+                            <table style="border: 0;">
                                 <tr>
                                     <td>
                                         <p class="ParagraphX1 ENG rc-Secondary in-line">@(transaction.Period):00</p>
@@ -75,7 +75,7 @@
                         </div>
                         <td>
                         <div class="verticalLine">
-                            <table border="0">
+                            <table style="border: 0;">
                                 <tr>
                                     <td>
                                         <p class="ParagraphX1 TH rc-Secondary in-line">จำนวน</p>
@@ -110,12 +110,7 @@
             </div>
         </div>
     }
-
-
-
-
-
-    @* <button type="button" class="collapsible ParagraphX1 ENG rc-Primary">14 / 02 / 2021</button> *@
+@* <button type="button" class="collapsible ParagraphX1 ENG rc-Primary">14 / 02 / 2021</button> *@
     @* <div class="content"> *@
     @*     <div class="container-table "> *@
     @*         <table class="w3-table w3-bordered "> *@

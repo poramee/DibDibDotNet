@@ -16,6 +16,11 @@ namespace DibDibDotNet.Models
     [DataType(DataType.Date)]
     public DateTime Date { get; set; }
     public bool Status { get; set; }
+    
+    [ForeignKey("User")]
+    public int UserId { get; set; }
+    [ForeignKey("Equipment")]
+    public int EquipmentId { get; set; }
 
     [NotMapped]
     public string FirstName { get; set; }

@@ -29,7 +29,7 @@ namespace DibDibDotNet.Controllers
         {
             var userInfo = info.NewAccountInfo;
             var currentAccount = _context.User.Find(Int32.Parse(HttpContext.Session.GetString("idUser")));
-            Console.WriteLine("DB Password  " + currentAccount.Password);
+
             if (currentAccount.Password != userInfo.CurrentPassword)
             {
                 Console.WriteLine("Failed to change the info");

@@ -82,18 +82,20 @@ namespace DibDibDotNet.Controllers
             Console.WriteLine(reservationDate.ToString());
             Console.WriteLine(slot);
             Console.WriteLine(amount);
+            
+            
 
             var newTransaction = new Transaction {
-                User = new User{Id = Int32.Parse(userId)},
-                Equipment = new Equipment{Id = equipmentId},
+                UserId = Int32.Parse(userId),
+                EquipmentId = equipmentId,
                 Period = slot,
                 Amount = amount,
-                Date = reservationDate
+                Date = reservationDate,
+                Status = false
             };
-            // 
             
-            
-            
+            _context.Add<Transaction>(newTransaction);
+            _context.SaveChanges();
             return Json("'status': 'success ");
         }
     }

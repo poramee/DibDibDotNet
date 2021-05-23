@@ -47,39 +47,41 @@
                 </div>
 
                 <div class="form-group section-row-2">
-                    @* //TODO: First Name Validate => Empty String *@
-                    <span class=" ParagraphX2 ENG rc-Primary">FirstName</span><br class="brr md-h5">
+                    @* //TODO: First Name Validate => Empty String  - DONE*@
+                    <span class=" ParagraphX2 ENG rc-Primary">First Name</span><br class="brr md-h5">
                     <input asp-for="FirstName" class="form-control input-login" required />
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                    <span asp-validation-for="FirstName" class="text-danger" style="color: red;padding-top: 8px;"></span>
                 </div>
                 <div class="form-group section-row-3">
-                    @* //TODO: Name Name Validate => Empty String *@
-                    <span class=" ParagraphX2 ENG rc-Primary">LastName</span><br class="brr md-h5">
+                    @* //TODO: Name Name Validate => Empty String - DONE*@
+                    <span class=" ParagraphX2 ENG rc-Primary">Last Name</span><br class="brr md-h5">
                     <input asp-for="LastName" class="form-control input-login" required />
-                    <span asp-validation-for="LastName" class="text-danger"></span>
+                    <span asp-validation-for="LastName" class="text-danger" style="color: red;padding-top: 8px;"></span>
                 </div>
                 <div class="section-row-4">
-                    @* //TODO: Email Validate => Empty String And Format *@
+                    @* //TODO: Email Validate => Empty String And Format - DONE*@
                     <span class="ParagraphX2 ENG rc-Primary">Email</span><br class="brr md-h5">
-                    <input asp-for="Email" class="input-login" type="email" name="email">
+                    <input asp-for="Email" class="input-login" type="email" name="email" required>
+                    <span asp-validation-for="Email" class="text-danger" style="color: red;padding-top: 8px;"></span>
                 </div>
                 <div class="section-row-5">
-                    @* //TODO: Password Validate => Empty String And Length > 6 *@
+                    @* //TODO: Password Validate => Empty String And Length > 6 - DONE*@
                     <span class="ParagraphX2 ENG rc-Primary">Password</span><br class="brr md-h5">
-                    <input asp-for="Password" class="input-login" type="password" name="password">
+                    <input asp-for="Password" class="input-login" type="password" name="password" required>
+                    <span asp-validation-for="Password" class="text-danger" style="color: red;padding-top: 8px;"></span>
                 </div>
                 <div class="section-row-6">
-                    @* //TODO: Password Validate => Empty String ,Length > 6 And Match Password*@
+                    @* //TODO: Password Validate => Empty String ,Length > 6 And Match Password - DONE*@
                     <span class="ParagraphX2 ENG rc-Primary">ConfirmPassword</span><br class="brr md-h5">
-                    <input asp-for="ConfirmPassword" class="input-login" type="password">
+                    <input asp-for="ConfirmPassword" class="input-login" type="password" required>
                     <span asp-validation-for="ConfirmPassword" style="color: red;padding-top: 8px;"></span>
                 </div>
                 <div class="section-row-7">
                     <input class="btn-login rc-BG ENG HeadingX6" type="submit" value="Sign Up"><br class="brr md-h20">
-                    <a class="no-line login ParagraphX1 ENG rc-Accent" href="@Url.Action("HomeAdmin", "HomeAdmin")"
-                        target="_parent">Admin</a> <br>
-                    <a class="no-line login ParagraphX1 ENG rc-Accent" href="@Url.Action("HomeUser", "HomeUser")"
-                        target="_parent">User</a>
+                    @* <a class="no-line login ParagraphX1 ENG rc-Accent" href="@Url.Action("HomeAdmin", "HomeAdmin")" *@
+                    @*     target="_parent">Admin</a> <br> *@
+                    @* <a class="no-line login ParagraphX1 ENG rc-Accent" href="@Url.Action("HomeUser", "HomeUser")" *@
+                    @*     target="_parent">User</a> *@
                 </div>
             </form>
         </div>

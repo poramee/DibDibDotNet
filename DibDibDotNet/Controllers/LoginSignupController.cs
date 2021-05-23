@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -72,8 +73,17 @@ namespace DibDibDotNet.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> SignUp(Register userInfo)
     {
-      // TODO: Make Register Validation Here
-      if (ModelState.IsValid && userInfo.Email.Length > 0)
+      // TODO: Make Register Validation Here - DONE
+      bool validFirstName = (new Regex(@".+")).IsMatch(userInfo.FirstName);
+      bool validLastName = (new Regex(@".+")).IsMatch(userInfo.LastName);
+      bool validEmail =
+        (new Regex(
+          @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z"))
+        .IsMatch(userInfo.Email);
+      bool validPassword = userInfo.Password.Equals(userInfo.ConfirmPassword) && (new Regex(".+")).IsMatch(userInfo.Password);
+      bool infoValid = validFirstName && validLastName && validEmail && validPassword;
+      
+      if (ModelState.IsValid && userInfo.Email.Length > 0 && infoValid)
       {
         var newUser = new User { Email = userInfo.Email, FullName = userInfo.FirstName + ' ' + userInfo.LastName, Password = userInfo.Password, IsAdmin = false, IsValid = true };
         _context.Add(newUser);

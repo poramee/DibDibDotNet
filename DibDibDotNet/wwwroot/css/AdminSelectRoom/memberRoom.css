@@ -4,7 +4,7 @@ body.BGG{
     background: var(--Grey6);/*เปลี่ยนสี BG ตาม UI ของแต่ละหน้า */
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;   
+    background-size: cover;
 }
 
 footer.container-wave {
@@ -123,7 +123,7 @@ th,td {
     -ms-user-select: none;
     user-select: none;
 }
-.btn-pop-bl{
+.btn-pop-bl, .whiteListButton{
     background-color: var(--Bright);
     border: 2px solid #4a494d;
     box-sizing: border-box;
@@ -132,10 +132,18 @@ th,td {
     height: 30px;
     cursor: pointer;
 }
-.btn-pop-bl:hover{
-    background-color:  #4a494d;
+.whiteListButton{
+    background-color: #7b7b7b;
+    border: 2px solid #7b7b7b;
     color: var(--Bright);
 }
+.btn-pop-bl:hover, .whiteListButton:hover{
+    background-color:  #4a494d;
+    border: 2px solid #4a494d;
+    color: var(--Bright);
+}
+
+
 .del-mem{
     cursor: pointer;
 }

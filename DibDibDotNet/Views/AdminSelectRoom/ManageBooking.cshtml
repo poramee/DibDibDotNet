@@ -241,11 +241,10 @@
                 dataType: "json",
                 traditional: true,
                 success: function (data) {
-                // TODO : Change Button Color
                 $(`#popUp-list > div > div > div > table > tbody > *tr > #${UserId}`).replaceWith(`
                         <td id="${UserId}">
                             <p class="ParagraphX1 ENG rc-Primary">
-                                <input class="btn-pop-bl rc-Primary TH ParagraphX1"  type="submit" value="Done">
+                                <input class="btn-pop-bl rc-Primary TH ParagraphX1" style="background:#289D45;color:white;"  type="submit" value="Done">
                             </p>
                         </td>`);
                    console.log("Black List Done");

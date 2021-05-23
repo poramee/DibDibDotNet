@@ -12,9 +12,10 @@ jobs:
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
       with:
-        host:  188.166.179.41
-        username: root
-        password: DibDib2021DotNet
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
         port: 22
-        script: cd /root/DibDibDotNet/DibDibDotNet |
-                docker-compose up --build -d
+        script: |
+          cd /root/DibDibDotNet/DibDibDotNet 
+          docker-compose up --build -d

@@ -50,8 +50,9 @@ namespace DibDibDotNet.Controllers
         if (currentUser.Count() > 0)
         {
           HttpContext.Session.SetString("idUser", currentUser.FirstOrDefault().Id.ToString());
-          // TODO: Check Is Admin And Redirect To Home Admin Page
-          return RedirectToAction("HomeUser", "HomeUser");
+          // TODO: Check Is Admin And Redirect To Home Admin Page - DONE
+          if (currentUser.FirstOrDefault().IsAdmin) return RedirectToAction("HomeAdmin", "HomeAdmin");
+          else return RedirectToAction("HomeUser", "HomeUser");
         }
         else
         {

@@ -182,7 +182,7 @@
                         </div>
                         <div class="add-remove">
                             @* //TODO: Default Value Is 1 - DONE *@
-                            <input asp-for="Amount" class="input-num" name="Amount" value="1" />
+                            <input asp-for="Amount" class="input-num" name="Amount" value="1" min="0" />
                         </div>
                         <input class="btn-pop-add rc-BG TH ParagraphX1 right " type="submit" value="เพิ่ม">
                     </form>
@@ -212,7 +212,7 @@
                         </div>
                         <div class="add-remove">
                             @* // TODO: Default Value Is 1 *@
-                            <input asp-for="Amount" class="input-num" name="Amount" value="1" />
+                            <input asp-for="Amount" class="input-num" name="Amount" value="1" min="0" />
                         </div>
                         <input class="btn-pop-remove rc-BG TH ParagraphX1 right " type="submit" value="ลบ">
                     </form>

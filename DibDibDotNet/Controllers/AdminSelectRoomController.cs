@@ -172,6 +172,21 @@ namespace DibDibDotNet.Controllers
     }
     public IActionResult MemberRoom()
     {
+      if (HttpContext.Session.GetString("idUser") != null)
+      {
+        var currentUser = _context.User.Where(e => e.Id.Equals(int.Parse(HttpContext.Session.GetString("idUser")))).ToList().FirstOrDefault();
+        Console.WriteLine("currentUser " + currentUser.IsAdmin);
+        if (!currentUser.IsAdmin)
+        {
+          Response.StatusCode = 404;
+          return Redirect("/");
+        }
+      }
+      else
+      {
+        Response.StatusCode = 404;
+        return Redirect("/");
+      }
       var userList = _context.User.ToList();
       foreach (var item in userList)
       {

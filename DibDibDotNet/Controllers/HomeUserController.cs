@@ -96,7 +96,6 @@ namespace DibDibDotNet.Controllers
 
       var equipmentList = _context.Equipment.ToList();
 
-
       var currentTime = DateTime.Now;
       var currentTimeWithoutTime = new DateTime(currentTime.Year, currentTime.Month, currentTime.Day);
 

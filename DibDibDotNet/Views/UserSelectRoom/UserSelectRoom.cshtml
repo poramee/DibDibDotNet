@@ -1,6 +1,7 @@
 @using System.Net.Sockets
 @using System.Reflection.Metadata
 @using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Mvc.Formatters
 @using Microsoft.CodeAnalysis.CSharp.Syntax
 @using Microsoft.Extensions.WebEncoders.Testing
 @model List<Booking>
@@ -66,10 +67,11 @@
 
 </div>
 
+
 <!-- righ -->
 <div class="contain-col-2-history ">
     <form class="month-sel" action="/action_page.php">
-        <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser" value="@ViewBag.Month" onchange="onMonthSelected()">
+        <input class="calendar ParagraphX1 ENG rc-Primary" type="month" id="monthUser" name="monthUser" value="@ViewBag.Month" onchange="onMonthSelected()" min="@DateTime.Now.ToString("yyyy-MM")">
         <div class="right update-text ">
             <p class="ParagraphX1 TH rc-Primary a-right">
                 จำนวนเครื่องทั้งหมด : @ViewBag.Equipment.Total เครื่อง <br>อัปเดตล่าสุด :
@@ -111,6 +113,8 @@
                 <tbody style="background-color: white">
                 @foreach (var item in Model)
                 {
+                    var currentTime = DateTime.Now;
+                    string yearMonth = ViewBag.YearMonth;
                     <tr>
                         @if (item.Day == 0)
                         {
@@ -123,12 +127,9 @@
 
                         @foreach (var slot in item.TimeSlots)
                         {
-                            string yearMonth = ViewBag.YearMonth;
-                            Console.WriteLine(yearMonth);
                             // using upperbound slot time
                             var slotDateTime = new DateTime(Int32.Parse(yearMonth.Split('-')[0]), Int32.Parse(yearMonth.Split('-')[1]), item.Day,slot.Slot + 1,0,0);
-                            var currentTime = DateTime.Now;
-
+                            
 
                             @if (currentTime.CompareTo(slotDateTime) > 0)
                             {
@@ -426,4 +427,5 @@
         var modal = document.getElementById("popUp-accountSetting");
         modal.style.display = "block";
     }
+    
 </script>

@@ -28,10 +28,7 @@ namespace DibDibDotNet
     public void ConfigureServices(IServiceCollection services)
     {
 
-      services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
-    {
-      builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-    }));
+      services.AddCors();
       // use session
       services.AddMvc();
       services.AddDistributedMemoryCache();

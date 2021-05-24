@@ -396,8 +396,16 @@
             type: "GET",
             data: dataToSend,
             success: function (result){
-                window.location.reload(true);
-                console.log(result);
+                var resultJson = JSON.parse(result);
+                if(resultJson.status === 'success'){
+                    window.alert("Reservation Success");
+                    window.location.reload(true);
+                }
+                else{
+                    window.alert("Reservation Failed" + " - " + resultJson.detail);
+                    window.location.reload(true);
+                }
+                
             }
         });
     }

@@ -95,10 +95,23 @@ namespace DibDibDotNet.Controllers
 
             var equipmentList = _context.Equipment.ToList();
 
+            // var currentTime = new DateTime(2021,5,25,9,0,0); // Test
+            var currentTime = DateTime.Now;
+            var currentTimeWithoutTime = new DateTime(currentTime.Year, currentTime.Month, currentTime.Day);
+
             foreach (var e in equipmentList)
             {
-                e.Booking = _context.Transaction.Count(a =>
-                    a.Equipment.Id.Equals(e.Id)); // TODO: This algorithm might be wrong.
+                var currentSlotTransaction = _context.Transaction.Where(a =>
+                    a.Equipment.Id.Equals(e.Id) && a.Date.Equals(currentTimeWithoutTime) && a.Period.Equals(currentTime.Hour));
+                var equipmentBookingAmount = 0;
+                foreach (var t in currentSlotTransaction)
+                {
+                    equipmentBookingAmount += t.Amount;
+                }
+
+                e.Booking = equipmentBookingAmount;
+                
+                Console.WriteLine(e.Booking);
                 homeUserModel.Equipments.Add(e.Id, e);
             }
 

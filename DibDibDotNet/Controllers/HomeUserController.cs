@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DibDibDotNet.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace DibDibDotNet.Controllers
@@ -115,7 +116,7 @@ namespace DibDibDotNet.Controllers
                 homeUserModel.Equipments.Add(e.Id, e);
             }
 
-            ViewBag.TransactionList = new List<EquipmentReservationListViewModel>();
+            
             ViewBag.NumUserBooked = 0;
             var userTransactionList = _context.Transaction.Where(t => t.User.Id.Equals(idUser));
             foreach (var transaction in userTransactionList)
@@ -140,20 +141,26 @@ namespace DibDibDotNet.Controllers
             searchResult =
                 searchResult.Where(t => t.Date.Year == dateTimeUser.Year && t.Date.Month == dateTimeUser.Month);
 
-            // foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(searchResultList[0]))
-            // {
-            //     string name = descriptor.Name;
-            //     object value = descriptor.GetValue(searchResultList[0]);
-            //     Console.WriteLine("{0}={1}", name, value);
-            // }
-
             var temp = searchResult.Select(t => new EquipmentReservationListViewModel
                 {
                     TransactionId = t.Id, Equipment = t.Equipment, Date = t.Date, Period = t.Period, Amount = t.Amount
                 })
                 .ToList();
 
-            ViewBag.TransactionList = temp;
+            var transactionGrouping = new Dictionary<DateTime, List<EquipmentReservationListViewModel>>();
+
+
+            foreach (var transaction in temp)
+            {
+                if (!transactionGrouping.ContainsKey(transaction.Date))
+                {
+                    transactionGrouping.Add(transaction.Date, new List<EquipmentReservationListViewModel>());
+                }
+                transactionGrouping[transaction.Date].Add(transaction);
+            }
+            
+
+            ViewBag.TransactionList = transactionGrouping;
             return PartialView("_EquipmentReserveListPartial");
         }
 

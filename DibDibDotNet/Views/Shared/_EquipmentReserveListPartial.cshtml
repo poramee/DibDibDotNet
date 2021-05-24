@@ -17,7 +17,7 @@
 
 <div class="scroll-table-mem">
     @{
-        List<EquipmentReservationListViewModel> transactionList = ViewBag.TransactionList;
+        Dictionary<DateTime,List<EquipmentReservationListViewModel>> transactionList = ViewBag.TransactionList;
         if (transactionList.Count() == 0)
         {
             <span>
@@ -26,12 +26,17 @@
         }
     }
     
-    @foreach (var tt in ViewBag.TransactionList)
+    @foreach (var tt in transactionList)
     {
-        EquipmentReservationListViewModel transaction = tt;
-        <button type="button" class="collapsible ParagraphX1 ENG rc-Primary">@transaction.Date.Day / @transaction.Date.Month / @transaction.Date.Year</button>
+        List<EquipmentReservationListViewModel> transactionInDate = tt.Value;
+        var date = tt.Key;
+        <button type="button" class="collapsible ParagraphX1 ENG rc-Primary"> [@transactionInDate.Count()] - @date.Date.ToString("d MMMM yyyy")</button>
+        
+        
         <div class="content" style="border: 0;">
             <div class="container-table " style="border: 0;">
+                @foreach (var transaction in transactionInDate)
+                {
                 <table class="w3-table" style="border: 0;">
                     <tbody style="border: none;">
                     <tr>
@@ -98,7 +103,7 @@
                                 <p class="ParagraphX1 ENG rc-Secondary">
                                     <button
                                         class="btn-pop-bl rc-Primary TH ParagraphX1" onclick="cancelTransaction('@transaction.TransactionId')">
-                                    Cancel
+                                        Cancel
                                     </button>
                                 </p>
                             </div>
@@ -107,6 +112,7 @@
                     </tr>
                     </tbody>
                 </table>
+                }
             </div>
         </div>
     }

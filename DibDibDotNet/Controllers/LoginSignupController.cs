@@ -51,8 +51,14 @@ namespace DibDibDotNet.Controllers
         var currentUser = _context.User.Where(e => e.Email.Equals(user.Email) && e.Password.Equals(user.Password)).ToList();
         if (currentUser.Count() > 0)
         {
-          HttpContext.Session.SetString("idUser", currentUser.FirstOrDefault().Id.ToString());
           Console.WriteLine("IS Admin" + currentUser.FirstOrDefault().IsAdmin);
+          if (!currentUser.FirstOrDefault().IsValid)
+          {
+            ViewBag.Message = "Account is invalid";
+            return RedirectToAction("Login");
+          }
+          HttpContext.Session.SetString("idUser", currentUser.FirstOrDefault().Id.ToString());
+
           if (currentUser.FirstOrDefault().IsAdmin) return RedirectToAction("HomeAdmin", "HomeAdmin");
           else return RedirectToAction("HomeUser", "HomeUser");
         }

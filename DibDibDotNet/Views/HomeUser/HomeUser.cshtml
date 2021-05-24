@@ -543,28 +543,14 @@
                 })
             }
         })
-    @* $.ajax({
-        type: "Get",
-        // url: `https://demo3.nsharuk.com/api/reserveavailable?year=${today.getFullYear()}&month=${today.getMonth()}&day=${today.getDate()}`,
-        url: "https://dibdibdotnet.medevhouse.xyz/api/reservation",
-        dataType: "json",
-        traditional: true,
-        success: function (data) {
-        const result
-        /*$(`#popUp-list > div > div > div > table > tbody > *tr > #${UserId}`).replaceWith(`
-        <td id="${UserId}">
-        <p class="ParagraphX1 ENG rc-Primary">
-        <input class="btn-pop-bl rc-Primary TH ParagraphX1" style="background:#289D45;color:white;"  type="submit" value="Done">
-        </p>
-        </td>`); */
-        console.log(data);
-        },
-        }); *@
     }
 
     function closeDogGo() {
         var dogGoModal = document.getElementById("dogGo-Popup");
+        let dogGoTable = document.getElementById("dogGo-Table");
+        dogGoTable.innerHTML = ""
         dogGoModal.style.display = "none";
+
     }
 
     function goRoom() {

@@ -1,0 +1,12 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "Test",
+      "group": "Tst",
+      "database": "./DibDib.db"
+    }
+  ],
+  "sqltools.useNodeRuntime": true
+}

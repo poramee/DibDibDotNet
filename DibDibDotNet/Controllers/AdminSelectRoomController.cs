@@ -116,7 +116,7 @@ namespace DibDibDotNet.Controllers
       Console.WriteLine(equipment.Amount);
       var currentEquipment = _context.Equipment.Where(e => e.Id.Equals(equipment.Id)).ToList().FirstOrDefault();
       var newEquipmentTransaction = new EquipmentTransaction { Equipment = currentEquipment, CreateAt = equipment.TransactionDate, Amount = equipment.Amount, IsUp = false };
-      currentEquipment.Total = (int.Parse(currentEquipment.Total) - equipment.Amount).ToString();
+      currentEquipment.Total = (int.Parse(currentEquipment.Total) - equipment.Amount > 0 ? int.Parse(currentEquipment.Total) - equipment.Amount : 0).ToString();
       _context.Update(currentEquipment);
       _context.Add(newEquipmentTransaction);
       await _context.SaveChangesAsync();

@@ -99,13 +99,10 @@
                     </tr>
                     <tr>
                         <td>
-                            <p class="ParagraphX1 TH rc-Secondary in-line">คงเหลือทั้งหมด</p>
                         </td>
                         <td>
-                            <p class="ParagraphX1 TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Avaliable</p>
                         </td>
                         <td>
-                            <p class="ParagraphX1 TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
                         </td>
                     </tr>
                 </table>
@@ -185,7 +182,7 @@
                         </div>
                         <div class="add-remove">
                             @* //TODO: Default Value Is 1 - DONE *@
-                            <input asp-for="Amount" class="input-num" name="Amount" value="1"/>
+                            <input asp-for="Amount" class="input-num" name="Amount" value="1" />
                         </div>
                         <input class="btn-pop-add rc-BG TH ParagraphX1 right " type="submit" value="เพิ่ม">
                     </form>
@@ -215,7 +212,7 @@
                         </div>
                         <div class="add-remove">
                             @* // TODO: Default Value Is 1 *@
-                            <input asp-for="Amount" class="input-num" name="Amount" value="1"/>
+                            <input asp-for="Amount" class="input-num" name="Amount" value="1" />
                         </div>
                         <input class="btn-pop-remove rc-BG TH ParagraphX1 right " type="submit" value="ลบ">
                     </form>
@@ -254,7 +251,7 @@
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date + ' ' + time;
-    
+
     var dt = new Date();
     var modalAdd = document.getElementById("popUp-add");
     var spanAdd = document.getElementsByClassName("close-add")[0];
@@ -262,19 +259,19 @@
     var modalDel = document.getElementById("popUp-del");
     var spanDel = document.getElementsByClassName("close-del")[0];
     //form-add
-    
-   function setCalendarToCurrentTime(elementId){
-       var calendar = document.getElementById(elementId);
-       var dateYMD = today.getFullYear().toString().padStart(4,"0") + '-' + (today.getMonth() + 1).toString().padStart(2,"0") + '-' + today.getDate().toString().padStart(2,"0");
-       var timeHrMin = today.getHours().toString().padStart(2,"0") + ":" + today.getMinutes().toString().padStart(2,"0");
-       calendar.setAttribute("value", dateYMD + "T" + timeHrMin);
-        
-   }
+
+    function setCalendarToCurrentTime(elementId) {
+        var calendar = document.getElementById(elementId);
+        var dateYMD = today.getFullYear().toString().padStart(4, "0") + '-' + (today.getMonth() + 1).toString().padStart(2, "0") + '-' + today.getDate().toString().padStart(2, "0");
+        var timeHrMin = today.getHours().toString().padStart(2, "0") + ":" + today.getMinutes().toString().padStart(2, "0");
+        calendar.setAttribute("value", dateYMD + "T" + timeHrMin);
+
+    }
     function openPopAdd() {
         modalAdd.style.display = "block";
         setCalendarToCurrentTime("dateTimeCurrent");
     }
-    
+
     spanAdd.onclick = function () {
         modalAdd.style.display = "none";
     }
@@ -286,6 +283,6 @@
     spanDel.onclick = function () {
         modalDel.style.display = "none";
     }
-   
+
 
 </script>

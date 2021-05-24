@@ -18,5 +18,9 @@ jobs:
         port: 22
         script: |
           cd /root/DibDibDotNet/DibDibDotNet 
+          git status
+          git add -A
+          git commit -a -m "update database before merge"
+          git push
           git pull
           docker-compose up --build -d

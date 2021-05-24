@@ -96,7 +96,7 @@ namespace DibDibDotNet.Controllers
 
             var equipmentList = _context.Equipment.ToList();
 
-            // var currentTime = new DateTime(2021,5,25,9,0,0); // Test
+            
             var currentTime = DateTime.Now;
             var currentTimeWithoutTime = new DateTime(currentTime.Year, currentTime.Month, currentTime.Day);
 
@@ -147,16 +147,16 @@ namespace DibDibDotNet.Controllers
                 })
                 .ToList();
 
-            var transactionGrouping = new Dictionary<DateTime, List<EquipmentReservationListViewModel>>();
+            var transactionGrouping = new SortedDictionary<DateTime, SortedList<int,EquipmentReservationListViewModel>>();
 
 
             foreach (var transaction in temp)
             {
                 if (!transactionGrouping.ContainsKey(transaction.Date))
                 {
-                    transactionGrouping.Add(transaction.Date, new List<EquipmentReservationListViewModel>());
+                    transactionGrouping.Add(transaction.Date, new SortedList<int,EquipmentReservationListViewModel>());
                 }
-                transactionGrouping[transaction.Date].Add(transaction);
+                transactionGrouping[transaction.Date].Add(transaction.Period,transaction);
             }
             
 

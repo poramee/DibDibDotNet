@@ -35,8 +35,8 @@ services:
           - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
     web:
         build: .
-        expose: 
-          - 80
+        volumes: 
+          - ${PWD}/DibDib.db:/app/DibDib.db
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.web.rule=Host(`dibdibdotnet.medevhouse.xyz`)"

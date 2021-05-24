@@ -8,7 +8,7 @@ RUN dotnet restore
 # Copy everything else and build
 COPY . ./
 RUN dotnet publish -c Release -o out
-COPY DibDib.db ./out
+# COPY DibDib.db ./out
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/sdk:3.1
 WORKDIR /app

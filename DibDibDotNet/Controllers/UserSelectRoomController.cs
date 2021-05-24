@@ -46,7 +46,7 @@ namespace DibDibDotNet.Controllers
 
             ViewBag.CurrentUser = _context.User.FirstOrDefault(u => u.Id.Equals(currentUser));
 
-            ViewBag.TransactionList = new List<EquipmentReservationListViewModel>(); // For Cart Popup
+            
             ViewBag.NumUserBooked = GetNumUserBooked(currentUser);
 
 

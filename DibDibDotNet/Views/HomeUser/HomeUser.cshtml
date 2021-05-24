@@ -106,6 +106,9 @@
 <div class="contain-cards">
 <div class="parent-card">
 @* ECC-501  Id = 2*@
+@{
+    var isInWorkingTime = DateTime.Now.Hour >= 9 && DateTime.Now.Hour <= 15;
+}
 <div class="div1-grid">
     <a href="@Url.Action("UserSelectRoom", "UserSelectRoom", new {roomId = "ECC-501", yearMonth=ViewBag.CurrentYearMonth})">
         <div class="card-preview DS-SS">
@@ -120,7 +123,7 @@
                         <p class="Label TH rc-Secondary in-line">จอง</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[2].Booking</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@(isInWorkingTime ? Model.Equipments[2].Booking.ToString() : "-")</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -167,7 +170,7 @@
                         <p class="Label TH rc-Secondary in-line">จอง</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[3].Booking</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@(isInWorkingTime ? Model.Equipments[3].Booking.ToString() : "-")</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -215,7 +218,7 @@
                         <p class="Label TH rc-Secondary in-line">จอง</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[4].Booking</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@(isInWorkingTime ? Model.Equipments[4].Booking.ToString() : "-")</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -261,7 +264,7 @@
                         <p class="Label TH rc-Secondary in-line">จอง</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[6].Booking</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@(isInWorkingTime ? Model.Equipments[6].Booking.ToString() : "-")</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>
@@ -307,7 +310,7 @@
                         <p class="Label TH rc-Secondary in-line">จอง</p>
                     </td>
                     <td>
-                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@Model.Equipments[5].Booking</p>
+                        <p class="Label TH rc-Secondary in-line ">&nbsp;&nbsp;@(isInWorkingTime ? Model.Equipments[5].Booking.ToString() : "-")</p>
                     </td>
                     <td>
                         <p class="Label TH rc-Secondary in-line">&nbsp;&nbsp;เครื่อง</p>

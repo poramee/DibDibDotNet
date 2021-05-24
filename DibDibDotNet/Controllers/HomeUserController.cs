@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using DibDibDotNet.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -25,36 +26,46 @@ namespace DibDibDotNet.Controllers
         }
 
 
-        public JsonResult UpdateAccountInfo(string firstName, string lastName, string email, string currentPassword,
+        public string UpdateAccountInfo(string firstName, string lastName, string email, string currentPassword,
             string newPassword)
         {
             Console.WriteLine("Update Account Info");
             var currentAccount = _context.User.Find(Int32.Parse(HttpContext.Session.GetString("idUser")));
 
-            if (newPassword.Length >= 0 && currentAccount.Password != currentPassword)
+            if (newPassword != null && currentPassword != null)
             {
-                Console.WriteLine("Failed to change the info");
-                return Json("'status': 'failed'");
+                if (currentAccount.Password != currentPassword)
+                {
+                    return "Failed - Current password is incorrect";
+                }
+                else if (newPassword.Length < 6) return "Failed - New password must be at least 6 characters";
+                else
+                {
+                    currentAccount.Password = newPassword;
+                }
             }
-            else
-            {
-                currentAccount.FullName = firstName + " " + lastName;
-                currentAccount.Email = email;
-                currentAccount.Password = newPassword;
-                _context.SaveChanges();
-            }
+            else if(newPassword != null && currentPassword == null) return "Failed - Please enter current password";
+            else if(newPassword == null && currentPassword != null) return "Failed - Please enter new password";
 
-            return Json("'status': 'success'");
+            var emailValidator = new Regex(@"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z");
+            
+            if (!emailValidator.IsMatch(email)) return "Failed - Invalid email format";
+
+            currentAccount.FullName = firstName + " " + lastName;
+            currentAccount.Email = email;
+            _context.SaveChanges();
+
+            return "Success";
         }
 
         [HttpPost]
         public async Task<IActionResult> UpdateAccount(HomeUserViewModel info)
         {
             var userInfo = info.NewAccountInfo;
-            UpdateAccountInfo(userInfo.FirstName, userInfo.LastName, userInfo.Email, userInfo.CurrentPassword,
+            var msg = UpdateAccountInfo(userInfo.FirstName, userInfo.LastName, userInfo.Email, userInfo.CurrentPassword,
                 userInfo.NewPassword);
 
-            return RedirectToAction("HomeUser");
+            return RedirectToAction("HomeUser", new {alertMsg = msg});
         }
 
         public IActionResult UpdateAccountUserSelect(string roomId, string yearMonth, string firstName, string lastName,
@@ -66,13 +77,14 @@ namespace DibDibDotNet.Controllers
             Console.WriteLine(currentPassword);
             Console.WriteLine(newPassword);
 
-            UpdateAccountInfo(firstName, lastName, email, currentPassword, newPassword);
+            var msg = UpdateAccountInfo(firstName, lastName, email, currentPassword, newPassword);
 
-            return RedirectToAction("UserSelectRoom", "UserSelectRoom", new {roomId, yearMonth});
+            return RedirectToAction("UserSelectRoom", "UserSelectRoom", new {roomId, yearMonth, alertMsg = msg});
         }
 
-        public IActionResult HomeUser()
+        public IActionResult HomeUser(string alertMsg)
         {
+            ViewBag.alertMsg = alertMsg;
             Console.WriteLine(HttpContext.Session.GetString("idUser"));
 
             int idUser = Int32.Parse(HttpContext.Session.GetString("idUser"));

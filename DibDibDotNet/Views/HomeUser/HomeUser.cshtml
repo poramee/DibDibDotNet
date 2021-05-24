@@ -33,6 +33,16 @@
     }
     </script>
 </header>
+@if (ViewBag.alertMsg != null)
+{
+    <text>
+        <script>
+            $(document).ready(function () {
+               alert('@ViewBag.alertMsg');
+            });
+        </script>
+    </text>
+}
 
 <body class="BGG unselectable ">
 <div class="topnav">
@@ -363,7 +373,7 @@
             @* <input class="input-login" type="text" name="lastName"> <br class="brr md-h20"> *@
 
             <span class="ParagraphX2 ENG rc-Secondary">Email</span><br class="brr md-h5">
-            <input asp-for="NewAccountInfo.Email" class="input-login" type="email" value="@Model.CurrentUser.Email"> <br class="brr md-h20">
+            <input asp-for="NewAccountInfo.Email" class="input-login" type="email" value="@Model.CurrentUser.Email" required> <br class="brr md-h20">
             <span asp-validation-for="NewAccountInfo.Email" class="text-danger" style="color: red;padding-top: 8px;"></span>
             @* <input class="input-login" type="email" name="email"> <br class="brr md-h20"> *@
 

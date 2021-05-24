@@ -23,7 +23,16 @@
 </header>
 
 <body class="BGG unselectable">
-
+@if (ViewBag.alertMsg != null)
+{
+    <text>
+        <script>
+            $(document).ready(function () {
+               alert('@ViewBag.alertMsg');
+            });
+        </script>
+    </text>
+}
 <div class="topnav">
     <div class="right">
         <a href="javascript:window.location.reload(true)">

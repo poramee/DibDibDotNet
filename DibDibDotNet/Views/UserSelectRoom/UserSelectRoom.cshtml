@@ -29,7 +29,7 @@
         <a href="javascript:window.location.reload(true)">
             <i class="material-icons md-20 rc-Muted ">refresh</i>
         </a>
-        <a id="openPopUp-cart" target="_parent">
+        <a id="openPopUp-cart" target="_parent" style="cursor: pointer;">
             <i class="material-icons md-20 rc-Muted ">add_shopping_cart</i>
             <mark
                 class="noti-cart Label ENG rc-Bright">
@@ -37,7 +37,7 @@
             </mark>
         </a>
         <p class="ParagraphX2 ENG rc-Muted" href="#">Quota: @(5 - ViewBag.NumUserBooked)</p>
-        <a href="#">
+        <a href="javascript:toggleAccountDropdown()" style="cursor: pointer;">
             <i class="material-icons md-20 rc-Success ">account_circle</i>
         </a>
         <!-- <a id="checkLogout" onclick="logout()"class="ParagraphX2 ENG rc-Muted" href="../LoginSignup/Login.html">Logout</a>-->
@@ -232,6 +232,62 @@
     </div>
 </div>
 
+<!--  pop up account-->
+<div id="popUp-account" class="modal-accmenu">
+    <div class="modal-content-accmenu DS-SS">
+        <div id="openPopUp-accountSetting" class="accountSetting " onclick="openAccountSetting()">
+            <p class="ParagraphX2 ENG rc-Secondary">Account Setting</p>
+        </div>
+        <a id="checkLogout" class="ParagraphX2 ENG rc-Secondary" href="@Url.Action("Logout", "LoginSignup")">
+            <div class="logout">Logout</div>
+        </a>
+    </div>
+</div>
+
+<!--  pop up accountSetting-->
+<div id="popUp-accountSetting" class="modal-accSet">
+    <div class="modal-content-accSet DS-SS">
+        @{
+            User currentUser = ViewBag.CurrentUser;
+        }
+        
+        <form asp-controller="HomeUser" asp-action="UpdateAccountUserSelect">
+            <input type="hidden" name="roomId" value="@ViewBag.RoomId"/>
+            <input type="hidden" name="yearMonth" value="@ViewBag.YearMonth"/>
+            <input type="hidden" name="redirectView" value="UserSelectRoom"/>
+            
+            <span class="close">
+                <i class="material-icons rc-Secondary">close</i>
+            </span>
+            <h1 class="HeadingX4 ENG rc-Primary">Account Setting</h1><br class="brr md-h5">
+            <p class="ParagraphX1 ENG rc-Primary">Change your information</p><br class="brr md-h15">
+
+            <span class="ParagraphX2 ENG rc-Secondary">First Name</span><br class="brr md-h5">
+            <input class="input-login" value="@currentUser.FullName.Split(' ')[0]" name="firstName" required/> <br class="brr md-h20">
+            @* <input class="input-login" type="text" name="firstName"> <br class="brr md-h20"> *@
+
+            <span class="ParagraphX2 ENG rc-Secondary">Last Name</span><br class="brr md-h5">
+            <input class="input-login" value="@currentUser.FullName.Split(' ')[1]" name="lastName" required/> <br class="brr md-h20">
+            @* <input class="input-login" type="text" name="lastName"> <br class="brr md-h20"> *@
+
+            <span class="ParagraphX2 ENG rc-Secondary">Email</span><br class="brr md-h5">
+            <input class="input-login" type="email" name="email" value="@currentUser.Email" required/> <br class="brr md-h20">
+            @* <input class="input-login" type="email" name="email"> <br class="brr md-h20"> *@
+
+            <span class="ParagraphX2 ENG rc-Secondary">Current Password</span><br class="brr md-h5">
+            <input class="input-login" type="password" name="currentPassword"> <br class="brr md-h20">
+            @* <input class="input-login" type="password" name="currentPassword"> <br class="brr md-h20"> *@
+
+            <span class="ParagraphX2 ENG rc-Secondary">New Password</span><br class="brr md-h5">
+            <input class="input-login" type="password" name="newPassword"> <br class="brr md-h20">
+            @* <input class="input-login" type="password" name="newPassword"> <br class="brr md-h20"> *@
+
+            @* <input onclick="sentResetLink()" class="btn-login rc-BG ENG HeadingX6" type="submit" value="Save"> *@
+            <input class="btn-login rc-BG ENG HeadingX6" type="submit" value="Save">
+        </form>
+    </div>
+</div>
+
 </body>
 
 </html>
@@ -329,5 +385,18 @@
             }
         });
         return false;
+    }
+    function toggleAccountDropdown(){
+        var modal = document.getElementById("popUp-account");
+        if (modal.style.display === "block") modal.style.display = "none";
+        else modal.style.display = "block";
+        window.onclick = function (){
+            modal.style.display = "none";
+        }
+    }
+    
+    function openAccountSetting(){
+        var modal = document.getElementById("popUp-accountSetting");
+        modal.style.display = "block";
     }
 </script>

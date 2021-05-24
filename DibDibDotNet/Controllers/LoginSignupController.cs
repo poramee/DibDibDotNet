@@ -28,7 +28,9 @@ namespace DibDibDotNet.Controllers
       if (HttpContext.Session.GetString("idUser") != null)
       {
         var currentUser = _context.User.Where(e => e.Id.Equals(int.Parse(HttpContext.Session.GetString("idUser")))).ToList().FirstOrDefault();
+        if (currentUser.IsAdmin) return RedirectToAction("HomeAdmin", "HomeAdmin");
         if (currentUser != null) return RedirectToAction("HomeUser", "HomeUser");
+
         return RedirectToAction("Login");
       }
       return View();
@@ -50,7 +52,7 @@ namespace DibDibDotNet.Controllers
         if (currentUser.Count() > 0)
         {
           HttpContext.Session.SetString("idUser", currentUser.FirstOrDefault().Id.ToString());
-          // TODO: Check Is Admin And Redirect To Home Admin Page - DONE
+          Console.WriteLine("IS Admin" + currentUser.FirstOrDefault().IsAdmin);
           if (currentUser.FirstOrDefault().IsAdmin) return RedirectToAction("HomeAdmin", "HomeAdmin");
           else return RedirectToAction("HomeUser", "HomeUser");
         }
@@ -83,7 +85,7 @@ namespace DibDibDotNet.Controllers
         .IsMatch(userInfo.Email);
       bool validPassword = userInfo.Password.Equals(userInfo.ConfirmPassword) && (new Regex(".+")).IsMatch(userInfo.Password);
       bool infoValid = validFirstName && validLastName && validEmail && validPassword;
-      
+
       if (ModelState.IsValid && userInfo.Email.Length > 0 && infoValid)
       {
         var newUser = new User { Email = userInfo.Email, FullName = userInfo.FirstName + ' ' + userInfo.LastName, Password = userInfo.Password, IsAdmin = false, IsValid = true };

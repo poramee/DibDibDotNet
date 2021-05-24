@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DibDibDotNet.Models;
 using DibDibDotNet.Data;
+using Microsoft.AspNetCore.Http;
+
 namespace DibDibDotNet.Controllers
 {
   public class AdminSelectRoomController : Controller
@@ -21,6 +23,21 @@ namespace DibDibDotNet.Controllers
     }
     public IActionResult AdminSelectRoom(string roomId)
     {
+      if (HttpContext.Session.GetString("idUser") != null)
+      {
+        var currentUser = _context.User.Where(e => e.Id.Equals(int.Parse(HttpContext.Session.GetString("idUser")))).ToList().FirstOrDefault();
+        Console.WriteLine("currentUser " + currentUser.IsAdmin);
+        if (!currentUser.IsAdmin)
+        {
+          Response.StatusCode = 404;
+          return Redirect("/");
+        }
+      }
+      else
+      {
+        Response.StatusCode = 404;
+        return Redirect("/");
+      }
       Console.WriteLine(" admin select room " + roomId);
       var equipment = _context.Equipment.Where(e => e.Room.Equals(roomId)).ToList().FirstOrDefault();
       var transaction = _context.EquipmentTransaction.Where(e => e.Equipment.Id.Equals(equipment.Id)).ToArray();
@@ -108,6 +125,20 @@ namespace DibDibDotNet.Controllers
 
     public IActionResult ManageBooking(string roomId, string month)
     {
+      if (HttpContext.Session.GetString("idUser") != null)
+      {
+        var currentUser = _context.User.Where(e => e.Id.Equals(int.Parse(HttpContext.Session.GetString("idUser")))).ToList().FirstOrDefault();
+        if (!currentUser.IsAdmin)
+        {
+          Response.StatusCode = 404;
+          return Redirect("/");
+        }
+      }
+      else
+      {
+        Response.StatusCode = 404;
+        return Redirect("/");
+      }
       var CurrentDate = DateTime.Now;
       TempData["CurrentMonth"] = month;
       TempData["RoomName"] = roomId;

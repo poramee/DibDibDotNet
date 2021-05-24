@@ -96,7 +96,6 @@ namespace DibDibDotNet.Controllers
 
       var equipmentList = _context.Equipment.ToList();
 
-      // var currentTime = new DateTime(2021,5,25,9,0,0); // Test
       var currentTime = DateTime.Now;
       var currentTimeWithoutTime = new DateTime(currentTime.Year, currentTime.Month, currentTime.Day);
 
@@ -107,46 +106,7 @@ namespace DibDibDotNet.Controllers
         var equipmentBookingAmount = 0;
         foreach (var t in currentSlotTransaction)
         {
-            ViewBag.alertMsg = alertMsg;
-            Console.WriteLine(HttpContext.Session.GetString("idUser"));
-
-            int idUser = Int32.Parse(HttpContext.Session.GetString("idUser"));
-            HomeUserViewModel homeUserModel = new HomeUserViewModel();
-            homeUserModel.CurrentUser = _context.User.Find(idUser);
-            homeUserModel.CurrentUser.FirstName = homeUserModel.CurrentUser.FullName.Split(" ")[0];
-            homeUserModel.CurrentUser.LastName = homeUserModel.CurrentUser.FullName.Split(" ")[1];
-
-            var equipmentList = _context.Equipment.ToList();
-
-            
-            var currentTime = DateTime.Now;
-            var currentTimeWithoutTime = new DateTime(currentTime.Year, currentTime.Month, currentTime.Day);
-
-            foreach (var e in equipmentList)
-            {
-                var currentSlotTransaction = _context.Transaction.Where(a =>
-                    a.Equipment.Id.Equals(e.Id) && a.Date.Equals(currentTimeWithoutTime) && a.Period.Equals(currentTime.Hour));
-                var equipmentBookingAmount = 0;
-                foreach (var t in currentSlotTransaction)
-                {
-                    equipmentBookingAmount += t.Amount;
-                }
-
-                e.Booking = equipmentBookingAmount;
-                
-                Console.WriteLine(e.Booking);
-                homeUserModel.Equipments.Add(e.Id, e);
-            }
-
-            
-            ViewBag.NumUserBooked = 0;
-            var userTransactionList = _context.Transaction.Where(t => t.User.Id.Equals(idUser));
-            foreach (var transaction in userTransactionList)
-            {
-                ViewBag.NumUserBooked += transaction.Amount;
-            }
-
-            return View(homeUserModel);
+          equipmentBookingAmount += t.Amount;
         }
 
         e.Booking = equipmentBookingAmount;
@@ -166,23 +126,15 @@ namespace DibDibDotNet.Controllers
       return View(homeUserModel);
     }
 
-            var transactionGrouping = new SortedDictionary<DateTime, SortedList<int,EquipmentReservationListViewModel>>();
+    [HttpGet]
+    public ActionResult GetUserReservationMonth(string monthUser)
+    {
+      Console.Write("GET: ");
+      Console.WriteLine(monthUser);
 
       int idUser = Int32.Parse(HttpContext.Session.GetString("idUser"));
 
-            foreach (var transaction in temp)
-            {
-                if (!transactionGrouping.ContainsKey(transaction.Date))
-                {
-                    transactionGrouping.Add(transaction.Date, new SortedList<int,EquipmentReservationListViewModel>());
-                }
-                transactionGrouping[transaction.Date].Add(transaction.Period,transaction);
-            }
-            
-
-            ViewBag.TransactionList = transactionGrouping;
-            return PartialView("_EquipmentReserveListPartial");
-
+      var searchResult = _context.Transaction.Where(t => t.User.Id.Equals(idUser));
       var dateTimeUser = DateTime.Parse(monthUser + "-1");
       searchResult =
           searchResult.Where(t => t.Date.Year == dateTimeUser.Year && t.Date.Month == dateTimeUser.Month);
@@ -197,16 +149,16 @@ namespace DibDibDotNet.Controllers
       })
           .ToList();
 
-      var transactionGrouping = new Dictionary<DateTime, List<EquipmentReservationListViewModel>>();
+      var transactionGrouping = new SortedDictionary<DateTime, SortedList<int, EquipmentReservationListViewModel>>();
 
 
       foreach (var transaction in temp)
       {
         if (!transactionGrouping.ContainsKey(transaction.Date))
         {
-          transactionGrouping.Add(transaction.Date, new List<EquipmentReservationListViewModel>());
+          transactionGrouping.Add(transaction.Date, new SortedList<int, EquipmentReservationListViewModel>());
         }
-        transactionGrouping[transaction.Date].Add(transaction);
+        transactionGrouping[transaction.Date].Add(transaction.Period, transaction);
       }
 
 

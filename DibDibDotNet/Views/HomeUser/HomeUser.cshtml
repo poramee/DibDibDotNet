@@ -489,39 +489,8 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <p class="ParagraphX1 ENG rc-Primary in-line">1</p>
-                                </td>
-                                <td>
-                                    <p class="ParagraphX1 ENG rc-Primary in-line ">ECC 601</p>
-                                </td>
-                                <td>
-                                    <p class="ParagraphX1 ENG rc-Primary in-line">หัวแร้ง</p>
-                                </td>
-                                <td>
-                                    <p class="ParagraphX1 ENG rc-Primary in-line">0</p>
-                                </td>
-                                <td>
-                                    <p class="ParagraphX1 ENG rc-Primary in-line">0</p>
-                                </td>
-                                <td>
-                                    <p class="ParagraphX1 ENG rc-Primary in-line">0</p>
-                                </td>
-                                <td>
-                                    <p class="ParagraphX1 ENG rc-Primary in-line">0</p>
-                                </td>
-                                <td>
-                                    <p class="ParagraphX1 ENG rc-Primary in-line">0</p>
-                                </td>
-                                <td>
-                                    <p class="ParagraphX1 ENG rc-Primary in-line">0</p>
-                                </td>
-                                <td>
-                                    <p class="ParagraphX1 ENG rc-Primary in-line">0</p>
-                                </td>
-                            </tr>
+                        <tbody id="dogGo-Table">
+
                         </tbody>
                     </table>
                 </div>
@@ -532,6 +501,7 @@
 
 </html>
 
+
 <!-- JS for link page -->
 <script>
 
@@ -539,21 +509,57 @@
         let dogGoModal = document.getElementById("dogGo-Popup");
         dogGoModal.style.display = "block";
         let today = new Date();
+
+
         $.ajax({
             type: "Get",
             url: `https://demo3.nsharuk.com/api/reserveavailable?year=${today.getFullYear()}&month=${today.getMonth()}&day=${today.getDate()}`,
             dataType: "json",
             traditional: true,
             success: function (data) {
-                /*$(`#popUp-list > div > div > div > table > tbody > *tr > #${UserId}`).replaceWith(`
-                    <td id="${UserId}">
-                    <p class="ParagraphX1 ENG rc-Primary">
-                    <input class="btn-pop-bl rc-Primary TH ParagraphX1" style="background:#289D45;color:white;"  type="submit" value="Done">
-                    </p>
-                    </td>`); */
-                console.log(data);
-            },
-        });
+                data.reserveList.forEach((e, i) => {
+                    var dogGoTable = document.getElementById("dogGo-Table");
+                    var row = dogGoTable.insertRow(dogGoTable.rows.length);
+                    var indexCell = row.insertCell(0);
+                    var roomCell = row.insertCell(1);
+                    var equipmentCell = row.insertCell(2);
+                    var t0910Cell = row.insertCell(3);
+                    var t1011Cell = row.insertCell(4);
+                    var t1112Cell = row.insertCell(5);
+                    var t1213Cell = row.insertCell(6);
+                    var t1314Cell = row.insertCell(7);
+                    var t1415Cell = row.insertCell(8);
+                    var t1516Cell = row.insertCell(9);
+                    indexCell.innerHTML = i + 1;
+                    roomCell.innerHTML = e.location;
+                    equipmentCell.innerHTML = e.name;
+                    t0910Cell.innerHTML = e.amount.t0910
+                    t1011Cell.innerHTML = e.amount.t1011
+                    t1112Cell.innerHTML = e.amount.t1112
+                    t1213Cell.innerHTML = e.amount.t1213
+                    t1314Cell.innerHTML = e.amount.t1314
+                    t1415Cell.innerHTML = e.amount.t1415
+                    t1516Cell.innerHTML = e.amount.t1516
+                })
+            }
+        })
+    @* $.ajax({
+        type: "Get",
+        // url: `https://demo3.nsharuk.com/api/reserveavailable?year=${today.getFullYear()}&month=${today.getMonth()}&day=${today.getDate()}`,
+        url: "https://dibdibdotnet.medevhouse.xyz/api/reservation",
+        dataType: "json",
+        traditional: true,
+        success: function (data) {
+        const result
+        /*$(`#popUp-list > div > div > div > table > tbody > *tr > #${UserId}`).replaceWith(`
+        <td id="${UserId}">
+        <p class="ParagraphX1 ENG rc-Primary">
+        <input class="btn-pop-bl rc-Primary TH ParagraphX1" style="background:#289D45;color:white;"  type="submit" value="Done">
+        </p>
+        </td>`); */
+        console.log(data);
+        },
+        }); *@
     }
 
     function closeDogGo() {

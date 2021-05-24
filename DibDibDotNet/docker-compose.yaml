@@ -1,7 +1,43 @@
 version: "3.3"
 services:
+    traefik:
+        image: "traefik:v2.0.1"
+        command:
+          - "--log.level=DEBUG"
+          - "--api.dashboard=true"
+          - "--providers.docker=true"
+          - "--providers.docker.exposedbydefault=false"
+          - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+          - "--certificatesresolvers.myresolver.acme.email=pasawee.dev@gmail.com"
+          - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+          - "--entrypoints.websecure.address=:443"
+          - "--entrypoints.web.address=:80"
+          - "--global.sendAnonymousUsage=false"
+        ports:
+          - "80:80"
+          - "443:443"
+        volumes:
+          - "./letsencrypt:/letsencrypt"
+          - "/var/run/docker.sock:/var/run/docker.sock:ro"
+        labels:
+          # Dashboard
+          - "traefik.enable=true"                             
+          - "traefik.http.routers.api.entrypoints=api"        
+          - "traefik.http.routers.api.rule=Host(`dibdibdotnet-traefik.medevhouse.xyz`)"
+          - "traefik.http.routers.api.service=api@internal"   
+          - "traefik.http.routers.api.middlewares=auth"
+          - "traefik.http.routers.api.entrypoints=websecure"   
+          - "traefik.http.routers.api.tls.certresolver=myresolver"
+          - "traefik.http.middlewares.auth.basicauth.users=user:$$apr1$$ju238yn4$$r4kn1YJKd3mcW2u45y7vL1"
+          - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:[a-z-.]+}`)"
+          - "traefik.http.routers.http-catchall.entrypoints=web"
+          - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
+          - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
     web:
         build: .
-        ports:
-            - "5000:80"
-            - "5001:5001"
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.web.rule=Host(`dibdibdotnet.medevhouse.xyz`)"
+            - "traefik.http.routers.web.entrypoints=websecure"
+            - "traefik.http.routers.web.tls.certresolver=myresolver"
+            - "traefik.http.services.web.loadbalancer.server.port=5000"

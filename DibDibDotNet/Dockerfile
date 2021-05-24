@@ -12,5 +12,7 @@ RUN dotnet publish -c Release -o out
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/sdk:3.1
 WORKDIR /app
+ENV TZ="Asia/Bangkok"
+RUN date
 COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "DibDibDotNet.dll"]

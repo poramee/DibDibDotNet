@@ -18,4 +18,5 @@ jobs:
         port: 22
         script: |
           cd /root/DibDibDotNet/DibDibDotNet 
+          git pull
           docker-compose up --build -d

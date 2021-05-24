@@ -443,4 +443,14 @@
         modal.style.display = "none";
     }
     
+    // Prevent submit form by enter
+    $(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode === 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+    
 </script>

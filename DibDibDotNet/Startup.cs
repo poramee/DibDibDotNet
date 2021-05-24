@@ -28,7 +28,10 @@ namespace DibDibDotNet
     public void ConfigureServices(IServiceCollection services)
     {
 
-      services.AddCors();
+      services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
+    {
+      builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+    }));
       // use session
       services.AddMvc();
       services.AddDistributedMemoryCache();
@@ -52,9 +55,10 @@ namespace DibDibDotNet
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-      app.UseCors(
-      options => options.WithOrigins("*").AllowAnyMethod()
-      );
+      app.UseCors(builder => builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
       app.UseSession();
       if (env.IsDevelopment())
       {

@@ -509,11 +509,9 @@
         let dogGoModal = document.getElementById("dogGo-Popup");
         dogGoModal.style.display = "block";
         let today = new Date();
-
-
         $.ajax({
             type: "Get",
-            url: `https://demo3.nsharuk.com/api/reserveavailable?year=${today.getFullYear()}&month=${today.getMonth()}&day=${today.getDate()}`,
+            url: `https://demo3.nsharuk.com/api/reserveavailable?year=${today.getFullYear()}&month=${today.getMonth() + 1}&day=${today.getDate()}`,
             dataType: "json",
             traditional: true,
             success: function (data) {
